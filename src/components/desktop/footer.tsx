@@ -19,7 +19,7 @@ export function Footer() {
 
   return (
     <footer className="relative overflow-hidden border-t border-cream/10 bg-ink" aria-label="پاورقی">
-      <div className="mx-auto max-w-[1680px] px-6 pt-24 lg:px-12">
+      <div className="mx-auto max-w-[1440px] px-6 pt-24 lg:px-12">
         <div className="grid grid-cols-1 gap-14 pb-20 md:grid-cols-2 lg:grid-cols-12">
           {/* brand */}
           <div className="lg:col-span-5">
@@ -110,7 +110,7 @@ export function Footer() {
       </div>
 
       <div className="border-t border-cream/10">
-        <div className="mx-auto flex max-w-[1680px] flex-wrap items-center justify-between gap-4 px-6 py-6 text-[0.68rem] font-light text-sand/45 lg:px-12">
+        <div className="mx-auto flex max-w-[1440px] flex-wrap items-center justify-between gap-4 px-6 py-6 text-[0.68rem] font-light text-sand/45 lg:px-12">
           <span>© ۱۴۰۴ چرم میش — تمام حقوق محفوظ است.</span>
           <span className="latin-tag">Mish Leather Co. — Handcrafted</span>
           <span>طراحی و ساخت: استودیو میش</span>

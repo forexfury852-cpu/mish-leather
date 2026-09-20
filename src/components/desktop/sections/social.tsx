@@ -95,7 +95,7 @@ export function Testimonials() {
 export function InstagramGallery() {
   return (
     <section className="bg-paper py-24 lg:py-32" aria-label="اینستاگرام">
-      <div className="mx-auto mb-14 flex max-w-[1680px] flex-wrap items-end justify-between gap-8 px-6 lg:px-12">
+      <div className="mx-auto mb-14 flex max-w-[1440px] flex-wrap items-end justify-between gap-8 px-6 lg:px-12">
         <div>
           <Reveal y={16}>
             <div className="flex items-center gap-4">
@@ -121,14 +121,14 @@ export function InstagramGallery() {
         </Reveal>
       </div>
 
-      <div className="grid grid-cols-2 gap-1.5 px-1.5 sm:grid-cols-4">
+      <div className="grid grid-cols-2 gap-2 px-2 sm:grid-cols-4">
         {INSTAGRAM_GRID.map((item, i) => (
           <Reveal key={item.image + i} delay={(i % 4) * 0.06} y={24}>
             <a
               href="https://instagram.com"
               target="_blank"
               rel="noreferrer"
-              className="group relative block aspect-square overflow-hidden"
+              className="group relative block aspect-square overflow-hidden rounded-2xl"
               aria-label="پست اینستاگرام"
             >
               { }

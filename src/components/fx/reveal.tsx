@@ -31,7 +31,11 @@ export function Reveal({
   );
 }
 
-/** Masked line reveal — text slides up from behind an overflow mask */
+/** Masked line reveal — text slides up from behind an overflow mask.
+ *  NOTE: whileInView must observe the OUTER mask span, never the translated
+ *  inner span — a fully-clipped child reports isIntersecting:false forever
+ *  (ancestor clipping is part of the IO intersection math), which would
+ *  deadlock the animation below the fold. Variants propagate down instead. */
 export function LineMask({
   children,
   className,
@@ -44,17 +48,20 @@ export function LineMask({
   once?: boolean;
 }) {
   return (
-    <span className={`block overflow-hidden ${className ?? ''}`}>
+    <motion.span
+      className={`block overflow-hidden ${className ?? ''}`}
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once, margin: '-6% 0px' }}
+    >
       <motion.span
         className="block will-change-transform"
-        initial={{ y: '112%' }}
-        whileInView={{ y: '0%' }}
-        viewport={{ once, margin: '-6% 0px' }}
+        variants={{ hidden: { y: '112%' }, show: { y: '0%' } }}
         transition={{ duration: 1.1, delay, ease: EASE }}
       >
         {children}
       </motion.span>
-    </span>
+    </motion.span>
   );
 }
 

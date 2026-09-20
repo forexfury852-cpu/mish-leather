@@ -37,7 +37,7 @@ export function SiteHeader() {
         solid ? 'border-b border-ink/10 bg-paper/90 backdrop-blur-md' : 'bg-transparent'
       }`}
     >
-      <div className="mx-auto flex h-20 max-w-[1680px] items-center justify-between px-6 lg:px-12">
+      <div className="mx-auto flex h-20 max-w-[1440px] items-center justify-between px-6 lg:px-12">
         {/* nav */}
         <nav className="hidden items-center gap-9 md:flex" aria-label="اصلی">
           {links.map((l) => (

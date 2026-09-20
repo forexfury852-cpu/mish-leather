@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
-import { ArrowLeft, ChevronLeft, ChevronRight, Plus } from 'lucide-react';
+import { ArrowLeft, ChevronLeft, ChevronRight, Heart, Plus } from 'lucide-react';
 import { BEST_SELLERS, NEW_COLLECTION, faPrice, CATEGORY_TITLE, type Product } from '@/lib/data';
 import { useUI } from '@/lib/store';
 import { Reveal, LineMask, ClipReveal, EASE } from '@/components/fx/reveal';
@@ -13,9 +13,16 @@ import { motion } from 'framer-motion';
 export function ProductCard({ product, tall = false }: { product: Product; tall?: boolean }) {
   const goProduct = useUI((s) => s.goProduct);
   const addToCart = useUI((s) => s.addToCart);
+  const toggleWishlist = useUI((s) => s.toggleWishlist);
+  const isWishlisted = useUI((s) => s.isWishlisted);
+  const wished = isWishlisted(product.id);
   return (
     <article className="group" data-hover>
-      <div className={`img-zoom relative ${tall ? 'aspect-[3/4]' : 'aspect-[4/5]'}`}>
+      <div
+        className={`img-zoom relative bg-paper-deep shadow-[0_2px_12px_rgba(28,19,10,0.06)] ring-1 ring-ink/5 transition-[box-shadow,transform] duration-700 ease-out group-hover:-translate-y-2 group-hover:shadow-[0_38px_70px_-26px_rgba(122,76,40,0.42)] ${
+          tall ? 'aspect-[3/4] rounded-[1.5rem]' : 'aspect-[4/5] rounded-[1.5rem]'
+        }`}
+      >
         <button onClick={() => goProduct(product.id)} className="absolute inset-0 z-10" aria-label={product.name} />
         { }
         <img
@@ -26,36 +33,45 @@ export function ProductCard({ product, tall = false }: { product: Product; tall?
         />
         {product.badge && (
           <span
-            className={`absolute right-4 top-4 z-20 px-3 py-1.5 text-[0.62rem] font-light tracking-wide ${
+            className={`absolute right-4 top-4 z-20 rounded-full px-3.5 py-1.5 text-[0.62rem] font-medium shadow-sm ${
               product.badge === 'new'
-                ? 'bg-copper text-ink'
-                : 'border border-cream/30 bg-ink/40 text-cream/90 backdrop-blur-sm'
+                ? 'bg-copper text-paper'
+                : 'border border-cream/25 bg-ink/35 text-cream/95 backdrop-blur-md'
             }`}
           >
             {product.badge === 'new' ? 'جدید' : 'پرفروش'}
           </span>
         )}
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 translate-y-full bg-gradient-to-t from-ink/95 to-ink/60 p-4 opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
-          <div className="pointer-events-auto flex items-center justify-between">
-            <span className="text-xs font-light text-sand/85">مشاهده جزئیات</span>
-            <button
-              onClick={() => addToCart()}
-              className="flex items-center gap-1.5 border border-cream/25 px-3 py-1.5 text-[0.68rem] font-light text-cream/90 transition-colors hover:border-copper hover:text-copper"
-              aria-label="افزودن سریع به سبد"
-            >
-              <Plus size={12} strokeWidth={1.5} />
-              افزودن سریع
-            </button>
-          </div>
+        <button
+          onClick={() => toggleWishlist(product.id)}
+          aria-label="افزودن به علاقه‌مندی‌ها"
+          className={`absolute left-4 top-4 z-20 flex h-9 w-9 translate-y-1 items-center justify-center rounded-full bg-paper/85 shadow-sm backdrop-blur-md transition-all duration-500 hover:bg-copper hover:text-paper active:scale-90 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100 ${
+            wished ? 'text-copper opacity-100' : 'text-ink/70'
+          }`}
+        >
+          <Heart size={14} strokeWidth={1.75} className={wished ? 'fill-copper' : ''} />
+        </button>
+        <div className="pointer-events-none absolute inset-x-3 bottom-3 z-20 flex translate-y-2 items-center justify-between rounded-2xl bg-paper/90 p-2 ps-4 opacity-0 shadow-[0_14px_35px_-12px_rgba(28,19,10,0.35)] backdrop-blur-md transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
+          <span className="text-[0.7rem] font-light text-ink/70">مشاهده جزئیات</span>
+          <button
+            onClick={() => addToCart()}
+            className="pointer-events-auto flex items-center gap-1.5 rounded-full bg-ink px-4 py-2 text-[0.68rem] font-light text-cream transition-colors duration-300 hover:bg-copper active:scale-95"
+            aria-label="افزودن سریع به سبد"
+          >
+            <Plus size={12} strokeWidth={1.75} />
+            افزودن سریع
+          </button>
         </div>
       </div>
-      <div className="mt-5 flex items-start justify-between gap-4">
+      <div className="mt-4 flex items-start justify-between gap-3 px-1">
         <div>
           <span className="latin-tag text-copper/80">{product.latin}</span>
-          <h3 className="mt-1.5 text-base font-light text-ink">{product.name}</h3>
-          <p className="mt-1 text-[0.7rem] font-light text-ink/50">{CATEGORY_TITLE[product.category]}</p>
+          <h3 className="mt-1.5 text-[0.95rem] font-normal text-ink">{product.name}</h3>
+          <p className="mt-0.5 text-[0.68rem] font-light text-ink/45">{CATEGORY_TITLE[product.category]}</p>
         </div>
-        <span className="whitespace-nowrap text-sm font-light text-ink/80">{faPrice(product.price)}</span>
+        <span className="mt-1 whitespace-nowrap rounded-full bg-paper-deep px-3.5 py-1.5 text-[0.76rem] font-medium text-ink/85">
+          {faPrice(product.price)}
+        </span>
       </div>
     </article>
   );
@@ -67,7 +83,7 @@ export function NewCollection() {
   const [a, b, c, d] = NEW_COLLECTION;
 
   return (
-    <section className="relative overflow-hidden bg-paper py-28 lg:py-40" aria-label="مجموعه جدید">
+    <section className="relative overflow-hidden bg-paper py-24 lg:py-32" aria-label="مجموعه جدید">
       <span
         className="text-outline-ink pointer-events-none absolute -top-6 left-0 select-none text-[19vw] font-extralight leading-none opacity-60"
         aria-hidden
@@ -75,10 +91,10 @@ export function NewCollection() {
         جدید
       </span>
 
-      <div className="mx-auto grid max-w-[1680px] grid-cols-1 gap-16 px-6 lg:grid-cols-12 lg:px-12">
+      <div className="mx-auto grid max-w-[1440px] grid-cols-1 gap-12 px-6 lg:grid-cols-12 lg:px-12">
         {/* sticky intro */}
         <div className="lg:col-span-4">
-          <div className="lg:sticky lg:top-32">
+          <div className="lg:sticky lg:top-28">
             <SectionHead index="۰۲" title="مجموعه جدید" latin="New Arrivals" />
             <Reveal delay={0.2}>
               <p className="mt-8 max-w-sm text-sm font-light leading-9 text-ink/65">
@@ -96,28 +112,28 @@ export function NewCollection() {
           </div>
         </div>
 
-        {/* layered composition */}
+        {/* layered composition — capped for standard card proportions */}
         <div className="lg:col-span-8">
-          <div className="grid grid-cols-2 gap-x-6 lg:gap-x-10">
-            <div className="flex flex-col gap-16 lg:gap-24">
+          <div className="mx-auto grid w-full max-w-[760px] grid-cols-2 gap-x-5 lg:gap-x-8 lg:ms-auto">
+            <div className="flex flex-col gap-10 lg:gap-14">
               <motion.div initial="hidden" whileInView="show" viewport={{ once: true }} variants={{}}>
                 <ClipReveal from="right">
                   <ProductCard product={a} tall />
                 </ClipReveal>
               </motion.div>
-              <motion.div className="ms-8 lg:ms-16">
+              <motion.div className="ms-6 lg:ms-12">
                 <ClipReveal from="right" delay={0.1}>
                   <ProductCard product={c} />
                 </ClipReveal>
               </motion.div>
             </div>
-            <div className="mt-24 flex flex-col gap-16 lg:mt-36 lg:gap-24">
+            <div className="mt-16 flex flex-col gap-10 lg:mt-24 lg:gap-14">
               <motion.div>
                 <ClipReveal from="left">
                   <ProductCard product={b} />
                 </ClipReveal>
               </motion.div>
-              <motion.div className="me-2 lg:me-10">
+              <motion.div className="me-1 lg:me-6">
                 <ClipReveal from="left" delay={0.1}>
                   <ProductCard product={d} tall />
                 </ClipReveal>
@@ -151,8 +167,8 @@ export function BestSellers() {
   }, [embla, onSelect]);
 
   return (
-    <section className="hairline-t hairline-b bg-paper-deep py-28 lg:py-36" aria-label="پرفروش‌ترین‌ها">
-      <div className="mx-auto max-w-[1680px] px-6 lg:px-12">
+    <section className="hairline-t hairline-b bg-paper-deep py-20 lg:py-28" aria-label="پرفروش‌ترین‌ها">
+      <div className="mx-auto max-w-[1440px] px-6 lg:px-12">
         <div className="flex flex-wrap items-end justify-between gap-8">
           <SectionHead index="۰۳" title="پرفروش‌ترین‌ها" latin="Best Sellers" />
           <div className="flex items-center gap-3">
@@ -176,7 +192,7 @@ export function BestSellers() {
         </div>
       </div>
 
-      <div className="mt-16 overflow-hidden" ref={emblaRef}>
+      <div className="mt-12 overflow-hidden" ref={emblaRef}>
         <div className="flex touch-pan-y gap-6 ps-6 lg:ps-12">
           {BEST_SELLERS.map((p, i) => (
             <motion.div
@@ -185,8 +201,8 @@ export function BestSellers() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.9, delay: i * 0.06, ease: EASE }}
-              className={`min-w-0 flex-none w-[74vw] sm:w-[42vw] lg:w-[29vw] xl:w-[24.5vw] ${
-                i % 2 === 1 ? 'lg:translate-y-14' : ''
+              className={`min-w-0 flex-none max-w-[340px] w-[70vw] sm:w-[40vw] lg:w-[26vw] xl:w-[21.5vw] ${
+                i % 2 === 1 ? 'lg:translate-y-10' : ''
               }`}
             >
               <ProductCard product={p} />
@@ -251,7 +267,7 @@ export function Campaign() {
             </blockquote>
           </Reveal>
           <Reveal delay={0.35}>
-            <button onClick={() => goShop('all')} className="lux-btn mt-14 w-fit border border-ink/25 px-9 py-4 text-sm font-light">
+            <button onClick={() => goShop('all')} className="lux-btn mt-12 w-fit border border-ink/25 px-8 py-3.5 text-sm font-light active:scale-[0.97]">
               تماشای مجموعه کمپین
             </button>
           </Reveal>

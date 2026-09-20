@@ -40,7 +40,7 @@ export function Hero() {
       {/* content */}
       <motion.div
         style={{ y: contentY, opacity: fade }}
-        className="absolute inset-0 mx-auto flex max-w-[1680px] flex-col justify-end px-6 pb-28 lg:px-12 lg:pb-32"
+        className="absolute inset-0 mx-auto flex max-w-[1440px] flex-col justify-end px-6 pb-24 lg:px-12 lg:pb-28"
       >
         <motion.div
           initial={{ opacity: 0 }}
@@ -76,14 +76,14 @@ export function Hero() {
         >
           <button
             onClick={() => goShop('all')}
-            className="lux-btn group border border-cream/30 px-10 py-4 text-sm font-light tracking-wide"
+            className="group rounded-full bg-cream px-9 py-4 text-[0.85rem] font-medium text-ink shadow-[0_18px_45px_-12px_rgba(0,0,0,0.55)] transition-all duration-500 hover:bg-copper hover:text-paper active:scale-[0.96]"
           >
-            <span className="flex items-center gap-3">
+            <span className="flex items-center justify-center gap-3">
               مشاهده مجموعه
-              <ArrowLeft size={15} strokeWidth={1.5} className="transition-transform duration-500 group-hover:-translate-x-1.5" />
+              <ArrowLeft size={15} strokeWidth={1.75} className="transition-transform duration-500 group-hover:-translate-x-1.5" />
             </span>
           </button>
-          <button onClick={scrollToCraft} className="lux-link text-sm font-light text-sand/85 hover:text-cream">
+          <button onClick={scrollToCraft} className="lux-link rounded-full text-sm font-light text-cream/85 transition-colors hover:text-cream active:text-copper">
             داستان صنعتگری
           </button>
         </motion.div>

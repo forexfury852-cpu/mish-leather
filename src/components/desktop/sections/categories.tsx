@@ -79,6 +79,12 @@ export function Categories() {
             <div className="mt-10 h-px w-full max-w-xs bg-ink/10">
               <motion.div style={{ width: progress }} className="h-px bg-copper" />
             </div>
+            <button
+              onClick={() => goShop('all')}
+              className="lux-btn mt-10 w-fit border border-ink/25 px-7 py-3 text-[0.8rem] font-light text-ink active:scale-[0.97]"
+            >
+              مشاهده همه‌ی مجموعه
+            </button>
           </div>
 
           {CATEGORIES.map((cat, i) => (
@@ -86,7 +92,7 @@ export function Categories() {
               key={cat.key}
               onClick={() => open(cat.key)}
               data-hover
-              className="group relative h-[62vh] w-[38vw] min-w-[330px] overflow-hidden text-start"
+              className="group relative h-[62vh] w-[38vw] min-w-[330px] overflow-hidden rounded-[1.75rem] text-start shadow-[0_10px_40px_-18px_rgba(28,19,10,0.35)] transition-shadow duration-700 hover:shadow-[0_30px_70px_-24px_rgba(28,19,10,0.5)]"
               aria-label={`دسته‌ی ${cat.title}`}
             >
               <span className="text-outline-ink absolute -top-4 right-4 z-10 select-none text-[7rem] font-extralight leading-none opacity-90">
@@ -123,7 +129,7 @@ export function Categories() {
           <button
             onClick={() => goShop('all')}
             data-hover
-            className="group relative flex h-[62vh] w-[24vw] min-w-[260px] flex-col items-start justify-center overflow-hidden border border-espresso bg-espresso p-10 text-start"
+            className="group relative flex h-[62vh] w-[24vw] min-w-[260px] flex-col items-start justify-center overflow-hidden rounded-[1.75rem] border border-espresso bg-espresso p-10 text-start shadow-[0_20px_50px_-20px_rgba(46,32,19,0.6)]"
             aria-label="همه‌ی محصولات"
           >
             <span className="latin-tag text-copper">Full Catalogue</span>

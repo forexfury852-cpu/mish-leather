@@ -84,16 +84,16 @@ export function MobileHome() {
           >
             <button
               onClick={() => goShop('all')}
-              className="lux-btn border border-cream/30 py-4 text-sm font-light text-cream"
+              className="rounded-full bg-cream py-4 text-[0.85rem] font-medium text-ink shadow-[0_14px_35px_-10px_rgba(0,0,0,0.5)] transition-all duration-300 active:scale-[0.96] active:bg-copper active:text-paper"
             >
               <span className="flex items-center justify-center gap-3">
                 مشاهده مجموعه
-                <ArrowLeft size={15} strokeWidth={1.5} />
+                <ArrowLeft size={15} strokeWidth={1.75} />
               </span>
             </button>
             <button
               onClick={() => goProduct('arta-messenger')}
-              className="py-3 text-[0.8rem] font-light text-sand/75"
+              className="py-3 text-[0.8rem] font-light text-sand/85 transition-colors active:text-copper"
             >
               قطعه امضا — کیف «آرتا»
             </button>
@@ -118,7 +118,7 @@ export function MobileHome() {
             <button
               key={cat.key}
               onClick={() => goShop(cat.key)}
-              className="relative aspect-[3/4] w-[56vw] flex-none snap-center overflow-hidden text-start"
+              className="relative aspect-[3/4] w-[56vw] flex-none snap-center overflow-hidden rounded-[1.5rem] shadow-[0_12px_35px_-16px_rgba(28,19,10,0.4)] transition-transform duration-300 active:scale-[0.97]"
               aria-label={cat.title}
             >
               { }
@@ -188,13 +188,16 @@ export function MobileHome() {
         <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/25 to-ink/60" />
         <div className="absolute inset-x-0 bottom-0 p-6 pb-14">
           <span className="latin-tag text-copper">Campaign — Autumn 1404</span>
-          <h2 className="mt-3 text-[2rem] font-extralight leading-snug">
+          <h2 className="mt-3 text-[2rem] font-extralight leading-snug text-cream">
             عصرِ <span className="text-copper">چرم</span>
           </h2>
           <p className="mt-3 max-w-[26ch] text-[0.8rem] font-light leading-7 text-sand/80">
             بدون لوگو، بدون شعار — فقط فرم، بافت و نور.
           </p>
-          <button onClick={() => goShop('all')} className="lux-btn mt-7 border border-cream/30 px-8 py-3.5 text-[0.82rem] font-light">
+          <button
+            onClick={() => goShop('all')}
+            className="mt-7 rounded-full bg-cream px-8 py-3.5 text-[0.82rem] font-medium text-ink shadow-lg transition-all duration-300 active:scale-[0.96] active:bg-copper active:text-paper"
+          >
             تماشای کمپین
           </button>
         </div>
@@ -211,11 +214,11 @@ export function MobileHome() {
           چهارده ساعت کار دست روی هر کیف؛ از انتخاب پوست در دباغی تا کوک آخرِ لبه. هر قطعه شماره‌ی سری و امضای استادکار خودش را دارد.
         </p>
         <div className="mt-7 grid grid-cols-2 gap-3">
-          <div className="img-zoom aspect-square overflow-hidden">
+          <div className="img-zoom aspect-square overflow-hidden rounded-[1.25rem]">
             { }
             <img src="/images/craft-hands.jpg" alt="دست‌های استادکار" loading="lazy" className="h-full w-full object-cover" />
           </div>
-          <div className="img-zoom aspect-square overflow-hidden">
+          <div className="img-zoom aspect-square overflow-hidden rounded-[1.25rem]">
             { }
             <img src="/images/craft-tools.jpg" alt="ابزار کارگاه" loading="lazy" className="h-full w-full object-cover" />
           </div>
@@ -227,7 +230,7 @@ export function MobileHome() {
             { v: '۱۰۰٪', l: 'چرم طبیعی' },
             { v: '∞', l: 'ضمانت دوخت' },
           ].map((s) => (
-            <div key={s.l} className="flex-none border border-ink/12 px-6 py-4">
+            <div key={s.l} className="flex-none rounded-2xl border border-ink/12 px-6 py-4">
               <div className="text-2xl font-extralight text-copper">{s.v}</div>
               <div className="mt-1 text-[0.62rem] font-light text-ink/50">{s.l}</div>
             </div>
@@ -240,7 +243,7 @@ export function MobileHome() {
         <span className="latin-tag text-copper">Testimonials</span>
         <div className="no-scrollbar mt-6 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2">
           {TESTIMONIALS.map((t) => (
-            <figure key={t.name} className="w-[78vw] flex-none snap-center border border-ink/12 bg-paper-deep p-6">
+            <figure key={t.name} className="w-[78vw] flex-none snap-center rounded-3xl border border-ink/12 bg-paper-deep p-6">
               <div className="flex gap-1">
                 {Array.from({ length: 5 }).map((_, i) => (
                   <Star key={i} size={12} className="fill-copper text-copper" strokeWidth={1} />
@@ -258,7 +261,7 @@ export function MobileHome() {
 
       {/* ---------- NEWSLETTER ---------- */}
       <section className="px-6 pt-20">
-        <div className="border border-ink/12 bg-paper-deep p-7">
+        <div className="rounded-[1.75rem] border border-ink/12 bg-paper-deep p-7">
           <span className="latin-tag text-copper">Newsletter</span>
           <h2 className="mt-3 text-xl font-extralight">به دنیای میش بپیوندید</h2>
           <p className="mt-3 text-[0.78rem] font-light leading-7 text-ink/60">
@@ -283,7 +286,7 @@ export function MobileHome() {
                 aria-label="ایمیل"
                 className="lux-input text-[0.85rem]"
               />
-              <button type="submit" className="lux-btn border border-ink/25 py-4 text-[0.85rem] font-light">
+              <button type="submit" className="rounded-full bg-ink py-4 text-[0.85rem] font-medium text-cream transition-all active:scale-[0.97] active:bg-copper">
                 عضویت
               </button>
             </div>

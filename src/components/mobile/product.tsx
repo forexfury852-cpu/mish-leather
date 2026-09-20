@@ -101,7 +101,7 @@ export function MobileProduct() {
         </div>
 
         {/* slide counter */}
-        <span className="absolute bottom-4 right-5 z-20 bg-ink/55 px-3 py-1.5 text-[0.65rem] font-light text-cream/90 backdrop-blur">
+        <span className="absolute bottom-4 right-5 z-20 rounded-full bg-ink/55 px-3.5 py-1.5 text-[0.65rem] font-light text-cream/90 backdrop-blur">
           {fa(slide + 1)} / {fa(product.gallery.length)}
         </span>
       </section>
@@ -170,7 +170,7 @@ export function MobileProduct() {
                 <button
                   key={s}
                   onClick={() => setSize(s)}
-                  className={`min-h-[48px] min-w-[52px] border px-5 text-[0.85rem] font-light transition-all duration-300 ${
+                  className={`min-h-[48px] min-w-[52px] rounded-full border px-5 text-[0.85rem] font-light transition-all duration-300 active:scale-95 ${
                     size === s ? 'border-copper bg-copper text-paper' : 'border-ink/15 text-ink/75'
                   }`}
                 >
@@ -185,7 +185,7 @@ export function MobileProduct() {
         {product.dimensions && (
           <div className="mt-8">
             <span className="text-[0.72rem] font-light text-ink/50">ابعاد</span>
-            <div className="mt-3 inline-block border border-ink/15 px-5 py-3 text-[0.82rem] font-light text-ink/80">
+            <div className="mt-3 inline-block rounded-full border border-ink/15 px-5 py-3 text-[0.82rem] font-light text-ink/80">
               {product.dimensions}
             </div>
           </div>
@@ -269,7 +269,7 @@ export function MobileProduct() {
           </div>
           <button
             onClick={handleAdd}
-            className="flex flex-1 items-center justify-center gap-3 bg-copper py-4 text-[0.88rem] font-medium text-paper active:brightness-110"
+            className="flex flex-1 items-center justify-center gap-3 rounded-full bg-copper py-4 text-[0.88rem] font-medium text-paper shadow-[0_12px_30px_-10px_rgba(181,114,47,0.65)] transition-all active:scale-[0.98] active:brightness-110"
           >
             <ShoppingBag size={16} strokeWidth={1.75} />
             {added ? 'به سبد اضافه شد ✓' : 'افزودن به سبد خرید'}

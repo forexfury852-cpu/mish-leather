@@ -65,7 +65,7 @@
   --primary: #b5722f;
   --primary-foreground: #f7f2e8;
 
-  --radius: 0;
+  --radius: 1rem;
 }
 
 * { border-color: var(--border); }
@@ -99,18 +99,18 @@ body {
    letter-spacing is reserved for Latin .latin-tag only. */
 
 .text-display-xl {
-  font-size: clamp(2.6rem, 8vw, 9rem);
-  line-height: 1.12;
-  font-weight: 200;
-}
-.text-display-lg {
-  font-size: clamp(2.1rem, 5.2vw, 5.6rem);
+  font-size: clamp(2.3rem, 4.8vw, 5.5rem);
   line-height: 1.18;
   font-weight: 200;
 }
+.text-display-lg {
+  font-size: clamp(1.8rem, 3.4vw, 3.9rem);
+  line-height: 1.22;
+  font-weight: 200;
+}
 .text-display-md {
-  font-size: clamp(1.6rem, 3.2vw, 3.4rem);
-  line-height: 1.28;
+  font-size: clamp(1.4rem, 2.2vw, 2.4rem);
+  line-height: 1.32;
   font-weight: 200;
 }
 .latin-tag {
@@ -144,6 +144,7 @@ body {
   position: relative;
   overflow: hidden;
   isolation: isolate;
+  border-radius: 999px;
 }
 .lux-btn::before {
   content: '';

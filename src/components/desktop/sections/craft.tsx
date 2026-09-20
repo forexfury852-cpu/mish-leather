@@ -27,7 +27,7 @@ export function Craft() {
         کارگاه
       </span>
 
-      <div className="mx-auto grid max-w-[1680px] grid-cols-1 gap-20 px-6 lg:grid-cols-12 lg:px-12">
+      <div className="mx-auto grid max-w-[1440px] grid-cols-1 gap-20 px-6 lg:grid-cols-12 lg:px-12">
         {/* sticky text */}
         <div className="lg:col-span-5">
           <div className="lg:sticky lg:top-28">
@@ -66,7 +66,7 @@ export function Craft() {
         {/* image stack */}
         <div className="lg:col-span-7">
           <ClipReveal from="left">
-            <div className="img-zoom aspect-[16/10]">
+            <div className="img-zoom aspect-[16/10] overflow-hidden rounded-[1.5rem]">
               { }
               <img src="/images/craft-hides.jpg" alt="چرم‌های دباغی‌شده در کارگاه" loading="lazy" className="h-full w-full object-cover" />
             </div>
@@ -74,7 +74,7 @@ export function Craft() {
 
           <ParallaxBox speed={36} className="relative z-10 -mt-10 ms-auto w-3/4 lg:-mt-24 lg:w-[62%]">
             <ClipReveal from="bottom">
-              <div className="img-zoom aspect-[3/4] shadow-[0_40px_80px_-30px_rgba(10,8,6,0.45)]">
+              <div className="img-zoom aspect-[3/4] overflow-hidden rounded-[1.5rem] shadow-[0_40px_80px_-30px_rgba(10,8,6,0.45)]">
                 { }
                 <img src="/images/craft-hands.jpg" alt="دست‌های استادکار در حال دوخت چرم" loading="lazy" className="h-full w-full object-cover" />
               </div>
@@ -83,7 +83,7 @@ export function Craft() {
 
           <ParallaxBox speed={26} className="relative z-20 -mt-16 w-1/2 lg:-mt-32 lg:w-[38%]">
             <ClipReveal from="right" delay={0.1}>
-              <div className="img-zoom aspect-square shadow-[0_30px_60px_-25px_rgba(10,8,6,0.4)]">
+              <div className="img-zoom aspect-square overflow-hidden rounded-[1.5rem] shadow-[0_30px_60px_-25px_rgba(10,8,6,0.4)]">
                 { }
                 <img src="/images/craft-tools.jpg" alt="ابزار دست‌ساز چرم‌دوزی" loading="lazy" className="h-full w-full object-cover" />
               </div>
@@ -93,7 +93,7 @@ export function Craft() {
       </div>
 
       {/* process steps */}
-      <div className="mx-auto mt-28 max-w-[1680px] px-6 lg:px-12">
+      <div className="mx-auto mt-28 max-w-[1440px] px-6 lg:px-12">
         <Reveal>
           <div className="flex items-center gap-4">
             <span className="latin-tag text-leather">Process</span>
@@ -139,19 +139,19 @@ export function Showcase() {
         امضا
       </span>
 
-      <div className="mx-auto grid max-w-[1680px] items-center gap-16 px-6 lg:grid-cols-12 lg:px-12">
+      <div className="mx-auto grid max-w-[1440px] items-center gap-16 px-6 lg:grid-cols-12 lg:px-12">
         {/* image */}
         <div className="relative lg:col-span-7">
           <ClipReveal from="right">
-            <div className="img-zoom group relative aspect-[4/3]">
+            <div className="img-zoom group relative aspect-[4/3] overflow-hidden rounded-[1.5rem]">
               { }
               <img src={p.image} alt={p.name} loading="lazy" className="h-full w-full object-cover" />
             </div>
           </ClipReveal>
-          <div className="absolute -bottom-8 start-6 z-10 flex items-center gap-6 border border-cream/12 bg-espresso/95 px-8 py-6 backdrop-blur lg:start-16">
+          <div className="absolute -bottom-8 start-6 z-10 flex items-center gap-6 rounded-3xl border border-cream/12 bg-espresso/95 px-8 py-6 shadow-[0_24px_60px_-20px_rgba(28,19,10,0.55)] backdrop-blur lg:start-16">
             <div>
               <span className="latin-tag text-copper">{p.latin}</span>
-              <div className="mt-1 text-lg font-light">{p.name}</div>
+              <div className="mt-1 text-lg font-light text-cream">{p.name}</div>
             </div>
             <span className="h-10 w-px bg-cream/15" />
             <div className="text-left">
@@ -224,7 +224,7 @@ const ICONS = { badge: BadgeCheck, shield: ShieldCheck, truck: Truck, return: Ro
 export function Guarantees() {
   return (
     <section className="hairline-t bg-paper-deep py-24 lg:py-32" aria-label="تعهد ما">
-      <div className="mx-auto max-w-[1680px] px-6 lg:px-12">
+      <div className="mx-auto max-w-[1440px] px-6 lg:px-12">
         <SectionHead index="۰۷" title="تعهد میش" latin="Our Promise" />
         <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
           {GUARANTEES.map((g, i) => {

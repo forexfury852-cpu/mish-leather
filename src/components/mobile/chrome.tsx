@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { BatteryMedium, Home, Search, ShoppingBag, Signal, Store, Heart, Wifi } from 'lucide-react';
+import { BatteryMedium, Home, Plus, Search, ShoppingBag, Signal, Store, Heart, Wifi } from 'lucide-react';
 import { CATEGORY_TITLE, faPrice, type Product } from '@/lib/data';
 import { useUI, type View } from '@/lib/store';
 import { EASE } from '@/components/fx/reveal';
@@ -92,22 +92,23 @@ export function BottomNav() {
   );
 }
 
-/* Mobile product card — clean editorial grid card */
+/* Mobile product card — modern rounded card */
 export function MobileProductCard({ product, compact = false }: { product: Product; compact?: boolean }) {
-  const { goProduct, addToCart } = useUI();
+  const { goProduct, addToCart, toggleWishlist, isWishlisted } = useUI();
+  const wished = isWishlisted(product.id);
   return (
     <article className="group">
       <div
         onClick={() => goProduct(product.id)}
-        className="img-zoom relative aspect-[4/5] overflow-hidden"
+        className="img-zoom relative aspect-[4/5] overflow-hidden rounded-[1.25rem] bg-paper-deep shadow-[0_2px_10px_rgba(28,19,10,0.06)] ring-1 ring-ink/5 transition-transform duration-300 active:scale-[0.97]"
         data-hover
       >
         { }
         <img src={product.image} alt={product.name} loading="lazy" className="h-full w-full object-cover" />
         {product.badge && (
           <span
-            className={`absolute right-3 top-3 px-2.5 py-1 text-[0.58rem] font-light ${
-              product.badge === 'new' ? 'bg-copper text-paper' : 'border border-cream/30 bg-ink/40 text-cream/90 backdrop-blur-sm'
+            className={`absolute right-3 top-3 rounded-full px-3 py-1 text-[0.58rem] font-medium shadow-sm ${
+              product.badge === 'new' ? 'bg-copper text-paper' : 'border border-cream/25 bg-ink/35 text-cream/95 backdrop-blur-md'
             }`}
           >
             {product.badge === 'new' ? 'جدید' : 'پرفروش'}
@@ -116,20 +117,32 @@ export function MobileProductCard({ product, compact = false }: { product: Produ
         <button
           onClick={(e) => {
             e.stopPropagation();
+            toggleWishlist(product.id);
+          }}
+          aria-label="افزودن به علاقه‌مندی‌ها"
+          className={`absolute left-2.5 top-2.5 flex h-8 w-8 items-center justify-center rounded-full bg-paper/85 shadow-sm backdrop-blur-md transition-all active:scale-90 ${
+            wished ? 'text-copper' : 'text-ink/60'
+          }`}
+        >
+          <Heart size={13} strokeWidth={1.75} className={wished ? 'fill-copper' : ''} />
+        </button>
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
             addToCart();
           }}
           aria-label="افزودن سریع"
-          className="absolute bottom-3 left-3 flex h-10 w-10 items-center justify-center rounded-full border border-cream/30 bg-ink/55 text-cream backdrop-blur transition-colors active:border-copper active:text-copper"
+          className="absolute bottom-2.5 left-2.5 flex h-10 w-10 items-center justify-center rounded-full bg-paper/90 text-ink shadow-md backdrop-blur-md transition-all active:scale-90 active:bg-copper active:text-paper"
         >
-          <span className="text-lg font-light leading-none">+</span>
+          <Plus size={16} strokeWidth={1.75} />
         </button>
       </div>
       <div className={`flex items-start justify-between gap-3 px-0.5 ${compact ? 'mt-2.5' : 'mt-3.5'}`}>
         <div>
-          <h3 className="text-[0.9rem] font-light text-ink">{product.name}</h3>
-          <p className="mt-0.5 text-[0.65rem] font-light text-ink/45">{CATEGORY_TITLE[product.category]}</p>
+          <h3 className="text-[0.88rem] font-normal text-ink">{product.name}</h3>
+          <p className="mt-0.5 text-[0.62rem] font-light text-ink/45">{CATEGORY_TITLE[product.category]}</p>
         </div>
-        <span className="whitespace-nowrap text-[0.8rem] font-light text-ink/75">{faPrice(product.price)}</span>
+        <span className="mt-0.5 whitespace-nowrap rounded-full bg-paper-deep px-2.5 py-1 text-[0.7rem] font-medium text-ink/80">{faPrice(product.price)}</span>
       </div>
     </article>
   );

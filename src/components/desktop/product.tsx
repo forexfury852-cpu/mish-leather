@@ -73,7 +73,7 @@ export function ProductPage() {
 
   return (
     <>
-      <section className="mx-auto max-w-[1680px] px-6 pt-32 lg:px-12" aria-label="محصول">
+      <section className="mx-auto max-w-[1440px] px-6 pt-32 lg:px-12" aria-label="محصول">
         {/* breadcrumb */}
         <nav className="flex items-center gap-2 text-xs font-light text-ink/50" aria-label="مسیر">
           <button onClick={goHome} className="transition-colors hover:text-copper">
@@ -98,7 +98,7 @@ export function ProductPage() {
                     key={src + i}
                     onClick={() => setImgIndex(i)}
                     aria-label={`تصویر ${i + 1}`}
-                    className={`relative aspect-[3/4] w-20 flex-none overflow-hidden border transition-all duration-500 md:w-24 ${
+                    className={`relative aspect-[3/4] w-20 flex-none overflow-hidden rounded-xl border transition-all duration-500 md:w-24 ${
                       imgIndex === i ? 'border-copper opacity-100' : 'border-transparent opacity-50 hover:opacity-90'
                     }`}
                   >
@@ -109,7 +109,7 @@ export function ProductPage() {
               </div>
 
               {/* main image */}
-              <div className="relative flex-1 overflow-hidden bg-espresso">
+              <div className="relative flex-1 overflow-hidden rounded-[1.5rem] bg-espresso shadow-[0_30px_70px_-30px_rgba(28,19,10,0.45)]">
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={imgIndex}
@@ -127,7 +127,7 @@ export function ProductPage() {
                     />
                   </motion.div>
                 </AnimatePresence>
-                <span className="absolute bottom-5 right-5 bg-ink/60 px-3 py-1.5 text-[0.65rem] font-light text-cream/85 backdrop-blur">
+                <span className="absolute bottom-5 right-5 rounded-full bg-ink/60 px-3.5 py-1.5 text-[0.65rem] font-light text-cream/85 backdrop-blur">
                   {String(imgIndex + 1).replace(/\d/g, (d) => '۰۱۲۳۴۵۶۷۸۹'[Number(d)])} /{' '}
                   {String(product.gallery.length).replace(/\d/g, (d) => '۰۱۲۳۴۵۶۷۸۹'[Number(d)])}
                 </span>
@@ -144,9 +144,11 @@ export function ProductPage() {
                     <span className="latin-tag text-copper">{product.latin}</span>
                     <span className="h-px w-10 bg-ink/25" />
                   </div>
-                  {product.badge === 'new' && <span className="bg-copper px-3 py-1 text-[0.62rem] text-paper">جدید</span>}
+                  {product.badge === 'new' && (
+                    <span className="rounded-full bg-copper px-3.5 py-1.5 text-[0.62rem] font-medium text-paper">جدید</span>
+                  )}
                   {product.badge === 'bestseller' && (
-                    <span className="border border-ink/30 px-3 py-1 text-[0.62rem] text-ink/80">پرفروش</span>
+                    <span className="rounded-full border border-ink/25 px-3.5 py-1.5 text-[0.62rem] text-ink/80">پرفروش</span>
                   )}
                 </div>
               </Reveal>
@@ -218,7 +220,7 @@ export function ProductPage() {
                         <button
                           key={s}
                           onClick={() => setSize(s)}
-                          className={`min-w-[3.2rem] border px-4 py-2.5 text-sm font-light transition-all duration-300 ${
+                          className={`min-w-[3.2rem] rounded-full border px-4 py-2.5 text-sm font-light transition-all duration-300 ${
                             size === s
                               ? 'border-copper bg-copper text-paper'
                               : 'border-ink/20 text-ink/80 hover:border-ink/50'
@@ -236,7 +238,7 @@ export function ProductPage() {
                 <Reveal delay={0.22} y={12}>
                   <div className="mt-8">
                     <span className="text-xs font-light text-ink/55">ابعاد</span>
-                    <div className="mt-3 inline-block border border-ink/20 px-5 py-2.5 text-sm font-light text-ink/85">
+                    <div className="mt-3 inline-block rounded-full border border-ink/20 px-5 py-2.5 text-sm font-light text-ink/85">
                       {product.dimensions}
                     </div>
                   </div>
@@ -246,10 +248,10 @@ export function ProductPage() {
               {/* qty + cta */}
               <Reveal delay={0.26} y={12}>
                 <div className="mt-10 flex items-stretch gap-4">
-                  <div className="flex items-center border border-ink/20">
+                  <div className="flex items-center rounded-full border border-ink/20">
                     <button
                       onClick={() => setQty(Math.max(1, qty - 1))}
-                      className="px-4 text-ink/70 transition-colors hover:text-copper"
+                      className="rounded-full px-4 py-2 text-ink/70 transition-colors hover:text-copper"
                       aria-label="کاهش"
                     >
                       <Minus size={14} strokeWidth={1.5} />
@@ -259,7 +261,7 @@ export function ProductPage() {
                     </span>
                     <button
                       onClick={() => setQty(qty + 1)}
-                      className="px-4 text-ink/70 transition-colors hover:text-copper"
+                      className="rounded-full px-4 py-2 text-ink/70 transition-colors hover:text-copper"
                       aria-label="افزایش"
                     >
                       <Plus size={14} strokeWidth={1.5} />
@@ -267,7 +269,7 @@ export function ProductPage() {
                   </div>
                   <button
                     onClick={handleAdd}
-                    className="lux-btn lux-btn-ink flex-1 border border-ink bg-ink px-6 py-4 text-sm font-medium text-cream"
+                    className="lux-btn lux-btn-ink flex-1 border border-ink bg-ink px-6 py-4 text-sm font-medium text-cream active:scale-[0.98]"
                   >
                     <span className="flex items-center justify-center gap-3">
                       <ShoppingBag size={16} strokeWidth={1.5} />
@@ -277,7 +279,7 @@ export function ProductPage() {
                   <button
                     onClick={() => toggleWishlist(product.id)}
                     aria-label="افزودن به علاقه‌مندی"
-                    className="flex w-14 items-center justify-center border border-ink/25 text-ink/85 transition-colors hover:border-copper hover:text-copper"
+                    className="flex w-14 items-center justify-center rounded-full border border-ink/25 text-ink/85 transition-all hover:border-copper hover:text-copper active:scale-90"
                   >
                     <Heart
                       size={17}
@@ -348,7 +350,7 @@ export function ProductPage() {
               <span className="latin-tag text-copper">From the Atelier</span>
             </Reveal>
             <Reveal delay={0.1}>
-              <h2 className="text-display-md mt-6 leading-snug">
+              <h2 className="text-display-md mt-6 leading-snug text-cream">
                 چهارده ساعت،
                 <br />
                 دو سوزن، یک امضا
@@ -384,8 +386,8 @@ export function ProductPage() {
       </section>
 
       {/* related */}
-      <section className="bg-paper py-24 lg:py-32" aria-label="قطعات مرتبط">
-        <div className="mx-auto max-w-[1680px] px-6 lg:px-12">
+      <section className="bg-paper py-20 lg:py-28" aria-label="قطعات مرتبط">
+        <div className="mx-auto max-w-[1440px] px-6 lg:px-12">
           <Reveal y={16}>
             <div className="flex items-center gap-4">
               <span className="latin-tag text-copper">Related Pieces</span>

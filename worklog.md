@@ -56,3 +56,22 @@ Work Log:
 
 Stage Summary:
 - Site is now warm white/leather-brown editorial with dark cinematic hero+footer anchors; all views browser-verified and stable.
+
+---
+Task ID: 4
+Agent: Super Z (main agent)
+Task: User revision round 4 — visible «مشاهده مجموعه» CTA, modern rounded product cards, standard desktop proportions, smaller hero text, mobile tap feedback.
+
+Work Log:
+- Root-caused invisible hero CTA: button inherited body ink (#221609) on dark photo. Replaced desktop+mobile hero CTA and mobile campaign CTA with filled cream pill (hover:bg-copper desktop, active:bg-copper+scale touch feedback).
+- Fixed same inherited-color class of bugs: product-page craft-strip h2, showcase floating card name, mobile campaign h2 → explicit text-cream.
+- ProductCard (desktop, shared shop/new/related) redesigned: rounded-[1.5rem] image, ring-ink/5, soft shadow + hover lift (-translate-y-2, copper-tinted shadow), pill badges, hover glass quick-add bar (rounded-2xl paper/90 backdrop-blur), wishlist heart, pill price chip; MobileProductCard: rounded-[1.25rem], active:scale tap feedback, glass quick-add + wishlist always visible.
+- Proportions: all max-w-[1680px]→1440px; display-xl clamp → (2.3rem,4.8vw,5.5rem), lg → (1.8,3.4vw,3.9rem), md → (1.4,2.2vw,2.4rem); New Collection composition capped max-w-[760px] + tighter gaps; Best Sellers rail max-w-[340px] xl:w-[21.5vw]; shop grid xl:grid-cols-4 with lighter stagger.
+- Modern rounding sweep: lux-btn border-radius 999px globally; category tiles + CTA panel rounded-[1.75rem] + shadows + new intro CTA «مشاهده همه‌ی مجموعه»; instagram tiles rounded-2xl; craft/showcase images rounded; product page gallery thumbs/main/counter/size pills/qty/wishlist rounded; mobile chips/sheet controls/CTA rounded-full; mobile cards/testimonials/newsletter/stat chips rounded.
+- CRITICAL latent bug found & fixed: LineMask whileInView observed the translated inner span, which is fully clipped by its own overflow-hidden mask → IntersectionObserver reports isIntersecting:false forever (modern Chromium clips ancestor overflow in IO math) → below-fold masked headings (product title, shop h1 on some mounts, campaign, sections) never revealed. Fix: observe outer mask span + variants propagation (hidden y:112% → show y:0). Verified: shop h1 & product title now animate.
+- Dev server was serving stale CSS chunk (display sizes new but lux-btn radius old); restarted next dev → bundle now contains --radius:1rem + .lux-btn{border-radius:999px}.
+- Verified via agent-browser @1600x1000: hero (visible cream CTA, smaller headline), categories (rounded tiles, intro CTA), campaign (pill button, rendered heading), shop (4-col standard grid, rounded cards, h1 renders), product (rounded gallery, visible title, cream craft-strip heading), mobile (hero pill CTA, rounded card grids with wishlist+quick-add, campaign heading+CTA, rounded chips). Fixed missing Plus import; lint clean; zero page errors.
+
+Stage Summary:
+- All 4 user-reported issues fixed + 2 deeper bugs (LineMask IO deadlock, stale dev CSS) discovered and resolved during verification.
+- Site now: white/leather-brown editorial, pill buttons everywhere, rounded modern cards, standard proportions, Vazirmatn throughout.

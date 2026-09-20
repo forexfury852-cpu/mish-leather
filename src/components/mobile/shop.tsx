@@ -130,7 +130,7 @@ export function MobileShop() {
           <button
             key={c.key}
             onClick={() => goShop(c.key as 'all' | CategoryKey)}
-            className={`min-h-[38px] whitespace-nowrap border px-5 py-2 text-[0.75rem] font-light transition-all duration-300 ${
+            className={`min-h-[38px] whitespace-nowrap rounded-full border px-5 py-2 text-[0.75rem] font-light transition-all duration-300 active:scale-95 ${
               shopCategory === c.key
                 ? 'border-copper bg-copper text-paper'
                 : 'border-ink/15 text-ink/70'
@@ -176,7 +176,7 @@ export function MobileShop() {
               <button
                 key={s.key}
                 onClick={() => setSort(s.key)}
-                className={`min-h-[42px] border px-6 py-2 text-[0.78rem] font-light ${
+                className={`min-h-[42px] rounded-full border px-6 py-2 text-[0.78rem] font-light transition-all active:scale-95 ${
                   sort === s.key ? 'border-copper bg-copper text-paper' : 'border-ink/15 text-ink/75'
                 }`}
               >
@@ -200,7 +200,7 @@ export function MobileShop() {
                 >
                   {c.title}
                   <span
-                    className={`flex h-6 w-6 items-center justify-center border ${
+                    className={`flex h-6 w-6 items-center justify-center rounded-lg border transition-all active:scale-90 ${
                       active ? 'border-copper bg-copper text-paper' : 'border-ink/25'
                     }`}
                   >
@@ -218,7 +218,7 @@ export function MobileShop() {
               <button
                 key={b.key}
                 onClick={() => setBand(b.key)}
-                className={`min-h-[42px] border px-6 py-2 text-[0.78rem] font-light ${
+                className={`min-h-[42px] rounded-full border px-6 py-2 text-[0.78rem] font-light transition-all active:scale-95 ${
                   band === b.key ? 'border-copper bg-copper text-paper' : 'border-ink/15 text-ink/75'
                 }`}
               >
@@ -235,7 +235,7 @@ export function MobileShop() {
               setBand('all');
               setPendingCats([]);
             }}
-            className="min-h-[52px] flex-1 border border-ink/20 py-3 text-[0.82rem] font-light text-ink/75"
+            className="min-h-[52px] flex-1 rounded-full border border-ink/20 py-3 text-[0.82rem] font-light text-ink/75 transition-all active:scale-[0.97]"
           >
             بازنشانی
           </button>
@@ -244,7 +244,7 @@ export function MobileShop() {
               if (pendingCats.length > 0) goShop(pendingCats[0]);
               setSheet(false);
             }}
-            className="min-h-[52px] flex-[2] bg-copper py-3 text-[0.85rem] font-medium text-paper active:brightness-110"
+            className="min-h-[52px] flex-[2] rounded-full bg-copper py-3 text-[0.85rem] font-medium text-paper shadow-[0_12px_30px_-10px_rgba(181,114,47,0.6)] transition-all active:scale-[0.97] active:brightness-110"
           >
             اعمال فیلتر
           </button>

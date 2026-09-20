@@ -54,7 +54,7 @@ export function Shop() {
           className="absolute inset-0 h-full w-full object-cover object-top"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/35 to-ink/45" />
-        <div className="relative mx-auto w-full max-w-[1680px] px-6 pb-16 lg:px-12">
+        <div className="relative mx-auto w-full max-w-[1440px] px-6 pb-16 lg:px-12">
           <nav className="mb-8 flex items-center gap-2 text-xs font-light text-sand/60" aria-label="مسیر">
             <button onClick={goHome} className="transition-colors hover:text-cream">
               خانه
@@ -79,7 +79,7 @@ export function Shop() {
 
       {/* filter bar */}
       <div className="sticky top-20 z-40 border-b border-ink/10 bg-paper/92 backdrop-blur-md">
-        <div className="mx-auto flex max-w-[1680px] items-center justify-between gap-6 px-6 lg:px-12">
+        <div className="mx-auto flex max-w-[1440px] items-center justify-between gap-6 px-6 lg:px-12">
           <div className="no-scrollbar flex items-center gap-8 overflow-x-auto py-5">
             {[{ key: 'all' as const, title: 'همه' }, ...CATEGORIES.map((c) => ({ key: c.key, title: c.title }))].map(
               (cat) => (
@@ -120,7 +120,7 @@ export function Shop() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 8 }}
                   transition={{ duration: 0.3 }}
-                  className="absolute end-0 top-full z-50 w-44 border border-ink/12 bg-paper py-2 shadow-xl"
+                  className="absolute end-0 top-full z-50 w-48 rounded-2xl border border-ink/10 bg-paper py-2 shadow-[0_24px_50px_-16px_rgba(28,19,10,0.25)]"
                 >
                   {SORTS.map((s) => (
                     <li key={s.key}>
@@ -129,7 +129,7 @@ export function Shop() {
                           setSort(s.key);
                           setSortOpen(false);
                         }}
-                        className={`w-full px-5 py-2.5 text-start text-[0.78rem] font-light transition-colors ${
+                        className={`w-full rounded-xl px-5 py-2.5 text-start text-[0.78rem] font-light transition-colors ${
                           sort === s.key ? 'bg-copper/[0.08] text-copper' : 'text-ink/70 hover:bg-ink/[0.04] hover:text-ink'
                         }`}
                       >
@@ -145,8 +145,8 @@ export function Shop() {
       </div>
 
       {/* grid */}
-      <section className="bg-paper py-20 lg:py-28" aria-label="محصولات">
-        <div className="mx-auto max-w-[1680px] px-6 lg:px-12">
+      <section className="bg-paper py-16 lg:py-24" aria-label="محصولات">
+        <div className="mx-auto max-w-[1440px] px-6 lg:px-12">
           <AnimatePresence mode="wait">
             <motion.div
               key={shopCategory + sort}
@@ -154,10 +154,10 @@ export function Shop() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -16 }}
               transition={{ duration: 0.6, ease: EASE }}
-              className="grid grid-cols-1 gap-x-6 gap-y-16 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-10"
+              className="grid grid-cols-1 gap-x-5 gap-y-12 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-7"
             >
               {items.map((p, i) => (
-                <div key={p.id} className={i % 3 === 1 ? 'lg:translate-y-16' : i % 3 === 2 ? 'lg:translate-y-32' : ''}>
+                <div key={p.id} className={i % 4 === 1 ? 'xl:translate-y-8' : i % 4 === 3 ? 'xl:translate-y-16' : ''}>
                   <ProductCard product={p} />
                 </div>
               ))}
@@ -168,7 +168,7 @@ export function Shop() {
 
       {/* bespoke banner */}
       <section className="border-t border-cream/10 bg-espresso py-24" aria-label="سفارش اختصاصی">
-        <div className="mx-auto flex max-w-[1680px] flex-wrap items-center justify-between gap-10 px-6 lg:px-12">
+        <div className="mx-auto flex max-w-[1440px] flex-wrap items-center justify-between gap-10 px-6 lg:px-12">
           <div>
             <span className="latin-tag text-copper">Bespoke</span>
             <h2 className="text-display-md mt-4">
@@ -182,7 +182,7 @@ export function Shop() {
           </div>
           <a
             href="#"
-            className="lux-btn border border-cream/25 px-10 py-4 text-sm font-light"
+            className="lux-btn border border-cream/25 px-8 py-3.5 text-sm font-light active:scale-[0.97]"
             onClick={(e) => e.preventDefault()}
           >
             درخواست مشاوره
