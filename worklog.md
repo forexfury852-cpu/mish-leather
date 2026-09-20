@@ -75,3 +75,18 @@ Work Log:
 Stage Summary:
 - All 4 user-reported issues fixed + 2 deeper bugs (LineMask IO deadlock, stale dev CSS) discovered and resolved during verification.
 - Site now: white/leather-brown editorial, pill buttons everywhere, rounded modern cards, standard proportions, Vazirmatn throughout.
+
+---
+Task ID: 5
+Agent: Super Z (main agent)
+Task: User revision round 5 — remove simulator, World-of-Mish text legibility, professional framed card shadows, chic animations especially mobile.
+
+Work Log:
+- Simulator removed: deleted src/components/presentation/phone-frame.tsx (PhoneFrame/MobileStage/PresentationDock) and StatusBar from mobile/chrome.tsx; store.ts stripped Device/device/setDevice; page.tsx rewritten as a real responsive app — desktop layout for viewport ≥768px, fullscreen mobile layout below (nav via header/footer links only). Codebase noticeably lighter.
+- World-of-Mish legibility: added two-layer scrim to category cards (desktop categories.tsx + mobile home carousel) — masked backdrop-blur band (h-62%, blur 6-7px, mask fading upward) + stronger gradient from-ink/95 via-ink/40(45) to-transparent; overlay titles now fully readable on bright images.
+- Professional framed card shadows: ProductCard (desktop, shared) and MobileProductCard now use 3-layer box-shadow (hairline 0_1px_2px + ambient 0_12px_28px + warm copper depth 0_32px_64px rgba(122,76,40,.28)) + ring-ink/10 + inset white/15 hairline ring for a premium frame; hover deepens shadow + lifts; testimonials/newsletter cards got matching soft shadows.
+- Mobile animations: MobileHome — Reveal on all section headers, motion entrance (whileInView, staggered delays) for category carousel, best-seller rail, craft images (scale 1.05→1), stat chips, testimonials, newsletter, footer watermark, campaign text block; MobileProductCard gains index-based stagger (delay index*0.07, capped 0.35s); BottomNav slides up after boot (y:90→0, delay 1s) + top edge shadow; MobileShop — hero text entrance, category chips stagger, filter FAB pops in (wrapped in fixed centered div to avoid framer/tailwind translate conflict) with whileTap; MobileProduct — top bar fades down, slide counter fades in, related cards staggered. Removed stale `void Reveal;`.
+- Verified via agent-browser: desktop 1600x1000 (hero w/o dock, visible CTA, World-of-Mish scrim, framed cards in New Collection/Best Sellers/Shop grid) + mobile 390x844 (fullscreen no frame, hero, World-of-Mish readable, framed 2-col grids, shop chips/FAB, product gallery+sheet+sticky CTA+bottom nav); zero page errors, zero console errors, dev.log clean, eslint clean, tsc clean in src/.
+
+Stage Summary:
+- App is now a true responsive site (simulator/presentation layer fully deleted); category-card text legible via blur-gradient scrim; product cards carry a professional framed shadow system; mobile experience fully animated with staggered cinematic reveals.

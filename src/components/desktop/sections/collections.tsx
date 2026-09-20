@@ -19,7 +19,7 @@ export function ProductCard({ product, tall = false }: { product: Product; tall?
   return (
     <article className="group" data-hover>
       <div
-        className={`img-zoom relative bg-paper-deep shadow-[0_2px_12px_rgba(28,19,10,0.06)] ring-1 ring-ink/5 transition-[box-shadow,transform] duration-700 ease-out group-hover:-translate-y-2 group-hover:shadow-[0_38px_70px_-26px_rgba(122,76,40,0.42)] ${
+        className={`img-zoom relative bg-paper-deep shadow-[0_1px_2px_rgba(28,19,10,0.06),0_12px_28px_-10px_rgba(28,19,10,0.16),0_32px_64px_-24px_rgba(122,76,40,0.28)] ring-1 ring-ink/10 transition-[box-shadow,transform] duration-700 ease-out group-hover:-translate-y-2 group-hover:shadow-[0_2px_4px_rgba(28,19,10,0.07),0_24px_48px_-14px_rgba(28,19,10,0.22),0_54px_100px_-28px_rgba(122,76,40,0.42)] ${
           tall ? 'aspect-[3/4] rounded-[1.5rem]' : 'aspect-[4/5] rounded-[1.5rem]'
         }`}
       >
@@ -31,6 +31,8 @@ export function ProductCard({ product, tall = false }: { product: Product; tall?
           loading="lazy"
           className="h-full w-full object-cover"
         />
+        {/* inner hairline — premium framed look */}
+        <span className="pointer-events-none absolute inset-0 rounded-[inherit] ring-1 ring-inset ring-white/15" aria-hidden />
         {product.badge && (
           <span
             className={`absolute right-4 top-4 z-20 rounded-full px-3.5 py-1.5 text-[0.62rem] font-medium shadow-sm ${

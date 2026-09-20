@@ -103,21 +103,27 @@ export function MobileHome() {
 
       {/* ---------- CATEGORIES — snap carousel ---------- */}
       <section className="pt-16">
-        <header className="flex items-end justify-between px-6">
-          <div>
-            <span className="latin-tag text-copper">The World of Mish</span>
-            <h2 className="mt-2 text-[1.55rem] font-extralight">دنیای میش</h2>
-          </div>
-          <button onClick={() => goShop('all')} className="flex items-center gap-1 text-[0.72rem] font-light text-copper">
-            همه
-            <ChevronLeft size={13} strokeWidth={1.5} />
-          </button>
-        </header>
+        <Reveal y={22} className="px-6">
+          <header className="flex items-end justify-between">
+            <div>
+              <span className="latin-tag text-copper">The World of Mish</span>
+              <h2 className="mt-2 text-[1.55rem] font-extralight">دنیای میش</h2>
+            </div>
+            <button onClick={() => goShop('all')} className="flex items-center gap-1 text-[0.72rem] font-light text-copper">
+              همه
+              <ChevronLeft size={13} strokeWidth={1.5} />
+            </button>
+          </header>
+        </Reveal>
         <div className="no-scrollbar mt-7 flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-2">
           {CATEGORIES.map((cat, i) => (
-            <button
+            <motion.button
               key={cat.key}
               onClick={() => goShop(cat.key)}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.85, delay: i * 0.06, ease: EASE }}
               className="relative aspect-[3/4] w-[56vw] flex-none snap-center overflow-hidden rounded-[1.5rem] shadow-[0_12px_35px_-16px_rgba(28,19,10,0.4)] transition-transform duration-300 active:scale-[0.97]"
               aria-label={cat.title}
             >
@@ -126,7 +132,12 @@ export function MobileHome() {
               <span className="text-outline absolute right-3 top-3 select-none text-5xl font-extralight">
                 {String(i + 1).replace(/\d/g, (d) => '۰۱۲۳۴۵۶۷۸۹'[Number(d)])}
               </span>
-              <div className="absolute inset-0 bg-gradient-to-t from-ink/95 via-transparent to-transparent" />
+              {/* legibility scrim — blurred base fading up + dark gradient */}
+              <div
+                className="absolute inset-x-0 bottom-0 h-[62%] backdrop-blur-[6px] [-webkit-mask-image:linear-gradient(to_top,black_35%,transparent)] [mask-image:linear-gradient(to_top,black_35%,transparent)]"
+                aria-hidden
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-ink/95 via-ink/45 to-transparent" />
               <div className="absolute inset-x-0 bottom-0 p-5">
                 <span className="latin-tag text-copper/90">{cat.latin}</span>
                 <h3 className="mt-1 text-xl font-extralight text-cream">{cat.title}</h3>
@@ -134,43 +145,54 @@ export function MobileHome() {
                   {String(cat.count).replace(/\d/g, (d) => '۰۱۲۳۴۵۶۷۸۹'[Number(d)])} قطعه — کاوش کنید
                 </p>
               </div>
-            </button>
+            </motion.button>
           ))}
         </div>
       </section>
 
       {/* ---------- NEW COLLECTION — clean 2-col grid ---------- */}
       <section className="pt-20">
-        <header className="px-6">
-          <span className="latin-tag text-copper">New Arrivals</span>
-          <h2 className="mt-2 text-[1.55rem] font-extralight">
-            مجموعه جدید <span className="text-ink/40 text-sm font-light">— پاییز ۱۴۰۴</span>
-          </h2>
-        </header>
+        <Reveal y={22} className="px-6">
+          <header>
+            <span className="latin-tag text-copper">New Arrivals</span>
+            <h2 className="mt-2 text-[1.55rem] font-extralight">
+              مجموعه جدید <span className="text-ink/40 text-sm font-light">— پاییز ۱۴۰۴</span>
+            </h2>
+          </header>
+        </Reveal>
         <div className="mt-7 grid grid-cols-2 gap-x-3 gap-y-9 px-6">
-          {NEW_COLLECTION.slice(0, 4).map((p) => (
-            <MobileProductCard key={p.id} product={p} />
+          {NEW_COLLECTION.slice(0, 4).map((p, i) => (
+            <MobileProductCard key={p.id} product={p} index={i} />
           ))}
         </div>
       </section>
 
       {/* ---------- BEST SELLERS — snap carousel ---------- */}
       <section className="pt-20">
-        <header className="flex items-end justify-between px-6">
-          <div>
-            <span className="latin-tag text-copper">Best Sellers</span>
-            <h2 className="mt-2 text-[1.55rem] font-extralight">پرفروش‌ترین‌ها</h2>
-          </div>
-          <button onClick={() => goShop('all')} className="flex items-center gap-1 text-[0.72rem] font-light text-copper">
-            همه
-            <ChevronLeft size={13} strokeWidth={1.5} />
-          </button>
-        </header>
+        <Reveal y={22} className="px-6">
+          <header className="flex items-end justify-between">
+            <div>
+              <span className="latin-tag text-copper">Best Sellers</span>
+              <h2 className="mt-2 text-[1.55rem] font-extralight">پرفروش‌ترین‌ها</h2>
+            </div>
+            <button onClick={() => goShop('all')} className="flex items-center gap-1 text-[0.72rem] font-light text-copper">
+              همه
+              <ChevronLeft size={13} strokeWidth={1.5} />
+            </button>
+          </header>
+        </Reveal>
         <div className="no-scrollbar mt-7 flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-2">
           {BEST_SELLERS.map((p, i) => (
-            <div key={p.id} className={`w-[44vw] flex-none snap-start ${i % 2 === 1 ? 'translate-y-4' : ''}`}>
+            <motion.div
+              key={p.id}
+              initial={{ opacity: 0, y: 36 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: i * 0.05, ease: EASE }}
+              className={`w-[44vw] flex-none snap-start ${i % 2 === 1 ? 'translate-y-4' : ''}`}
+            >
               <MobileProductCard product={p} compact />
-            </div>
+            </motion.div>
           ))}
           <div className="w-2 flex-none" />
         </div>
@@ -186,7 +208,13 @@ export function MobileHome() {
           loading="lazy"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/25 to-ink/60" />
-        <div className="absolute inset-x-0 bottom-0 p-6 pb-14">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-12% 0px' }}
+          transition={{ duration: 0.9, ease: EASE }}
+          className="absolute inset-x-0 bottom-0 p-6 pb-14"
+        >
           <span className="latin-tag text-copper">Campaign — Autumn 1404</span>
           <h2 className="mt-3 text-[2rem] font-extralight leading-snug text-cream">
             عصرِ <span className="text-copper">چرم</span>
@@ -200,28 +228,37 @@ export function MobileHome() {
           >
             تماشای کمپین
           </button>
-        </div>
+        </motion.div>
       </section>
 
       {/* ---------- CRAFT teaser ---------- */}
       <section className="px-6 pt-20">
-        <span className="latin-tag text-copper">The Craft</span>
-        <h2 className="mt-2 text-[1.55rem] font-extralight leading-relaxed">
-          چرم، در دستان ما
-          <span className="text-copper"> جان می‌گیرد</span>
-        </h2>
-        <p className="mt-4 text-[0.83rem] font-light leading-8 text-ink/60">
-          چهارده ساعت کار دست روی هر کیف؛ از انتخاب پوست در دباغی تا کوک آخرِ لبه. هر قطعه شماره‌ی سری و امضای استادکار خودش را دارد.
-        </p>
+        <Reveal y={22}>
+          <span className="latin-tag text-copper">The Craft</span>
+          <h2 className="mt-2 text-[1.55rem] font-extralight leading-relaxed">
+            چرم، در دستان ما
+            <span className="text-copper"> جان می‌گیرد</span>
+          </h2>
+          <p className="mt-4 text-[0.83rem] font-light leading-8 text-ink/60">
+            چهارده ساعت کار دست روی هر کیف؛ از انتخاب پوست در دباغی تا کوک آخرِ لبه. هر قطعه شماره‌ی سری و امضای استادکار خودش را دارد.
+          </p>
+        </Reveal>
         <div className="mt-7 grid grid-cols-2 gap-3">
-          <div className="img-zoom aspect-square overflow-hidden rounded-[1.25rem]">
-            { }
-            <img src="/images/craft-hands.jpg" alt="دست‌های استادکار" loading="lazy" className="h-full w-full object-cover" />
-          </div>
-          <div className="img-zoom aspect-square overflow-hidden rounded-[1.25rem]">
-            { }
-            <img src="/images/craft-tools.jpg" alt="ابزار کارگاه" loading="lazy" className="h-full w-full object-cover" />
-          </div>
+          {[
+            { src: '/images/craft-hands.jpg', alt: 'دست‌های استادکار' },
+            { src: '/images/craft-tools.jpg', alt: 'ابزار کارگاه' },
+          ].map((img, i) => (
+            <motion.div
+              key={img.src}
+              initial={{ opacity: 0, y: 34, scale: 1.05 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true, margin: '-8% 0px' }}
+              transition={{ duration: 1, delay: i * 0.12, ease: EASE }}
+              className="img-zoom aspect-square overflow-hidden rounded-[1.25rem]"
+            >
+              <img src={img.src} alt={img.alt} loading="lazy" className="h-full w-full object-cover" />
+            </motion.div>
+          ))}
         </div>
         <div className="no-scrollbar mt-4 flex gap-3 overflow-x-auto">
           {[
@@ -229,21 +266,37 @@ export function MobileHome() {
             { v: '۱۴۰', l: 'مرحله ساخت' },
             { v: '۱۰۰٪', l: 'چرم طبیعی' },
             { v: '∞', l: 'ضمانت دوخت' },
-          ].map((s) => (
-            <div key={s.l} className="flex-none rounded-2xl border border-ink/12 px-6 py-4">
+          ].map((s, i) => (
+            <motion.div
+              key={s.l}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, delay: i * 0.08, ease: EASE }}
+              className="flex-none rounded-2xl border border-ink/12 bg-paper-deep/60 px-6 py-4"
+            >
               <div className="text-2xl font-extralight text-copper">{s.v}</div>
               <div className="mt-1 text-[0.62rem] font-light text-ink/50">{s.l}</div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </section>
 
       {/* ---------- TESTIMONIAL ---------- */}
       <section className="px-6 pt-20">
-        <span className="latin-tag text-copper">Testimonials</span>
+        <Reveal y={20}>
+          <span className="latin-tag text-copper">Testimonials</span>
+        </Reveal>
         <div className="no-scrollbar mt-6 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2">
-          {TESTIMONIALS.map((t) => (
-            <figure key={t.name} className="w-[78vw] flex-none snap-center rounded-3xl border border-ink/12 bg-paper-deep p-6">
+          {TESTIMONIALS.map((t, i) => (
+            <motion.figure
+              key={t.name}
+              initial={{ opacity: 0, y: 32 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-6% 0px' }}
+              transition={{ duration: 0.8, delay: i * 0.06, ease: EASE }}
+              className="w-[78vw] flex-none snap-center rounded-3xl border border-ink/12 bg-paper-deep p-6 shadow-[0_18px_44px_-26px_rgba(28,19,10,0.22)]"
+            >
               <div className="flex gap-1">
                 {Array.from({ length: 5 }).map((_, i) => (
                   <Star key={i} size={12} className="fill-copper text-copper" strokeWidth={1} />
@@ -254,14 +307,15 @@ export function MobileHome() {
                 <div className="text-[0.78rem] font-medium text-copper">{t.name}</div>
                 <div className="mt-0.5 text-[0.65rem] font-light text-ink/50">{t.role}</div>
               </figcaption>
-            </figure>
+            </motion.figure>
           ))}
         </div>
       </section>
 
       {/* ---------- NEWSLETTER ---------- */}
       <section className="px-6 pt-20">
-        <div className="rounded-[1.75rem] border border-ink/12 bg-paper-deep p-7">
+        <Reveal y={30}>
+        <div className="rounded-[1.75rem] border border-ink/12 bg-paper-deep p-7 shadow-[0_24px_60px_-32px_rgba(28,19,10,0.25)]">
           <span className="latin-tag text-copper">Newsletter</span>
           <h2 className="mt-3 text-xl font-extralight">به دنیای میش بپیوندید</h2>
           <p className="mt-3 text-[0.78rem] font-light leading-7 text-ink/60">
@@ -295,6 +349,7 @@ export function MobileHome() {
             </p>
           </form>
         </div>
+        </Reveal>
       </section>
 
       {/* ---------- FOOTER (compact) ---------- */}
@@ -313,14 +368,18 @@ export function MobileHome() {
             <a href="https://instagram.com" target="_blank" rel="noreferrer" className="lux-link">اینستاگرام</a>
           </div>
         </div>
-        <div className="mt-10 select-none overflow-hidden text-center text-[4.4rem] font-black leading-[0.9] text-ink/[0.06]" aria-hidden>
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1.1, ease: EASE }}
+          className="mt-10 select-none overflow-hidden text-center text-[4.4rem] font-black leading-[0.9] text-ink/[0.06]"
+          aria-hidden
+        >
           چرم میش
-        </div>
+        </motion.div>
         <p className="mt-4 text-center text-[0.62rem] font-light text-ink/40">© ۱۴۰۴ چرم میش — تمام حقوق محفوظ است.</p>
       </footer>
     </div>
   );
 }
-
-/* re-export to keep Reveal referenced for future edits */
-void Reveal;

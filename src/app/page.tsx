@@ -12,7 +12,6 @@ import { MobileHome } from '@/components/mobile/home';
 import { MobileShop } from '@/components/mobile/shop';
 import { MobileProduct } from '@/components/mobile/product';
 import { BottomNav } from '@/components/mobile/chrome';
-import { PhoneFrame, PresentationDock, MobileStage } from '@/components/presentation/phone-frame';
 import { EASE } from '@/components/fx/reveal';
 
 const viewVariants = {
@@ -22,7 +21,7 @@ const viewVariants = {
 };
 
 export default function Page() {
-  const { device, view, productId, setBooted } = useUI();
+  const { view, productId, setBooted } = useUI();
   const [loading, setLoading] = useState(true);
   const [smallScreen, setSmallScreen] = useState(false);
 
@@ -37,16 +36,13 @@ export default function Page() {
     };
   }, []);
 
-  // reset page scroll when the desktop view changes
+  // reset page scroll when the view changes
   useEffect(() => {
     if (window.scrollY > 0) window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
-  }, [view, productId, device]);
+  }, [view, productId]);
 
-  const activeDevice = smallScreen ? 'mobile' : device;
-  const fullscreenMobile = smallScreen || activeDevice === 'mobile';
-
-  /* ---------- DESKTOP ---------- */
-  if (!fullscreenMobile) {
+  /* ---------- DESKTOP (viewport ≥ 768px) ---------- */
+  if (!smallScreen) {
     return (
       <main className="grain min-h-svh bg-paper text-ink">
         <Cursor />
@@ -66,64 +62,31 @@ export default function Page() {
             {view === 'product' && <ProductPage />}
           </motion.div>
         </AnimatePresence>
-        <PresentationDock />
       </main>
     );
   }
 
-  /* ---------- MOBILE (fullscreen on real devices) ---------- */
-  if (smallScreen) {
-    return (
-      <main className="grain fixed inset-0 overflow-hidden bg-paper text-ink [container-type:size]">
-        <AnimatePresence>{loading && <Preloader onDone={() => { setLoading(false); setBooted(); }} />}</AnimatePresence>
-        <div className="h-full overflow-y-auto overscroll-contain no-scrollbar">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={`${view}-${productId}`}
-              variants={viewVariants}
-              initial="hidden"
-              animate="show"
-              exit="exit"
-              transition={{ duration: 0.5, ease: EASE }}
-            >
-              {view === 'home' && <MobileHome />}
-              {view === 'shop' && <MobileShop />}
-              {view === 'product' && <MobileProduct />}
-            </motion.div>
-          </AnimatePresence>
-        </div>
-        <BottomNav />
-      </main>
-    );
-  }
-
-  /* ---------- MOBILE (inside phone frame — presentation mode) ---------- */
+  /* ---------- MOBILE (viewport < 768px) ---------- */
   return (
-    <main className="min-h-svh bg-paper text-ink">
-      <MobileStage>
-        <PhoneFrame>
-          <div className="relative h-full">
-            <div className="h-full overflow-y-auto overscroll-contain no-scrollbar">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={`${view}-${productId}`}
-                  variants={viewVariants}
-                  initial="hidden"
-                  animate="show"
-                  exit="exit"
-                  transition={{ duration: 0.5, ease: EASE }}
-                >
-                  {view === 'home' && <MobileHome />}
-                  {view === 'shop' && <MobileShop />}
-                  {view === 'product' && <MobileProduct />}
-                </motion.div>
-              </AnimatePresence>
-            </div>
-            <BottomNav />
-          </div>
-        </PhoneFrame>
-      </MobileStage>
-      <PresentationDock />
+    <main className="grain fixed inset-0 overflow-hidden bg-paper text-ink [container-type:size]">
+      <AnimatePresence>{loading && <Preloader onDone={() => { setLoading(false); setBooted(); }} />}</AnimatePresence>
+      <div className="h-full overflow-y-auto overscroll-contain no-scrollbar">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={`${view}-${productId}`}
+            variants={viewVariants}
+            initial="hidden"
+            animate="show"
+            exit="exit"
+            transition={{ duration: 0.5, ease: EASE }}
+          >
+            {view === 'home' && <MobileHome />}
+            {view === 'shop' && <MobileShop />}
+            {view === 'product' && <MobileProduct />}
+          </motion.div>
+        </AnimatePresence>
+      </div>
+      <BottomNav />
     </main>
   );
 }

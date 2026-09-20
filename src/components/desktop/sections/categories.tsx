@@ -107,7 +107,12 @@ export function Categories() {
                   className="h-full w-full object-cover transition-[filter] duration-700 group-hover:brightness-[1.08]"
                 />
               </div>
-              <div className="absolute inset-0 bg-gradient-to-t from-ink/92 via-ink/15 to-transparent" />
+              {/* legibility scrim — blurred base fading up + dark gradient */}
+              <div
+                className="absolute inset-x-0 bottom-0 h-[62%] backdrop-blur-[7px] [-webkit-mask-image:linear-gradient(to_top,black_38%,transparent)] [mask-image:linear-gradient(to_top,black_38%,transparent)]"
+                aria-hidden
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-ink/95 via-ink/40 to-transparent" />
               <div className="absolute inset-x-0 bottom-0 p-8">
                 <span className="latin-tag text-copper/90">{cat.latin}</span>
                 <h3 className="mt-2 text-3xl font-extralight text-cream">{cat.title}</h3>

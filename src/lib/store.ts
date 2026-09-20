@@ -1,11 +1,9 @@
 import { create } from 'zustand';
 import type { CategoryKey } from './data';
 
-export type Device = 'desktop' | 'mobile';
 export type View = 'home' | 'shop' | 'product';
 
 interface UIState {
-  device: Device;
   view: View;
   productId: string;
   shopCategory: 'all' | CategoryKey;
@@ -13,7 +11,6 @@ interface UIState {
   wishlist: string[];
   booted: boolean;
   setBooted: () => void;
-  setDevice: (d: Device) => void;
   goHome: () => void;
   goShop: (category?: 'all' | CategoryKey) => void;
   goProduct: (id: string) => void;
@@ -23,7 +20,6 @@ interface UIState {
 }
 
 export const useUI = create<UIState>((set, get) => ({
-  device: 'desktop',
   view: 'home',
   productId: 'arta-messenger',
   shopCategory: 'all',
@@ -31,7 +27,6 @@ export const useUI = create<UIState>((set, get) => ({
   wishlist: [],
   booted: false,
   setBooted: () => set({ booted: true }),
-  setDevice: (device) => set({ device }),
   goHome: () => set({ view: 'home' }),
   goShop: (category) =>
     set((s) => ({ view: 'shop', shopCategory: category ?? s.shopCategory })),

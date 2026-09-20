@@ -1,30 +1,10 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { BatteryMedium, Home, Plus, Search, ShoppingBag, Signal, Store, Heart, Wifi } from 'lucide-react';
+import { Home, Plus, Search, ShoppingBag, Store, Heart } from 'lucide-react';
 import { CATEGORY_TITLE, faPrice, type Product } from '@/lib/data';
 import { useUI, type View } from '@/lib/store';
 import { EASE } from '@/components/fx/reveal';
-
-/* Simulated iOS-style status bar inside the phone frame */
-export function StatusBar({ dark = true }: { dark?: boolean }) {
-  return (
-    <div
-      className={`pointer-events-none absolute inset-x-0 top-0 z-50 flex items-center justify-between px-7 pt-3.5 text-[0.68rem] font-medium ${
-        dark ? 'text-cream' : 'text-ink'
-      }`}
-      aria-hidden
-    >
-      <span dir="ltr">9:41</span>
-      <span className="absolute left-1/2 top-2 h-[26px] w-[110px] -translate-x-1/2 rounded-full bg-black" />
-      <span className="flex items-center gap-1.5">
-        <Signal size={12} strokeWidth={2} />
-        <Wifi size={12} strokeWidth={2} />
-        <BatteryMedium size={14} strokeWidth={1.5} />
-      </span>
-    </div>
-  );
-}
 
 const NAV_ITEMS: { view: View; label: string; icon: typeof Home }[] = [
   { view: 'home', label: 'خانه', icon: Home },
@@ -39,8 +19,11 @@ export function BottomNav() {
   const item = (v: View) => view === v;
 
   return (
-    <nav
-      className="fixed inset-x-0 bottom-0 z-50 border-t border-ink/10 bg-paper/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-lg"
+    <motion.nav
+      initial={{ y: 90, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.9, delay: 1, ease: EASE }}
+      className="fixed inset-x-0 bottom-0 z-50 border-t border-ink/10 bg-paper/95 pb-[env(safe-area-inset-bottom)] shadow-[0_-18px_40px_-24px_rgba(28,19,10,0.25)] backdrop-blur-lg"
       aria-label="ناوبری موبایل"
     >
       <div className="grid grid-cols-5 items-stretch">
@@ -88,23 +71,31 @@ export function BottomNav() {
           <span className="text-[0.58rem] font-light text-ink/45">سبد</span>
         </button>
       </div>
-    </nav>
+    </motion.nav>
   );
 }
 
-/* Mobile product card — modern rounded card */
-export function MobileProductCard({ product, compact = false }: { product: Product; compact?: boolean }) {
+/* Mobile product card — modern rounded card, framed shadow, staggered reveal */
+export function MobileProductCard({ product, compact = false, index = 0 }: { product: Product; compact?: boolean; index?: number }) {
   const { goProduct, addToCart, toggleWishlist, isWishlisted } = useUI();
   const wished = isWishlisted(product.id);
   return (
-    <article className="group">
+    <motion.article
+      className="group"
+      initial={{ opacity: 0, y: 26 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-4% 0px' }}
+      transition={{ duration: 0.75, delay: Math.min(index * 0.07, 0.35), ease: EASE }}
+    >
       <div
         onClick={() => goProduct(product.id)}
-        className="img-zoom relative aspect-[4/5] overflow-hidden rounded-[1.25rem] bg-paper-deep shadow-[0_2px_10px_rgba(28,19,10,0.06)] ring-1 ring-ink/5 transition-transform duration-300 active:scale-[0.97]"
+        className="img-zoom relative aspect-[4/5] overflow-hidden rounded-[1.25rem] bg-paper-deep shadow-[0_1px_2px_rgba(28,19,10,0.06),0_10px_22px_-8px_rgba(28,19,10,0.15),0_26px_52px_-20px_rgba(122,76,40,0.24)] ring-1 ring-ink/10 transition-transform duration-300 active:scale-[0.97]"
         data-hover
       >
         { }
         <img src={product.image} alt={product.name} loading="lazy" className="h-full w-full object-cover" />
+        {/* inner hairline — premium framed look */}
+        <span className="pointer-events-none absolute inset-0 rounded-[inherit] ring-1 ring-inset ring-white/15" aria-hidden />
         {product.badge && (
           <span
             className={`absolute right-3 top-3 rounded-full px-3 py-1 text-[0.58rem] font-medium shadow-sm ${
@@ -144,6 +135,6 @@ export function MobileProductCard({ product, compact = false }: { product: Produ
         </div>
         <span className="mt-0.5 whitespace-nowrap rounded-full bg-paper-deep px-2.5 py-1 text-[0.7rem] font-medium text-ink/80">{faPrice(product.price)}</span>
       </div>
-    </article>
+    </motion.article>
   );
 }

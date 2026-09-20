@@ -83,7 +83,12 @@ export function MobileProduct() {
         <div className="absolute inset-0 bg-gradient-to-t from-ink/85 via-transparent to-ink/45" />
 
         {/* top bar */}
-        <div className="absolute inset-x-0 top-12 z-20 flex items-center justify-between px-5">
+        <motion.div
+          initial={{ opacity: 0, y: -16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.3, ease: EASE }}
+          className="absolute inset-x-0 top-12 z-20 flex items-center justify-between px-5"
+        >
           <button
             onClick={goHome}
             aria-label="بازگشت"
@@ -98,12 +103,17 @@ export function MobileProduct() {
           >
             <Heart size={18} strokeWidth={1.5} className={wished ? 'fill-copper text-copper' : ''} />
           </button>
-        </div>
+        </motion.div>
 
         {/* slide counter */}
-        <span className="absolute bottom-4 right-5 z-20 rounded-full bg-ink/55 px-3.5 py-1.5 text-[0.65rem] font-light text-cream/90 backdrop-blur">
+        <motion.span
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
+          className="absolute bottom-4 right-5 z-20 rounded-full bg-ink/55 px-3.5 py-1.5 text-[0.65rem] font-light text-cream/90 backdrop-blur"
+        >
           {fa(slide + 1)} / {fa(product.gallery.length)}
-        </span>
+        </motion.span>
       </section>
 
       {/* ---------- content sheet ---------- */}
@@ -246,9 +256,9 @@ export function MobileProduct() {
           </div>
           <h2 className="mt-2 text-[1.35rem] font-extralight">قطعات هم‌خانواده</h2>
           <div className="no-scrollbar mt-6 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2">
-            {related.map((p) => (
+            {related.map((p, i) => (
               <div key={p.id} className="w-[44vw] flex-none snap-start">
-                <MobileProductCard product={p} compact />
+                <MobileProductCard product={p} compact index={i} />
               </div>
             ))}
           </div>

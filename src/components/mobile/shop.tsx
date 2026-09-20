@@ -115,20 +115,28 @@ export function MobileShop() {
         { }
         <img src="/images/cat-bag.jpg" alt="فروشگاه چرم میش" className="absolute inset-0 h-full w-full object-cover object-top" />
         <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/35 to-ink/55" />
-        <div className="relative w-full px-6 pb-7">
+        <motion.div
+          initial={{ opacity: 0, y: 26 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, delay: 0.15, ease: EASE }}
+          className="relative w-full px-6 pb-7"
+        >
           <span className="latin-tag text-copper">Shop — Catalogue</span>
           <h1 className="mt-2 text-[2rem] font-extralight text-cream">فروشگاه</h1>
           <p className="mt-1.5 text-[0.72rem] font-light text-sand/65">
             {fa(items.length)} قطعه — چرم طبیعی، دست‌دوز
           </p>
-        </div>
+        </motion.div>
       </section>
 
       {/* category chips */}
       <div className="no-scrollbar sticky top-0 z-40 flex gap-3 overflow-x-auto border-b border-ink/10 bg-paper/95 px-6 py-4 backdrop-blur">
-        {[{ key: 'all' as const, title: 'همه' }, ...CATEGORIES.map((c) => ({ key: c.key, title: c.title }))].map((c) => (
-          <button
+        {[{ key: 'all' as const, title: 'همه' }, ...CATEGORIES.map((c) => ({ key: c.key, title: c.title }))].map((c, i) => (
+          <motion.button
             key={c.key}
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.25 + i * 0.05, ease: EASE }}
             onClick={() => goShop(c.key as 'all' | CategoryKey)}
             className={`min-h-[38px] whitespace-nowrap rounded-full border px-5 py-2 text-[0.75rem] font-light transition-all duration-300 active:scale-95 ${
               shopCategory === c.key
@@ -137,7 +145,7 @@ export function MobileShop() {
             }`}
           >
             {c.title}
-          </button>
+          </motion.button>
         ))}
       </div>
 
@@ -156,17 +164,23 @@ export function MobileShop() {
       </section>
 
       {/* floating filter button */}
-      <button
-        onClick={() => {
-          setPendingCats([]);
-          setSheet(true);
-        }}
-        className="fixed bottom-[92px] left-1/2 z-40 flex -translate-x-1/2 items-center gap-2.5 rounded-full border border-ink/15 bg-espresso/95 px-7 py-3.5 text-[0.8rem] font-light text-cream shadow-2xl backdrop-blur active:scale-95"
-        aria-label="فیلترها"
-      >
-        <SlidersHorizontal size={15} strokeWidth={1.5} className="text-copper" />
-        فیلتر و ترتیب
-      </button>
+      <div className="fixed bottom-[92px] left-1/2 z-40 -translate-x-1/2">
+        <motion.button
+          initial={{ opacity: 0, y: 24, scale: 0.92 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 0.7, delay: 0.7, ease: EASE }}
+          whileTap={{ scale: 0.94 }}
+          onClick={() => {
+            setPendingCats([]);
+            setSheet(true);
+          }}
+          className="flex items-center gap-2.5 rounded-full border border-ink/15 bg-espresso/95 px-7 py-3.5 text-[0.8rem] font-light text-cream shadow-2xl backdrop-blur"
+          aria-label="فیلترها"
+        >
+          <SlidersHorizontal size={15} strokeWidth={1.5} className="text-copper" />
+          فیلتر و ترتیب
+        </motion.button>
+      </div>
 
       {/* bottom sheet */}
       <BottomSheet open={sheet} onClose={() => setSheet(false)} title="فیلتر و ترتیب">
