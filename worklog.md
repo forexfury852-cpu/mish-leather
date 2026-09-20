@@ -170,3 +170,17 @@ Work Log:
 
 Stage Summary:
 - Desktop hero is now a high-quality cinematic leather-house campaign image (AI-generated still life, Lanczos-upscaled to 2016x1152) that fuses with the brand palette and RTL text layout, and the preloader has a bespoke exit: three staggered vertical ink curtains on desktop, a copper-banded horizontal sweep on mobile — with the brand lockup fading out ahead of the curtains.
+
+---
+Task ID: 11
+Agent: Super Z (main agent)
+Task: User supplied their own photo — make it the desktop hero image.
+
+Work Log:
+- Inspected upload/pasted_image_1789915387373.png (PNG 1672x941 RGB, 1.8MB): man in a brown leather jacket beside a wooden table with leather goods (messenger bag, wallet, belt), dark moody right half — ideal for the RTL text block.
+- scripts/process_hero_upload.py: EXIF-transpose, 1.25x Lanczos upscale -> 2090x1176, UnsharpMask(1.3/52/2), JPEG q87 progressive (234KB) -> public/images/hero.jpg; round-10 hero backed up to tmp-search/hero-round10.jpg.
+- hero.tsx: alt -> «مردی با کاپشن چرم کنار کیف، کیف‌پول و کمربند چرم بر میز چوبی»; object-position -> object-[left_center] so the subject stays anchored on the left and cover-crop eats into the dark right side (under the text).
+- Verified desktop 1600x1000 via agent-browser: subject/bag crisp on the left, cream headline + copper accents fully legible over the dark right half, «۲۰۰۰» numeral and CTAs read well; eslint src 0 problems; dev.log 200s.
+
+Stage Summary:
+- The user's own photo is now the desktop hero (upscaled + sharpened), framed so the dark right half carries the Persian headline; previous generated hero kept as backup.
