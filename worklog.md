@@ -153,3 +153,20 @@ Work Log:
 
 Stage Summary:
 - Mobile menu is right-handed and the top bar stays clean, slider edges are whisper-subtle, and the whole site (minus the hero) breathes with a barely-there copper/cream glow that costs nothing at runtime.
+
+---
+Task ID: 10
+Agent: Super Z (main agent)
+Task: User revision round 10 — replace the bad desktop hero image with a high-quality chic modern one; make the preloader exit special (desktop: split into 3 parts fading vertically; mobile: horizontal with a premium feel).
+
+Work Log:
+- Desktop hero image: stock search (3 parallel image-search queries) yielded nothing on-brand (street-style collages, hiking photo, interiors) → generated 3 cinematic campaign candidates at 1344x768 via z-ai image (CLI rejects 1440x720 — backend requires multiples of 32; sequential calls to avoid 429): A) leather briefcase still life on volcanic stone w/ golden dust beam, B) artisan hands saddle-stitching, C) editorial figure in concrete gallery. Chose A — matches ink/copper palette, darker right side suits RTL text block. Processed via scripts/process_hero.py: 1.5x Lanczos upscale → 2016x1152 + UnsharpMask(1.4/58/2), saved JPEG q86 progressive (365KB) to public/images/hero.jpg (old hero backed up to tmp-search/hero-old.jpg). hero.tsx: alt updated («کیف چرم دست‌دوز میش بر سنگ تیره، در نور سینمایی»), object-position 28% → 42% to center the bag band.
+- Preloader rewrite (fx/atoms.tsx): new `variant` prop ('desktop' | 'mobile'), passed from page.tsx branches. Root is now a transparent fixed container with (a) exit curtains, (b) brand content layer, (c) counter — nested motion exit animations drive the choreography: content fades FIRST (desktop: opacity+y-28, mobile: opacity+x-44, 0.4s easeIn) so the wordmark leaves before the curtains move; counter fades 0.28s.
+  - Desktop exit: THREE ink columns (flex, each flex-1, hairline copper/[0.06] seams) lift vertically y:-102% with [0.76,0,0.24,1] over 0.85s, staggered 0.22s + i*0.14 in RTL order (right column first) → staggered 3-part vertical reveal of the hero (which is simultaneously brightening from its 2.45s-delayed entrance).
+  - Mobile exit: two full-screen layers sweep LEFT x:-102% (0.85s same ease) — ink leads at delay 0, deep-copper #6e4218 band chases at delay 0.14 → a ~15vw copper band travels between the retreating ink and the revealed page (right→left = RTL reading direction).
+- Regression found & fixed during verification: old preloader root carried text-cream; the new transparent root made «چرم» inherit the page's text-ink → invisible on the ink screen (only copper «میش» showed). Added text-cream to the brand content layer.
+- Verified via agent-browser (in-page polling: preloader present ~1.1s → gone ~4.4s after nav, matching 2.05s timer + 1.35s exit): desktop 1600x1000 burst captured the 3-column staggered lift mid-flight (right column revealed → middle lifting → left still ink; tail band at top in the next frame) + final hero (bag crisp, copper beam, cream headline legible, «۲۰۰۰» numeral, CTA pill); mobile 390x844 burst captured the three-zone horizontal wipe (ink | copper band | revealed hero with BottomNav/hamburger emerging) + full reveal. Desktop + mobile load states show the fixed «چرم میش» wordmark and Persian counter (۴۱٪/۵۷٪/۱۰۰٪).
+- eslint src: 0 problems; tsc: 0 errors in src/ (pre-existing errors only in examples/scripts/skills); dev.log all 200s; tmp-search cleaned (verification shots + hero-old.jpg backup kept).
+
+Stage Summary:
+- Desktop hero is now a high-quality cinematic leather-house campaign image (AI-generated still life, Lanczos-upscaled to 2016x1152) that fuses with the brand palette and RTL text layout, and the preloader has a bespoke exit: three staggered vertical ink curtains on desktop, a copper-banded horizontal sweep on mobile — with the brand lockup fading out ahead of the curtains.

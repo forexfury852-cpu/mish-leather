@@ -50,7 +50,7 @@ export default function Page() {
     return (
       <main className="grain min-h-svh bg-paper text-ink">
         <Cursor />
-        <AnimatePresence>{loading && <Preloader onDone={() => { setLoading(false); setBooted(); }} />}</AnimatePresence>
+        <AnimatePresence>{loading && <Preloader variant="desktop" onDone={() => { setLoading(false); setBooted(); }} />}</AnimatePresence>
         <SiteHeader />
         <LivingBackdrop />
         <AnimatePresence mode="wait">
@@ -74,7 +74,7 @@ export default function Page() {
   /* ---------- MOBILE (viewport < 768px) ---------- */
   return (
     <main className="grain fixed inset-0 overflow-hidden bg-paper text-ink [container-type:size]">
-      <AnimatePresence>{loading && <Preloader onDone={() => { setLoading(false); setBooted(); }} />}</AnimatePresence>
+      <AnimatePresence>{loading && <Preloader variant="mobile" onDone={() => { setLoading(false); setBooted(); }} />}</AnimatePresence>
       <div ref={mobileScrollRef} className="h-full overflow-y-auto overscroll-contain no-scrollbar">
         <AnimatePresence mode="wait">
           <motion.div

@@ -27,8 +27,8 @@ export function Hero() {
       <motion.div style={{ y: imgY }} className="absolute inset-0">
         <motion.img
           src="/images/hero.jpg"
-          alt="مردی با پالتوی تیره و کیف چرم میش در فضایی معماری"
-          className="h-full w-full object-cover object-[center_28%]"
+          alt="کیف چرم دست‌دوز میش بر سنگ تیره، در نور سینمایی"
+          className="h-full w-full object-cover object-[center_42%]"
           initial={{ scale: 1.18, filter: 'brightness(0.5)' }}
           animate={{ scale: 1, filter: 'brightness(1)' }}
           transition={{ duration: 2.6, delay: booted ? 0 : 2.45, ease: EASE }}

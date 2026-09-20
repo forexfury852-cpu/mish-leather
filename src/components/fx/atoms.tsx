@@ -43,10 +43,14 @@ export function Cursor() {
   );
 }
 
-/** Animated film-grain / preloader */
-export function Preloader({ onDone }: { onDone: () => void }) {
+/** Cinematic brand preloader.
+ *  Exit choreography — desktop: brand fades, then three ink columns lift vertically in RTL stagger;
+ *  mobile: brand drifts out horizontally, ink curtain sweeps left with a deep-copper band chasing it. */
+export function Preloader({ onDone, variant = 'desktop' }: { onDone: () => void; variant?: 'desktop' | 'mobile' }) {
   const [count, setCount] = useState(0);
   const startedRef = useRef(false);
+  const mobile = variant === 'mobile';
+  const sweep = [0.76, 0, 0.24, 1] as const;
 
   useEffect(() => {
     if (startedRef.current) return;
@@ -74,39 +78,74 @@ export function Preloader({ onDone }: { onDone: () => void }) {
   }, [onDone]);
 
   return (
-    <motion.div
-      className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-ink text-cream"
-      exit={{ clipPath: 'inset(0 0 100% 0)' }}
-      transition={{ duration: 1, ease: [0.76, 0, 0.24, 1] }}
-      aria-hidden
-    >
-      <div className="overflow-hidden">
-        <motion.div
-          initial={{ y: '110%' }}
-          animate={{ y: 0 }}
-          transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
-          className="text-display-lg text-center"
-        >
-          چرم <span className="text-copper">میش</span>
-        </motion.div>
-      </div>
+    <div className="fixed inset-0 z-[100]" aria-hidden>
+      {/* exit curtains */}
+      {mobile ? (
+        <>
+          <motion.div
+            className="absolute inset-0 bg-[#6e4218]"
+            exit={{ x: '-102%' }}
+            transition={{ duration: 0.85, ease: sweep, delay: 0.14 }}
+          />
+          <motion.div
+            className="absolute inset-0 bg-ink"
+            exit={{ x: '-102%' }}
+            transition={{ duration: 0.85, ease: sweep }}
+          />
+        </>
+      ) : (
+        <div className="absolute inset-0 flex">
+          {[0, 1, 2].map((i) => (
+            <motion.div
+              key={i}
+              className="h-full flex-1 bg-ink [&:not(:first-child)]:border-l [&:not(:first-child)]:border-copper/[0.06]"
+              exit={{ y: '-102%' }}
+              transition={{ duration: 0.85, ease: sweep, delay: 0.22 + i * 0.14 }}
+            />
+          ))}
+        </div>
+      )}
+
+      {/* brand content — leaves before the curtains move (vertical on desktop, horizontal on mobile) */}
       <motion.div
-        initial={{ scaleX: 0 }}
-        animate={{ scaleX: 1 }}
-        transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1], delay: 0.5 }}
-        className="mt-6 h-px w-40 origin-center bg-copper/70"
-      />
-      <motion.p
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.8, delay: 0.8 }}
-        className="latin-tag mt-6 text-sand/70"
+        className="absolute inset-0 flex flex-col items-center justify-center text-cream"
+        exit={
+          mobile
+            ? { opacity: 0, x: -44, transition: { duration: 0.4, ease: 'easeIn' } }
+            : { opacity: 0, y: -28, transition: { duration: 0.4, ease: 'easeIn' } }
+        }
       >
-        Mish Leather — Est. 2000
-      </motion.p>
-      <div className="absolute bottom-10 text-xs tabular-nums text-sand/50">
+        <div className="overflow-hidden">
+          <motion.div
+            initial={{ y: '110%' }}
+            animate={{ y: 0 }}
+            transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
+            className="text-display-lg text-center"
+          >
+            چرم <span className="text-copper">میش</span>
+          </motion.div>
+        </div>
+        <motion.div
+          initial={{ scaleX: 0 }}
+          animate={{ scaleX: 1 }}
+          transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1], delay: 0.5 }}
+          className="mt-6 h-px w-40 origin-center bg-copper/70"
+        />
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.8 }}
+          className="latin-tag mt-6 text-sand/70"
+        >
+          Mish Leather — Est. 2000
+        </motion.p>
+      </motion.div>
+      <motion.div
+        exit={{ opacity: 0, transition: { duration: 0.28 } }}
+        className="absolute inset-x-0 bottom-10 text-center text-xs tabular-nums text-sand/50"
+      >
         {String(count).replace(/\d/g, (d) => '۰۱۲۳۴۵۶۷۸۹'[Number(d)])}٪
-      </div>
-    </motion.div>
+      </motion.div>
+    </div>
   );
 }
