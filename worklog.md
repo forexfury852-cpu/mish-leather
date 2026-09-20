@@ -138,3 +138,18 @@ Work Log:
 
 Stage Summary:
 - All 4 requested updates shipped: mobile now has its own minimal hamburger menu, the desktop brand reads over any hero photo, slider edges frost-blur instead of fading white, and best-seller cards fade in with a «همه‌ی محصول‌ها» link waiting at the end of the rail on both desktop and mobile.
+
+---
+Task ID: 9
+Agent: Super Z (main agent)
+Task: User revision round 9 — move mobile hamburger trigger to the right (keep top bar intact), much lighter blur on World-of-Mish edges, ultra-subtle "living" luxury background site-wide except the hero (no lag).
+
+Work Log:
+- Hamburger to the right: trigger left-4 → right-4 (mirrors desktop menu position); menu overlay top row mirrored (close X on the right where the trigger sits, brand to the left); mobile hero brand row rebuilt as RTL justify-between: 44px spacer reserves the right corner, «چرم میش» stays absolutely centered, «Est. 2000» tag moved to the left (the long «Est. 2000 — Tehran» tag collided with the centered brand — shortened). BottomNav and product top bar untouched (trigger still hidden on product view).
+- World-of-Mish edges much lighter: blur overlays w-14 backdrop-blur-[7px] → w-7 backdrop-blur-[3px], same gradient masks; drift/swipe untouched.
+- LivingBackdrop (new src/components/fx/backdrop.tsx + globals.css aura block): fixed z-30 pointer-events-none layer with three pre-blurred radial-gradient blobs (copper 0.10 / copper-bright 0.08 / cream 0.10 alpha, 48–72vmax) drifting via transform-only keyframes (54s/68s/46s alternate, translate3d+scale → compositor-only, no filter, no per-frame JS); fades in (1.2s ease) only after scrolling past ~72% of the first viewport (capture-phase scroll listener reads window.scrollY or the mobile container ref), so the hero stays untouched; prefers-reduced-motion disables the drift.
+- Build issue found & fixed: Turbopack persistent cache served a stale globals CSS chunk (TSX changes compiled but the aura rules never emitted; chunk hash unchanged; touch/restart insufficient) → hard reset (rm -rf .next + restart) restored full CSS. Verified served bundle contains aura rules.
+- Verification: eslint 0 problems, tsc clean; agent-browser mobile 390x844 (trigger right + balanced brand row, overlay close-right/brand-left, lighter edge blur, aura animName aura-a + opacity 0→1 gate + transform matrix drifting between samples) + desktop 1600x1000 (gate top:0 → scrolled:1, drift:true, sections render with the subtle warm glow); zero page errors.
+
+Stage Summary:
+- Mobile menu is right-handed and the top bar stays clean, slider edges are whisper-subtle, and the whole site (minus the hero) breathes with a barely-there copper/cream glow that costs nothing at runtime.

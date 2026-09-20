@@ -91,15 +91,15 @@ function DriftSlider({ children }: { children: React.ReactNode }) {
       <div ref={trackRef} dir="ltr" className="flex w-max will-change-transform">
         {children}
       </div>
-      {/* frosted edges — blur fades in from both sides (no white fade) */}
+      {/* whisper-thin frosted edges — blur fades in from both sides (kept very subtle) */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-y-0 left-0 z-10 w-14 backdrop-blur-[7px]"
+        className="pointer-events-none absolute inset-y-0 left-0 z-10 w-7 backdrop-blur-[3px]"
         style={{ WebkitMaskImage: 'linear-gradient(to right, black, transparent)', maskImage: 'linear-gradient(to right, black, transparent)' }}
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-y-0 right-0 z-10 w-14 backdrop-blur-[7px]"
+        className="pointer-events-none absolute inset-y-0 right-0 z-10 w-7 backdrop-blur-[3px]"
         style={{ WebkitMaskImage: 'linear-gradient(to left, black, transparent)', maskImage: 'linear-gradient(to left, black, transparent)' }}
       />
     </div>
@@ -133,17 +133,18 @@ export function MobileHome() {
         </motion.div>
         <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/10 to-ink/55" />
 
-        {/* top brand row — hamburger trigger occupies the left corner (global chrome) */}
+        {/* top brand row — hamburger trigger occupies the right corner (global chrome) */}
         <motion.div
           initial={{ opacity: 0, y: -14 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: bootedDelay + 0.4, duration: 0.9, ease: EASE }}
           className="absolute inset-x-0 top-12 flex items-center justify-between px-6"
         >
-          <span className="latin-tag text-copper">Est. 2000 — Tehran</span>
+          <span className="h-11 w-11 flex-none" aria-hidden />
           <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-lg font-medium text-cream">
             چرم <span className="font-extralight text-copper">میش</span>
           </span>
+          <span className="latin-tag text-copper">Est. 2000</span>
         </motion.div>
 
         {/* headline block */}

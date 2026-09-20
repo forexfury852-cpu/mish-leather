@@ -219,6 +219,42 @@ body {
   100% { transform: translateY(42px); opacity: 0; }
 }
 
+/* ---------- Living backdrop — very subtle drifting warm glows (GPU-only) ----------
+   Pre-blurred radial gradients animated with transform → compositor frames only,
+   no filter/repaint. Slow 46–68s loops, whisper-low alpha for a luxury breath. */
+.aura-root { transition: opacity 1.2s ease; }
+.aura-blob { position: absolute; border-radius: 9999px; will-change: transform; }
+.aura-blob-a {
+  width: 72vmax; height: 72vmax; top: -26vmax; right: -22vmax;
+  background: radial-gradient(closest-side, rgba(181, 114, 47, 0.10), rgba(181, 114, 47, 0.04) 45%, transparent 72%);
+  animation: aura-a 54s ease-in-out infinite alternate;
+}
+.aura-blob-b {
+  width: 62vmax; height: 62vmax; bottom: -30vmax; left: -20vmax;
+  background: radial-gradient(closest-side, rgba(207, 143, 78, 0.08), rgba(207, 143, 78, 0.03) 48%, transparent 72%);
+  animation: aura-b 68s ease-in-out infinite alternate;
+}
+.aura-blob-c {
+  width: 48vmax; height: 48vmax; top: 32%; left: 34%;
+  background: radial-gradient(closest-side, rgba(242, 234, 217, 0.10), transparent 70%);
+  animation: aura-c 46s ease-in-out infinite alternate;
+}
+@keyframes aura-a {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to { transform: translate3d(-16vmax, 12vmax, 0) scale(1.18); }
+}
+@keyframes aura-b {
+  from { transform: translate3d(0, 0, 0) scale(1.08); }
+  to { transform: translate3d(14vmax, -10vmax, 0) scale(0.94); }
+}
+@keyframes aura-c {
+  from { transform: translate3d(0, 0, 0) scale(0.92); }
+  to { transform: translate3d(-12vmax, -14vmax, 0) scale(1.15); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .aura-blob { animation: none; }
+}
+
 /* Hairline dividers */
 .hairline-t { border-top: 1px solid var(--hairline); }
 .hairline-b { border-bottom: 1px solid var(--hairline); }

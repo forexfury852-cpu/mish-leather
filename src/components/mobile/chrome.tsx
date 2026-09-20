@@ -27,7 +27,7 @@ export function MobileMenu() {
 
   return (
     <>
-      {/* trigger — frosted circle, hidden on product (its top bar has back/wishlist) */}
+      {/* trigger — frosted circle on the right (mirrors desktop), hidden on product (its top bar has back/wishlist) */}
       {view !== 'product' && (
         <motion.button
           initial={{ opacity: 0, y: -14 }}
@@ -35,7 +35,7 @@ export function MobileMenu() {
           transition={{ duration: 0.8, delay: 0.9, ease: EASE }}
           onClick={() => setOpen(true)}
           aria-label="باز کردن منو"
-          className="fixed left-4 top-10 z-[70] flex h-11 w-11 flex-col items-center justify-center gap-[5px] rounded-full bg-paper/80 shadow-[0_14px_34px_-14px_rgba(28,19,10,0.5)] ring-1 ring-ink/10 backdrop-blur-md transition-transform active:scale-90"
+          className="fixed right-4 top-10 z-[70] flex h-11 w-11 flex-col items-center justify-center gap-[5px] rounded-full bg-paper/80 shadow-[0_14px_34px_-14px_rgba(28,19,10,0.5)] ring-1 ring-ink/10 backdrop-blur-md transition-transform active:scale-90"
         >
           <span className="h-px w-4 bg-ink/85" />
           <span className="h-px w-2.5 bg-ink/55" />
@@ -60,11 +60,8 @@ export function MobileMenu() {
               میش
             </span>
 
-            {/* top row — brand (right) + close (left) */}
+            {/* top row — close (right, same corner as the trigger) + brand (left) */}
             <div className="relative flex items-center justify-between px-6 pt-7">
-              <span className="text-lg font-medium text-cream">
-                چرم <span className="font-extralight text-copper">میش</span>
-              </span>
               <button
                 onClick={() => setOpen(false)}
                 aria-label="بستن منو"
@@ -72,6 +69,9 @@ export function MobileMenu() {
               >
                 <X size={17} strokeWidth={1.5} />
               </button>
+              <span className="text-lg font-medium text-cream">
+                چرم <span className="font-extralight text-copper">میش</span>
+              </span>
             </div>
 
             {/* primary items — big editorial lines */}

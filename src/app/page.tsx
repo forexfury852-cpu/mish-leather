@@ -12,6 +12,7 @@ import { MobileHome } from '@/components/mobile/home';
 import { MobileShop } from '@/components/mobile/shop';
 import { MobileProduct } from '@/components/mobile/product';
 import { BottomNav, MobileMenu } from '@/components/mobile/chrome';
+import { LivingBackdrop } from '@/components/fx/backdrop';
 import { EASE } from '@/components/fx/reveal';
 
 const viewVariants = {
@@ -51,6 +52,7 @@ export default function Page() {
         <Cursor />
         <AnimatePresence>{loading && <Preloader onDone={() => { setLoading(false); setBooted(); }} />}</AnimatePresence>
         <SiteHeader />
+        <LivingBackdrop />
         <AnimatePresence mode="wait">
           <motion.div
             key={`${view}-${productId}`}
@@ -91,6 +93,7 @@ export default function Page() {
       </div>
       <MobileMenu />
       <BottomNav />
+      <LivingBackdrop containerRef={mobileScrollRef} />
     </main>
   );
 }
