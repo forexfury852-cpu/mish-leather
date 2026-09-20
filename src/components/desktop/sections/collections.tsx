@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
 import { ArrowLeft, ChevronLeft, ChevronRight, Heart, Plus } from 'lucide-react';
-import { BEST_SELLERS, NEW_COLLECTION, faPrice, CATEGORY_TITLE, type Product } from '@/lib/data';
+import { BEST_SELLERS, CATEGORIES, NEW_COLLECTION, faPrice, CATEGORY_TITLE, type Product } from '@/lib/data';
 import { useUI } from '@/lib/store';
 import { Reveal, LineMask, ClipReveal, EASE } from '@/components/fx/reveal';
 import { SectionHead } from '@/components/fx/section';
@@ -18,12 +18,9 @@ export function ProductCard({ product, tall = false }: { product: Product; tall?
   const wished = isWishlisted(product.id);
   return (
     <article className="group" data-hover>
-      {/* framed card — clear boundary against neighbours */}
+      {/* minimal editorial card — the image is the frame, no box around it */}
       <div
-        className={`relative rounded-[1.5rem] bg-paper p-2.5 pb-4 ring-1 ring-ink/10 shadow-[0_1px_2px_rgba(28,19,10,0.05),0_18px_44px_-20px_rgba(28,19,10,0.18),0_44px_88px_-36px_rgba(122,76,40,0.3)] transition-all duration-700 ease-out group-hover:-translate-y-2 group-hover:ring-copper/40 group-hover:shadow-[0_2px_4px_rgba(28,19,10,0.06),0_30px_60px_-20px_rgba(28,19,10,0.24),0_70px_120px_-40px_rgba(122,76,40,0.45)]`}
-      >
-      <div
-        className={`img-zoom relative overflow-hidden rounded-[1.15rem] bg-paper-deep ${
+        className={`img-zoom relative overflow-hidden rounded-[1.25rem] bg-paper-deep ring-1 ring-ink/[0.05] shadow-[0_22px_50px_-30px_rgba(28,19,10,0.35)] transition-all duration-700 ease-out group-hover:-translate-y-1.5 group-hover:shadow-[0_34px_70px_-32px_rgba(122,76,40,0.42)] ${
           tall ? 'aspect-[3/4]' : 'aspect-[4/5]'
         }`}
       >
@@ -69,16 +66,15 @@ export function ProductCard({ product, tall = false }: { product: Product; tall?
           </button>
         </div>
       </div>
-      <div className="mt-3.5 flex items-start justify-between gap-3 px-1.5">
+      <div className="mt-4 flex items-start justify-between gap-3">
         <div>
-          <span className="latin-tag text-copper/80">{product.latin}</span>
+          <span className="latin-tag text-[0.58rem] text-copper/80">{product.latin}</span>
           <h3 className="mt-1.5 text-[0.95rem] font-normal text-ink">{product.name}</h3>
           <p className="mt-0.5 text-[0.68rem] font-light text-ink/45">{CATEGORY_TITLE[product.category]}</p>
         </div>
-        <span className="mt-1 whitespace-nowrap rounded-full bg-paper-deep px-3.5 py-1.5 text-[0.76rem] font-medium text-ink/85 ring-1 ring-ink/[0.06]">
+        <span className="mt-1 whitespace-nowrap text-[0.8rem] font-medium tracking-wide text-ink/85">
           {faPrice(product.price)}
         </span>
-      </div>
       </div>
     </article>
   );
@@ -111,9 +107,10 @@ export function NewCollection() {
             <Reveal delay={0.3}>
               <button
                 onClick={() => goShop('all')}
-                className="lux-btn mt-12 border border-ink/25 px-9 py-4 text-sm font-light"
+                className="group mt-12 flex items-center gap-3 rounded-full bg-ink px-9 py-4 text-sm font-light text-cream shadow-[0_20px_45px_-18px_rgba(28,19,10,0.5)] transition-all duration-500 hover:bg-copper active:scale-[0.97]"
               >
                 همه‌ی قطعات جدید
+                <ArrowLeft size={15} strokeWidth={1.75} className="transition-transform duration-500 group-hover:-translate-x-1" />
               </button>
             </Reveal>
           </div>
@@ -155,6 +152,7 @@ export function NewCollection() {
 
 /* ---------------- Best Sellers — horizontal rail ---------------- */
 export function BestSellers() {
+  const goShop = useUI((s) => s.goShop);
   const [emblaRef, embla] = useEmblaCarousel({ direction: 'rtl', align: 'start', containScroll: 'trimSnaps' });
   const [canPrev, setCanPrev] = useState(false);
   const [canNext, setCanNext] = useState(true);
@@ -178,6 +176,14 @@ export function BestSellers() {
       <div className="mx-auto max-w-[1440px] px-6 lg:px-12">
         <div className="flex flex-wrap items-end justify-between gap-8">
           <SectionHead index="۰۳" title="پرفروش‌ترین‌ها" latin="Best Sellers" />
+        <div className="flex flex-wrap items-center gap-6">
+          <button
+            onClick={() => goShop('all')}
+            className="group flex items-center gap-2.5 rounded-full bg-ink px-7 py-3.5 text-[0.82rem] font-light text-cream transition-all duration-500 hover:bg-copper active:scale-[0.97]"
+          >
+            مشاهده همه‌ی پرفروش‌ها
+            <ArrowLeft size={14} strokeWidth={1.75} className="transition-transform duration-500 group-hover:-translate-x-1" />
+          </button>
           <div className="flex items-center gap-3">
             <button
               onClick={() => embla?.scrollPrev()}
@@ -274,11 +280,74 @@ export function Campaign() {
             </blockquote>
           </Reveal>
           <Reveal delay={0.35}>
-            <button onClick={() => goShop('all')} className="lux-btn mt-12 w-fit border border-ink/25 px-8 py-3.5 text-sm font-light active:scale-[0.97]">
+            <button onClick={() => goShop('all')} className="mt-12 rounded-full bg-ink px-9 py-4 text-sm font-light text-cream shadow-[0_20px_45px_-18px_rgba(28,19,10,0.5)] transition-all duration-500 hover:bg-copper active:scale-[0.97]">
               تماشای مجموعه کمپین
             </button>
           </Reveal>
         </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------------- Shop Doorway — the unmistakable path to the shop ---------------- */
+export function ShopDoorway() {
+  const goShop = useUI((s) => s.goShop);
+  return (
+    <section className="relative overflow-hidden bg-ink py-28 lg:py-36" aria-label="ورود به فروشگاه">
+      {/* giant outlined watermark */}
+      <span
+        className="text-outline-copper pointer-events-none absolute -top-4 right-0 select-none text-[17vw] font-extralight leading-none opacity-25"
+        aria-hidden
+      >
+        فروشگاه
+      </span>
+      <span
+        className="text-outline pointer-events-none absolute -bottom-8 left-4 select-none text-[9vw] font-extralight leading-none opacity-40"
+        aria-hidden
+      >
+        ۱۴۰۴
+      </span>
+
+      <div className="relative mx-auto flex max-w-[1440px] flex-col items-center px-6 text-center lg:px-12">
+        <Reveal y={14}>
+          <div className="flex items-center gap-4">
+            <span className="h-px w-12 bg-copper/70" />
+            <span className="latin-tag text-copper">The Shop — Step Inside</span>
+            <span className="h-px w-12 bg-copper/70" />
+          </div>
+        </Reveal>
+        <h2 className="text-display-lg mt-8 max-w-[16ch] text-cream">
+          <LineMask>حالا، نوبتِ انتخابِ شماست</LineMask>
+        </h2>
+        <Reveal delay={0.15}>
+          <p className="mt-7 max-w-xl text-sm font-light leading-9 text-sand/75">
+            مجموعه‌ی کامل میش در فروشگاه منتظر شماست؛ از کیف و کفش تا جزئیاتی که استایل را تمام می‌کنند. مسیر کوتاه است — یک کلیک فاصله است.
+          </p>
+        </Reveal>
+        <Reveal delay={0.25}>
+          <button
+            onClick={() => goShop('all')}
+            className="group mt-12 flex items-center gap-4 rounded-full bg-copper px-12 py-5 text-[0.95rem] font-medium text-paper shadow-[0_28px_70px_-20px_rgba(164,110,62,0.65)] transition-all duration-500 hover:bg-cream hover:text-ink active:scale-[0.97]"
+          >
+            ورود به فروشگاه
+            <ArrowLeft size={16} strokeWidth={1.75} className="transition-transform duration-500 group-hover:-translate-x-1.5" />
+          </button>
+        </Reveal>
+        <Reveal delay={0.35}>
+          <div className="mt-12 flex flex-wrap items-center justify-center gap-3">
+            <span className="text-[0.7rem] font-light text-cream/45">میان‌بر به دنیای میش:</span>
+            {CATEGORIES.map((cat) => (
+              <button
+                key={cat.key}
+                onClick={() => goShop(cat.key)}
+                className="rounded-full border border-cream/20 px-5 py-2.5 text-[0.75rem] font-light text-cream/85 transition-all duration-300 hover:border-copper hover:text-copper active:scale-[0.96]"
+              >
+                {cat.title}
+              </button>
+            ))}
+          </div>
+        </Reveal>
       </div>
     </section>
   );

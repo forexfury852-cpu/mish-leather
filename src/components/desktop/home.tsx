@@ -2,7 +2,7 @@
 
 import { Hero } from './sections/hero';
 import { Categories } from './sections/categories';
-import { NewCollection, BestSellers, Campaign } from './sections/collections';
+import { NewCollection, BestSellers, Campaign, ShopDoorway } from './sections/collections';
 import { Craft, Showcase, Guarantees } from './sections/craft';
 import { Testimonials, InstagramGallery, Newsletter } from './sections/social';
 import { Footer } from './footer';
@@ -33,6 +33,7 @@ export function Home() {
       <Guarantees />
       <Testimonials />
       <InstagramGallery />
+      <ShopDoorway />
       <Newsletter />
       <Footer />
     </>
