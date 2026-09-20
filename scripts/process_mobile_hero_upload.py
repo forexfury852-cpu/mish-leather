@@ -1,17 +1,17 @@
 #!/usr/bin/env python3
-"""User-uploaded portrait photo -> public/images/mobile-hero.jpg (round 12).
-Portrait 940x1672 (man + leather duffel, Tehran skyline at dusk) -> Lanczos 1.5x
-upscale (1410x2508, ~native for 390x844 @3x) + gentle unsharp, JPEG q84 progressive."""
+"""User-uploaded portrait (round 13) -> public/images/mobile-hero.jpg.
+941x1672 (leather-jacket man + duffel against sunlit wall) -> Lanczos 1.5x
+upscale (1411x2508, ~native for 390x844 @3x) + gentle unsharp, JPEG q84 progressive."""
 from PIL import Image, ImageFilter, ImageOps
 import os, shutil
 
-SRC = "/home/z/my-project/upload/pasted_image_1789916042790.png"
+SRC = "/home/z/my-project/upload/pasted_image_1789916872850.png"
 DST = "/home/z/my-project/public/images/mobile-hero.jpg"
-PREV = "/home/z/my-project/tmp-search/mobile-hero-old.jpg"
+PREV = "/home/z/my-project/tmp-search/mobile-hero-round12.jpg"
 
 if os.path.exists(DST) and not os.path.exists(PREV):
     shutil.copy2(DST, PREV)
-    print("backed up previous mobile hero ->", PREV)
+    print("backed up round-12 mobile hero ->", PREV)
 
 img = ImageOps.exif_transpose(Image.open(SRC)).convert("RGB")
 w, h = img.size

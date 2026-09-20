@@ -199,3 +199,22 @@ Work Log:
 
 Stage Summary:
 - The user's portrait photo now backs the mobile hero: Lanczos-upscaled to 1410x2508 and framed so the leather-clad figure, duffel bag and Tehran dusk skyline all survive the cover-crop, with the existing ink gradients keeping every overlay text legible; desktop hero and all other sections untouched.
+
+---
+Task ID: 13
+Agent: Super Z (main agent)
+Task: User revision round 13 — replace mobile hero background with a new uploaded photo; «تثبیت» everything (full stabilization pass) because the site will be shown to a customer tonight.
+
+Work Log:
+- New upload upload/pasted_image_1789916872850.png (941x1672, 1.6MB): man in brown leather jacket leaning against a sunlit concrete wall, leather duffel bag on a stone plinth beside him, dark warm copper palette, bottom third naturally black — ideal under the mobile headline gradient.
+- scripts/process_mobile_hero_upload.py (updated SRC): 1.5x Lanczos -> 1411x2508 (~native for 390x844 @3x), UnsharpMask(1.4/55/2), JPEG q84 progressive 227KB -> public/images/mobile-hero.jpg; round-12 Tehran-skyline photo backed up to tmp-search/mobile-hero-round12.jpg.
+- Framing A/B tested live via in-page objectPosition eval: 'center 20%' vs 'left 20%' -> chose left (duffel/product fully in frame, subject keeps air, right side stays dark). home.tsx: object-[center_20%] -> object-[left_20%], alt -> «مردی با کاپشن چرم و کیف سفری چرم میش کنار دیوار سنگی در نور غروب».
+- Stabilization sweep for tonight's demo:
+  - Mobile 390x844: fresh load (preloader horizontal sweep OK) -> hero final state (headline/CTA legible over dark bottom) -> scroll to New Arrivals grid (prices, badges) -> hamburger menu open (brand+X right, editorial items, chips) -> SHOP nav -> shop view (banner, chips, grid, BottomNav state) -> product view via card (gallery ۱/۴, price, rating, CTA) -> back navigation.
+  - Desktop 1600x1000: fresh load -> hero (round-11 photo + RTL headline) -> دنیای میش slider -> مجموعه جدید zig-zag grid -> dark STEP INSIDE section -> menu open (preview card shows user photo) -> THE SHOP -> shop view -> product page (breadcrumbs, swatches, qty, CTA, gallery) — all correct.
+  - Non-issue investigated: SARV cardholder looked blank during programmatic fast-scroll = lazy image still fetching; re-check shows complete:true + rendered (1024x1024).
+  - eslint src: 0 problems; tsc src: 0 errors; page errors: none (only pre-existing framer container warning); dev.log all 200s, compiles <320ms; site health curl 200; browser closed.
+- No other code touched — everything else stays exactly as approved in rounds 1-12.
+
+Stage Summary:
+- Mobile hero now carries the user's newest editorial photo (Lanczos-upscaled, left-framed so the duffel bag is whole), and the entire site passed a two-viewport end-to-end stabilization pass (preloader → hero → sections → menu → shop → product → back) with zero lint/type/runtime errors — ready for the customer demo tonight.
