@@ -184,3 +184,18 @@ Work Log:
 
 Stage Summary:
 - The user's own photo is now the desktop hero (upscaled + sharpened), framed so the dark right half carries the Persian headline; previous generated hero kept as backup.
+
+---
+Task ID: 12
+Agent: Super Z (main agent)
+Task: User revision round 12 — user supplied their own portrait photo; make it the mobile-size hero background.
+
+Work Log:
+- Inspected upload/pasted_image_1789916042790.png (PNG 940x1672 RGB, 1.68MB, portrait): man in leather jacket and sunglasses gazing out at the Tehran skyline at dusk (Milad Tower + mountains visible), leather duffel bag on a dark marble table in the foreground — cinematic, on-palette (ink/copper).
+- scripts/process_mobile_hero_upload.py: EXIF-transpose, 1.5x Lanczos upscale -> 1410x2508 (~native for 390x844 @3x DPR), UnsharpMask(1.4/55/2), JPEG q84 progressive (289KB) -> public/images/mobile-hero.jpg; previous generated mobile hero backed up to tmp-search/mobile-hero-old.jpg. Desktop hero (user's round-11 photo) untouched.
+- mobile/home.tsx: alt updated to «مردی با کاپشن چرم و کیف سفری چرم میش، منظره‌ی تهران در غروب»; object-[center_20%] kept — image aspect (0.562) vs viewport (0.462) means cover crops ~9% per side, keeping both the man (left third) and Milad Tower (right) in frame; top ink/55 + bottom from-ink gradient continues to carry the brand row and headline.
+- Verified via agent-browser: 390x844 hero after preloader (wordmark + Est. ۲۰۰۰ legible, «Autumn Collection» tag, cream/copper headline «اصالت، در جزئیات ساخته می‌شود», subtitle, CTA pill over darkened bag area, BottomNav intact); 430x932 tall viewport composition holds; inner scroll container scrolled 430px -> parallax + hero fade correct, transition into «دنیای میش» (BAGS/BELTS cards) clean. Image served 200 (~296KB).
+- eslint src: 0 problems; tsc: 0 errors in src/; agent-browser errors: none.
+
+Stage Summary:
+- The user's portrait photo now backs the mobile hero: Lanczos-upscaled to 1410x2508 and framed so the leather-clad figure, duffel bag and Tehran dusk skyline all survive the cover-crop, with the existing ink gradients keeping every overlay text legible; desktop hero and all other sections untouched.

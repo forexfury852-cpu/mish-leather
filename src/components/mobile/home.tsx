@@ -124,7 +124,7 @@ export function MobileHome() {
         <motion.div style={{ y: heroY }} className="absolute inset-0">
           <motion.img
             src="/images/mobile-hero.jpg"
-            alt="مردی با کیف چرم میش"
+            alt="مردی با کاپشن چرم و کیف سفری چرم میش، منظره‌ی تهران در غروب"
             className="h-full w-full object-cover object-[center_20%]"
             initial={{ scale: 1.16 }}
             animate={{ scale: 1 }}
