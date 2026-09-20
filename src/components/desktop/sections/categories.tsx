@@ -1,155 +1,156 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { useState } from 'react';
+import { motion } from 'framer-motion';
 import { ArrowLeft } from 'lucide-react';
-import { CATEGORIES, type CategoryKey } from '@/lib/data';
+import { CATEGORIES } from '@/lib/data';
 import { useUI } from '@/lib/store';
-import { Reveal, LineMask } from '@/components/fx/reveal';
+import { Reveal, LineMask, EASE } from '@/components/fx/reveal';
 
 const FA_INDEX = ['۰۱', '۰۲', '۰۳', '۰۴', '۰۵'];
+const GROW = 3.4;
 
+/**
+ * «The World of Mish» — compact expanding-panel gallery.
+ * No scroll-jack: a single normal-height row of five blades.
+ * The active blade opens (flex-grow) to reveal its world; the rest
+ * stay as slim vertical spines with a rotated title.
+ */
 export function Categories() {
   const goShop = useUI((s) => s.goShop);
-  const wrapRef = useRef<HTMLDivElement>(null);
-  const trackRef = useRef<HTMLDivElement>(null);
-  const [range, setRange] = useState(0);
-
-  useEffect(() => {
-    const measure = () => {
-      if (!trackRef.current) return;
-      setRange(Math.max(0, trackRef.current.scrollWidth - window.innerWidth + 48));
-    };
-    measure();
-    window.addEventListener('resize', measure);
-    const t = setTimeout(measure, 800);
-    return () => {
-      window.removeEventListener('resize', measure);
-      clearTimeout(t);
-    };
-  }, []);
-
-  const { scrollYProgress } = useScroll({
-    target: wrapRef,
-    offset: ['start start', 'end end'],
-  });
-  const x = useTransform(scrollYProgress, [0, 1], [0, range]);
-  const progress = useTransform(scrollYProgress, [0, 1], ['0%', '100%']);
-
-  const open = (key: CategoryKey) => goShop(key);
+  const [active, setActive] = useState(0);
 
   return (
-    <section ref={wrapRef} className="relative h-[420vh] bg-paper" aria-label="دسته‌بندی‌ها">
-      <div className="sticky top-0 flex h-screen flex-col justify-center overflow-hidden">
-        {/* header line */}
-        <div className="absolute inset-x-0 top-0 z-10 flex items-end justify-between px-6 pt-28 lg:px-12">
+    <section
+      className="bg-paper py-20 lg:py-28"
+      aria-label="دسته‌بندی‌ها"
+      onMouseLeave={() => setActive(0)}
+    >
+      <div className="mx-auto max-w-[1440px] px-6 lg:px-12">
+        {/* header — title right, invitation left */}
+        <div className="flex flex-wrap items-end justify-between gap-x-12 gap-y-8">
           <div>
-            <Reveal y={20}>
+            <Reveal y={18}>
               <div className="flex items-center gap-4">
                 <span className="latin-tag text-copper">The World of Mish</span>
                 <span className="h-px w-14 bg-ink/25" />
                 <span className="text-sm font-light text-ink/50">۰۱</span>
               </div>
             </Reveal>
-            <h2 className="text-display-lg mt-4">
-              <LineMask>دنیای میش</LineMask>
+            <h2 className="text-display-md mt-4">
+              <LineMask>دنیای میش — پنج دنیا، یک امضا</LineMask>
             </h2>
           </div>
-          <Reveal y={20} className="hidden pb-2 md:block">
-            <span className="text-xs font-light text-ink/45">برای کاوش، اسکرول کنید ←</span>
-          </Reveal>
-        </div>
-
-        {/* horizontal track — RTL: positive x reveals leftward overflow */}
-        <motion.div
-          ref={trackRef}
-          style={{ x }}
-          className="flex w-max items-stretch gap-[3.5vw] px-[6vw] will-change-transform"
-        >
-          {/* intro panel */}
-          <div className="flex w-[30vw] min-w-[300px] flex-col justify-center">
-            <p className="text-display-md leading-snug text-ink">
-              پنج دنیا،
-              <br />
-              یک <span className="text-copper">امضا</span>
+          <Reveal y={18} delay={0.12} className="max-w-[300px]">
+            <p className="text-[0.82rem] font-light leading-7 text-ink/60">
+              هر دسته، فصلی از یک روایت است؛ چرمی که برای یک عمر ساخته شده است.
+              روی هر دنیا بایستید تا باز شود.
             </p>
-            <p className="mt-6 max-w-xs text-sm font-light leading-8 text-ink/65">
-              هر دسته، فصلی از یک روایت است؛ چرمی که از کارگاه میش بیرون می‌رود، برای یک عمر ساخته شده است.
-            </p>
-            <div className="mt-10 h-px w-full max-w-xs bg-ink/10">
-              <motion.div style={{ width: progress }} className="h-px bg-copper" />
-            </div>
             <button
               onClick={() => goShop('all')}
-              className="lux-btn mt-10 w-fit border border-ink/25 px-7 py-3 text-[0.8rem] font-light text-ink active:scale-[0.97]"
+              className="lux-btn mt-5 border border-ink/25 px-7 py-3 text-[0.8rem] font-light text-ink active:scale-[0.97]"
             >
               مشاهده همه‌ی مجموعه
             </button>
-          </div>
+          </Reveal>
+        </div>
 
-          {CATEGORIES.map((cat, i) => (
-            <button
-              key={cat.key}
-              onClick={() => open(cat.key)}
-              data-hover
-              className="group relative h-[62vh] w-[38vw] min-w-[330px] overflow-hidden rounded-[1.75rem] text-start shadow-[0_10px_40px_-18px_rgba(28,19,10,0.35)] transition-shadow duration-700 hover:shadow-[0_30px_70px_-24px_rgba(28,19,10,0.5)]"
-              aria-label={`دسته‌ی ${cat.title}`}
-            >
-              <span className="text-outline-ink absolute -top-4 right-4 z-10 select-none text-[7rem] font-extralight leading-none opacity-90">
-                {FA_INDEX[i]}
-              </span>
-              <div className="img-zoom absolute inset-0">
-                { }
+        {/* expanding blades */}
+        <motion.div
+          initial={{ opacity: 0, y: 28 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-10% 0px' }}
+          transition={{ duration: 1, ease: EASE }}
+          className="mt-12 flex h-[46vh] max-h-[520px] min-h-[360px] gap-2.5 lg:gap-3"
+        >
+          {CATEGORIES.map((cat, i) => {
+            const open = active === i;
+            return (
+              <button
+                key={cat.key}
+                onMouseEnter={() => setActive(i)}
+                onFocus={() => setActive(i)}
+                onClick={() => goShop(cat.key)}
+                data-hover
+                style={{
+                  flexGrow: open ? GROW : 1,
+                  flexBasis: 0,
+                  transition:
+                    'flex-grow 0.9s cubic-bezier(0.22,1,0.36,1), box-shadow 0.7s ease',
+                }}
+                className={`group relative min-w-0 overflow-hidden rounded-[1.4rem] text-start shadow-[0_10px_40px_-18px_rgba(28,19,10,0.35)] ${
+                  open
+                    ? 'shadow-[0_28px_70px_-26px_rgba(28,19,10,0.5)] ring-1 ring-copper/50'
+                    : 'ring-1 ring-ink/10'
+                }`}
+                aria-label={`دسته‌ی ${cat.title}`}
+                aria-expanded={open}
+              >
+                {/* image — dimmed while closed, alive when open */}
                 <img
                   src={cat.image}
                   alt={cat.title}
                   loading="lazy"
-                  className="h-full w-full object-cover transition-[filter] duration-700 group-hover:brightness-[1.08]"
+                  className={`absolute inset-0 h-full w-full object-cover transition-all duration-[1100ms] ease-out ${
+                    open ? 'scale-100 brightness-100' : 'scale-[1.14] brightness-[0.66]'
+                  }`}
                 />
-              </div>
-              {/* legibility scrim — blurred base fading up + dark gradient */}
-              <div
-                className="absolute inset-x-0 bottom-0 h-[62%] backdrop-blur-[7px] [-webkit-mask-image:linear-gradient(to_top,black_38%,transparent)] [mask-image:linear-gradient(to_top,black_38%,transparent)]"
-                aria-hidden
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-ink/95 via-ink/40 to-transparent" />
-              <div className="absolute inset-x-0 bottom-0 p-8">
-                <span className="latin-tag text-copper/90">{cat.latin}</span>
-                <h3 className="mt-2 text-3xl font-extralight text-cream">{cat.title}</h3>
-                <p className="mt-1 text-xs font-light text-sand/70">{cat.line}</p>
-                <div className="mt-5 flex items-center justify-between border-t border-cream/15 pt-4">
-                  <span className="text-xs font-light text-sand/70">
-                    {String(cat.count).replace(/\d/g, (d) => '۰۱۲۳۴۵۶۷۸۹'[Number(d)])} قطعه
-                  </span>
-                  <span className="flex items-center gap-2 text-xs font-light text-copper opacity-0 transition-all duration-500 group-hover:opacity-100">
-                    کاوش دسته
-                    <ArrowLeft size={14} strokeWidth={1.5} className="transition-transform duration-500 group-hover:-translate-x-1" />
-                  </span>
-                </div>
-              </div>
-            </button>
-          ))}
+                {/* legibility scrim */}
+                <div className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/25 to-ink/[0.08]" />
+                <div
+                  className={`absolute inset-0 bg-copper/10 transition-opacity duration-700 ${
+                    open ? 'opacity-100' : 'opacity-0'
+                  }`}
+                  aria-hidden
+                />
 
-          {/* CTA panel */}
-          <button
-            onClick={() => goShop('all')}
-            data-hover
-            className="group relative flex h-[62vh] w-[24vw] min-w-[260px] flex-col items-start justify-center overflow-hidden rounded-[1.75rem] border border-espresso bg-espresso p-10 text-start shadow-[0_20px_50px_-20px_rgba(46,32,19,0.6)]"
-            aria-label="همه‌ی محصولات"
-          >
-            <span className="latin-tag text-copper">Full Catalogue</span>
-            <span className="text-display-md mt-6 leading-snug text-cream">
-              همه‌ی
-              <br />
-              محصولات
-            </span>
-            <span className="mt-10 flex h-14 w-14 items-center justify-center rounded-full border border-cream/25 transition-all duration-500 group-hover:border-copper group-hover:bg-copper group-hover:text-ink">
-              <ArrowLeft size={18} strokeWidth={1.25} className="transition-transform duration-500 group-hover:-translate-x-1" />
-            </span>
-            <span className="absolute -bottom-8 -left-6 select-none text-[10rem] font-extralight leading-none text-cream/[0.04]">
-              میش
-            </span>
-          </button>
+                {/* index — always visible */}
+                <span
+                  className={`absolute right-4 top-4 z-10 select-none font-light transition-colors duration-500 ${
+                    open ? 'text-[0.8rem] text-copper-bright' : 'text-[0.8rem] text-cream/60'
+                  }`}
+                >
+                  {FA_INDEX[i]}
+                </span>
+
+                {/* closed spine — rotated title */}
+                <span
+                  aria-hidden
+                  className={`absolute bottom-6 right-1/2 z-10 translate-x-1/2 [writing-mode:vertical-rl] text-[0.95rem] font-extralight text-cream/90 transition-all duration-500 ${
+                    open ? 'translate-y-3 opacity-0' : 'opacity-100'
+                  }`}
+                >
+                  {cat.title}
+                </span>
+
+                {/* open content */}
+                <div
+                  className={`absolute inset-x-0 bottom-0 z-10 p-6 transition-all duration-500 lg:p-7 ${
+                    open ? 'translate-y-0 opacity-100 delay-[350ms]' : 'translate-y-5 opacity-0'
+                  }`}
+                >
+                  <span className="latin-tag text-copper/90">{cat.latin}</span>
+                  <h3 className="mt-2 text-[1.45rem] font-extralight text-cream">{cat.title}</h3>
+                  <p className="mt-1.5 line-clamp-2 text-xs font-light leading-6 text-sand/75">
+                    {cat.line}
+                  </p>
+                  <div className="mt-4 flex items-center justify-between border-t border-cream/15 pt-3.5">
+                    <span className="text-[0.7rem] font-light text-sand/70">
+                      {String(cat.count).replace(/\d/g, (d) => '۰۱۲۳۴۵۶۷۸۹'[Number(d)])} قطعه
+                    </span>
+                    <span className="flex items-center gap-2 text-[0.7rem] font-light text-copper-bright">
+                      کاوش دسته
+                      <ArrowLeft
+                        size={13}
+                        strokeWidth={1.5}
+                        className={`transition-transform duration-500 ${open ? '-translate-x-0.5' : ''}`}
+                      />
+                    </span>
+                  </div>
+                </div>
+              </button>
+            );
+          })}
         </motion.div>
       </div>
     </section>

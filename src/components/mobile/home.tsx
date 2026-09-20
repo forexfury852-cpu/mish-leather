@@ -101,7 +101,7 @@ export function MobileHome() {
         </motion.div>
       </section>
 
-      {/* ---------- CATEGORIES — snap carousel ---------- */}
+      {/* ---------- CATEGORIES — continuous auto slider (very smooth, no entrance jump) ---------- */}
       <section className="pt-16">
         <Reveal y={22} className="px-6">
           <header className="flex items-end justify-between">
@@ -115,39 +115,52 @@ export function MobileHome() {
             </button>
           </header>
         </Reveal>
-        <div className="no-scrollbar mt-7 flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-2">
-          {CATEGORIES.map((cat, i) => (
-            <motion.button
-              key={cat.key}
-              onClick={() => goShop(cat.key)}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.85, delay: i * 0.06, ease: EASE }}
-              className="relative aspect-[3/4] w-[56vw] flex-none snap-center overflow-hidden rounded-[1.5rem] shadow-[0_12px_35px_-16px_rgba(28,19,10,0.4)] transition-transform duration-300 active:scale-[0.97]"
-              aria-label={cat.title}
-            >
-              { }
-              <img src={cat.image} alt={cat.title} loading="lazy" className="h-full w-full object-cover" />
-              <span className="text-outline absolute right-3 top-3 select-none text-5xl font-extralight">
-                {String(i + 1).replace(/\d/g, (d) => '۰۱۲۳۴۵۶۷۸۹'[Number(d)])}
-              </span>
-              {/* legibility scrim — blurred base fading up + dark gradient */}
-              <div
-                className="absolute inset-x-0 bottom-0 h-[62%] backdrop-blur-[6px] [-webkit-mask-image:linear-gradient(to_top,black_35%,transparent)] [mask-image:linear-gradient(to_top,black_35%,transparent)]"
-                aria-hidden
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-ink/95 via-ink/45 to-transparent" />
-              <div className="absolute inset-x-0 bottom-0 p-5">
-                <span className="latin-tag text-copper/90">{cat.latin}</span>
-                <h3 className="mt-1 text-xl font-extralight text-cream">{cat.title}</h3>
-                <p className="mt-1 text-[0.62rem] font-light text-sand/65">
-                  {String(cat.count).replace(/\d/g, (d) => '۰۱۲۳۴۵۶۷۸۹'[Number(d)])} قطعه — کاوش کنید
-                </p>
+        <motion.div
+          dir="ltr"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.9, ease: EASE }}
+          className="relative mt-7 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_6%,black_94%,transparent)] [-webkit-mask-image:linear-gradient(to_right,transparent,black_6%,black_94%,transparent)]"
+        >
+          {/* seamless, very slow horizontal drift — the slider glides on its own */}
+          <div
+            dir="ltr"
+            className="flex w-max animate-[marquee_44s_linear_infinite] will-change-transform hover:[animation-play-state:paused]"
+          >
+            {[0, 1].map((half) => (
+              <div key={half} className="flex gap-4 pr-4">
+                {CATEGORIES.map((cat, i) => (
+                  <button
+                    key={`${half}-${cat.key}`}
+                    dir="rtl"
+                    onClick={() => goShop(cat.key)}
+                    className="relative aspect-[3/4] w-[46vw] flex-none overflow-hidden rounded-[1.5rem] shadow-[0_12px_35px_-16px_rgba(28,19,10,0.4)] ring-1 ring-ink/10 transition-transform duration-300 active:scale-[0.97]"
+                    aria-label={cat.title}
+                  >
+                    <img src={cat.image} alt={cat.title} loading="lazy" className="h-full w-full object-cover" />
+                    <span className="text-outline absolute right-3 top-3 select-none text-5xl font-extralight">
+                      {String(i + 1).replace(/\d/g, (d) => '۰۱۲۳۴۵۶۷۸۹'[Number(d)])}
+                    </span>
+                    {/* legibility scrim — blurred base fading up + dark gradient */}
+                    <div
+                      className="absolute inset-x-0 bottom-0 h-[62%] backdrop-blur-[6px] [-webkit-mask-image:linear-gradient(to_top,black_35%,transparent)] [mask-image:linear-gradient(to_top,black_35%,transparent)]"
+                      aria-hidden
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-ink/95 via-ink/45 to-transparent" />
+                    <div className="absolute inset-x-0 bottom-0 p-5">
+                      <span className="latin-tag text-copper/90">{cat.latin}</span>
+                      <h3 className="mt-1 text-xl font-extralight text-cream">{cat.title}</h3>
+                      <p className="mt-1 text-[0.62rem] font-light text-sand/65">
+                        {String(cat.count).replace(/\d/g, (d) => '۰۱۲۳۴۵۶۷۸۹'[Number(d)])} قطعه — کاوش کنید
+                      </p>
+                    </div>
+                  </button>
+                ))}
               </div>
-            </motion.button>
-          ))}
-        </div>
+            ))}
+          </div>
+        </motion.div>
       </section>
 
       {/* ---------- NEW COLLECTION — clean 2-col grid ---------- */}
@@ -167,7 +180,7 @@ export function MobileHome() {
         </div>
       </section>
 
-      {/* ---------- BEST SELLERS — snap carousel ---------- */}
+      {/* ---------- BEST SELLERS — one clean horizontal line ---------- */}
       <section className="pt-20">
         <Reveal y={22} className="px-6">
           <header className="flex items-end justify-between">
@@ -181,21 +194,20 @@ export function MobileHome() {
             </button>
           </header>
         </Reveal>
-        <div className="no-scrollbar mt-7 flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-2">
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, ease: EASE }}
+          className="no-scrollbar mt-7 flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-2"
+        >
           {BEST_SELLERS.map((p, i) => (
-            <motion.div
-              key={p.id}
-              initial={{ opacity: 0, y: 36 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: i * 0.05, ease: EASE }}
-              className={`w-[44vw] flex-none snap-start ${i % 2 === 1 ? 'translate-y-4' : ''}`}
-            >
-              <MobileProductCard product={p} compact />
-            </motion.div>
+            <div key={p.id} className="w-[42vw] flex-none snap-start">
+              <MobileProductCard product={p} compact index={i} />
+            </div>
           ))}
           <div className="w-2 flex-none" />
-        </div>
+        </motion.div>
       </section>
 
       {/* ---------- CAMPAIGN ---------- */}

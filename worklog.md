@@ -90,3 +90,21 @@ Work Log:
 
 Stage Summary:
 - App is now a true responsive site (simulator/presentation layer fully deleted); category-card text legible via blur-gradient scrim; product cards carry a professional framed shadow system; mobile experience fully animated with staggered cinematic reveals.
+
+---
+Task ID: 6
+Agent: Super Z (main agent)
+Task: User revision round 6 — marquee polish, World-of-Mish creative redesign (no scroll-jack), framed card separation, mobile auto-slider categories, one-line best sellers, scroll-to-top navigation.
+
+Work Log:
+- Marquee (fx/section.tsx): redesigned ribbon — 80s ultra-slow linear drift (was 36s), copper latin-tags vs muted Persian words, rotated-diamond separators, soft edge-fade masks on both sides, hover pause. CRITICAL RTL fix: track dir=ltr inside RTL page anchored its box to the RIGHT edge, so translateX(-50%) drifted content out of view and the strip visibly emptied before wrapping (root cause of user's "پیوسته نواره بره و بیاد" complaint); outer container now dir=ltr → left-anchored, mathematically seamless (coverage verified 1.00 at tx=-2530 and -3658 of a 9009px track).
+- World of Mish (desktop/sections/categories.tsx): full rewrite — 420vh sticky scroll-jack replaced with a compact (~46vh) expanding-blades gallery. 5 blades flex-grow 1→3.4 (0.9s cubic-bezier); active blade shows image alive (scale 1, brightness 1, copper tint) with latin tag/title/line/count/CTA; idle blades become slim spines with rotated vertical titles + index numbers; blade ۰۱ open by default, onMouseLeave resets; hover/focus/keyboard support; click → filtered shop. Entrance via single whileInView (no per-card bottom-up).
+- Framed product cards (desktop ProductCard + MobileProductCard): whole card (image+name+price) now wrapped in a bg-paper surface with ring-ink/10, p-2.5, 3-layer premium shadow (hairline+ambient+copper depth), price chip ringed; hover lift + copper ring + deeper shadow (desktop), active:scale (mobile). Card boundaries clearly separated from neighbours in New Collection / Best Sellers / Shop / related rails.
+- Mobile World of Mist→Mish (mobile/home.tsx): snap carousel with y:40 entrances removed → seamless continuous auto-slider (44s linear marquee, duplicated halves, hover-pause, edge-fade mask). Fixed two mobile-only bugs: wrapper needed overflow-hidden (track created horizontal scrollable overflow in RTL container) AND wrapper needed dir=ltr (RTL anchoring pushed the whole track off-window). Verified drift -22px/s, cards visible, scrims intact.
+- Mobile best sellers: single clean horizontal snap rail — removed the i%2 translate-y-4 vertical stagger and per-card y:36 entrances (opacity-only fade); cards w-[42vw].
+- Scroll-to-top navigation: mobile root scroll container is an inner div (main is fixed) whose scrollTop persisted across view switches — added mobileScrollRef + reset in the view/productId effect (desktop window reset already existed). Verified: home scrolled 3000 → tap فروشگاه → scrollTop 0, shop hero at top; card tap → product at top.
+- Verified via agent-browser: desktop 1600x1000 (marquee coverage loop-sampled, blades hover-expand + click-through to shop, framed cards in best sellers + shop, nav reset scrollY=0) + mobile 390x844 (auto-slider drift measured, best sellers one line, framed grids, shop/product nav resets). eslint src: 0 problems; tsc src: clean; no page errors; dev.log all 200s.
+
+Stage Summary:
+- All 6 requested updates shipped; found and fixed the real RTL-anchoring bug behind "non-continuous marquee" (dir=ltr wrapper required) and the mobile overflow/anchor pair that hid the slider cards.
+- Site remains responsive (no simulator), white/leather-brown editorial, Vazirmatn throughout.

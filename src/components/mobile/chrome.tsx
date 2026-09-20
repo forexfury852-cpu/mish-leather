@@ -82,15 +82,19 @@ export function MobileProductCard({ product, compact = false, index = 0 }: { pro
   return (
     <motion.article
       className="group"
-      initial={{ opacity: 0, y: 26 }}
+      initial={{ opacity: 0, y: 14 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-4% 0px' }}
-      transition={{ duration: 0.75, delay: Math.min(index * 0.07, 0.35), ease: EASE }}
+      transition={{ duration: 0.65, delay: Math.min(index * 0.06, 0.3), ease: EASE }}
     >
+      {/* framed card — clear boundary against neighbours */}
       <div
         onClick={() => goProduct(product.id)}
-        className="img-zoom relative aspect-[4/5] overflow-hidden rounded-[1.25rem] bg-paper-deep shadow-[0_1px_2px_rgba(28,19,10,0.06),0_10px_22px_-8px_rgba(28,19,10,0.15),0_26px_52px_-20px_rgba(122,76,40,0.24)] ring-1 ring-ink/10 transition-transform duration-300 active:scale-[0.97]"
+        className="relative rounded-[1.4rem] bg-paper p-2 pb-3 ring-1 ring-ink/10 shadow-[0_1px_2px_rgba(28,19,10,0.05),0_14px_32px_-14px_rgba(28,19,10,0.16),0_32px_64px_-28px_rgba(122,76,40,0.28)] transition-transform duration-300 active:scale-[0.97]"
         data-hover
+      >
+      <div
+        className="img-zoom relative aspect-[4/5] overflow-hidden rounded-[1.05rem] bg-paper-deep"
       >
         { }
         <img src={product.image} alt={product.name} loading="lazy" className="h-full w-full object-cover" />
@@ -128,12 +132,13 @@ export function MobileProductCard({ product, compact = false, index = 0 }: { pro
           <Plus size={16} strokeWidth={1.75} />
         </button>
       </div>
-      <div className={`flex items-start justify-between gap-3 px-0.5 ${compact ? 'mt-2.5' : 'mt-3.5'}`}>
+      <div className={`flex items-start justify-between gap-3 px-1 ${compact ? 'mt-2.5' : 'mt-3'}`}>
         <div>
           <h3 className="text-[0.88rem] font-normal text-ink">{product.name}</h3>
           <p className="mt-0.5 text-[0.62rem] font-light text-ink/45">{CATEGORY_TITLE[product.category]}</p>
         </div>
-        <span className="mt-0.5 whitespace-nowrap rounded-full bg-paper-deep px-2.5 py-1 text-[0.7rem] font-medium text-ink/80">{faPrice(product.price)}</span>
+        <span className="mt-0.5 whitespace-nowrap rounded-full bg-paper-deep px-2.5 py-1 text-[0.7rem] font-medium text-ink/80 ring-1 ring-ink/[0.06]">{faPrice(product.price)}</span>
+      </div>
       </div>
     </motion.article>
   );

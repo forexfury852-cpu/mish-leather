@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useUI } from '@/lib/store';
 import { Preloader, Cursor } from '@/components/fx/atoms';
@@ -24,6 +24,7 @@ export default function Page() {
   const { view, productId, setBooted } = useUI();
   const [loading, setLoading] = useState(true);
   const [smallScreen, setSmallScreen] = useState(false);
+  const mobileScrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const mq = window.matchMedia('(max-width: 767px)');
@@ -36,9 +37,11 @@ export default function Page() {
     };
   }, []);
 
-  // reset page scroll when the view changes
+  // reset page scroll when the view changes — desktop window + mobile scroll container
   useEffect(() => {
     if (window.scrollY > 0) window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
+    const el = mobileScrollRef.current;
+    if (el && el.scrollTop > 0) el.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
   }, [view, productId]);
 
   /* ---------- DESKTOP (viewport ≥ 768px) ---------- */
@@ -70,7 +73,7 @@ export default function Page() {
   return (
     <main className="grain fixed inset-0 overflow-hidden bg-paper text-ink [container-type:size]">
       <AnimatePresence>{loading && <Preloader onDone={() => { setLoading(false); setBooted(); }} />}</AnimatePresence>
-      <div className="h-full overflow-y-auto overscroll-contain no-scrollbar">
+      <div ref={mobileScrollRef} className="h-full overflow-y-auto overscroll-contain no-scrollbar">
         <AnimatePresence mode="wait">
           <motion.div
             key={`${view}-${productId}`}

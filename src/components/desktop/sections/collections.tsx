@@ -18,9 +18,13 @@ export function ProductCard({ product, tall = false }: { product: Product; tall?
   const wished = isWishlisted(product.id);
   return (
     <article className="group" data-hover>
+      {/* framed card — clear boundary against neighbours */}
       <div
-        className={`img-zoom relative bg-paper-deep shadow-[0_1px_2px_rgba(28,19,10,0.06),0_12px_28px_-10px_rgba(28,19,10,0.16),0_32px_64px_-24px_rgba(122,76,40,0.28)] ring-1 ring-ink/10 transition-[box-shadow,transform] duration-700 ease-out group-hover:-translate-y-2 group-hover:shadow-[0_2px_4px_rgba(28,19,10,0.07),0_24px_48px_-14px_rgba(28,19,10,0.22),0_54px_100px_-28px_rgba(122,76,40,0.42)] ${
-          tall ? 'aspect-[3/4] rounded-[1.5rem]' : 'aspect-[4/5] rounded-[1.5rem]'
+        className={`relative rounded-[1.5rem] bg-paper p-2.5 pb-4 ring-1 ring-ink/10 shadow-[0_1px_2px_rgba(28,19,10,0.05),0_18px_44px_-20px_rgba(28,19,10,0.18),0_44px_88px_-36px_rgba(122,76,40,0.3)] transition-all duration-700 ease-out group-hover:-translate-y-2 group-hover:ring-copper/40 group-hover:shadow-[0_2px_4px_rgba(28,19,10,0.06),0_30px_60px_-20px_rgba(28,19,10,0.24),0_70px_120px_-40px_rgba(122,76,40,0.45)]`}
+      >
+      <div
+        className={`img-zoom relative overflow-hidden rounded-[1.15rem] bg-paper-deep ${
+          tall ? 'aspect-[3/4]' : 'aspect-[4/5]'
         }`}
       >
         <button onClick={() => goProduct(product.id)} className="absolute inset-0 z-10" aria-label={product.name} />
@@ -65,15 +69,16 @@ export function ProductCard({ product, tall = false }: { product: Product; tall?
           </button>
         </div>
       </div>
-      <div className="mt-4 flex items-start justify-between gap-3 px-1">
+      <div className="mt-3.5 flex items-start justify-between gap-3 px-1.5">
         <div>
           <span className="latin-tag text-copper/80">{product.latin}</span>
           <h3 className="mt-1.5 text-[0.95rem] font-normal text-ink">{product.name}</h3>
           <p className="mt-0.5 text-[0.68rem] font-light text-ink/45">{CATEGORY_TITLE[product.category]}</p>
         </div>
-        <span className="mt-1 whitespace-nowrap rounded-full bg-paper-deep px-3.5 py-1.5 text-[0.76rem] font-medium text-ink/85">
+        <span className="mt-1 whitespace-nowrap rounded-full bg-paper-deep px-3.5 py-1.5 text-[0.76rem] font-medium text-ink/85 ring-1 ring-ink/[0.06]">
           {faPrice(product.price)}
         </span>
+      </div>
       </div>
     </article>
   );

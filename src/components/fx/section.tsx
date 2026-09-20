@@ -11,29 +11,50 @@ export function Marquee({
   dark?: boolean;
   className?: string;
 }) {
-  const row = [...items, ...items, ...items, ...items];
+  const row = [...items, ...items, ...items];
   return (
     <div
-      className={`relative overflow-hidden border-y py-5 ${
-        dark ? 'border-cream/10 bg-coal' : 'border-ink/10 bg-cream'
+      dir="ltr"
+      className={`relative overflow-hidden border-y py-[1.15rem] ${
+        dark ? 'border-cream/10 bg-coal' : 'border-ink/10 bg-paper'
       } ${className ?? ''}`}
       aria-hidden
     >
-      <div dir="ltr" className="flex w-max animate-marquee items-center">
+      {/* soft edge fades — the ribbon dissolves instead of being cut */}
+      <div
+        className={`pointer-events-none absolute inset-y-0 left-0 z-10 w-28 bg-gradient-to-r ${
+          dark ? 'from-coal' : 'from-paper'
+        } to-transparent`}
+      />
+      <div
+        className={`pointer-events-none absolute inset-y-0 right-0 z-10 w-28 bg-gradient-to-l ${
+          dark ? 'from-coal' : 'from-paper'
+        } to-transparent`}
+      />
+      {/* continuous, very slow drift — pauses gently on hover */}
+      <div
+        dir="ltr"
+        className="flex w-max animate-[marquee_80s_linear_infinite] will-change-transform hover:[animation-play-state:paused]"
+      >
         {[0, 1].map((half) => (
           <div key={half} className="flex items-center">
-            {row.map((item, i) => (
-              <span key={`${half}-${i}`} className="flex items-center">
-                <span
-                  className={`whitespace-nowrap px-8 text-sm font-light ${
-                    dark ? 'text-sand/80' : 'text-ink/70'
-                  } ${/^[A-Za-z0-9 .—-]+$/.test(item) ? 'latin-word text-xs' : ''}`}
-                >
-                  {item}
+            {row.map((item, i) => {
+              const isLatin = /^[A-Za-z0-9 .—-]+$/.test(item);
+              return (
+                <span key={`${half}-${i}`} className="flex items-center">
+                  <span
+                    className={`whitespace-nowrap px-9 ${
+                      isLatin
+                        ? `latin-tag ${dark ? 'text-copper/85' : 'text-copper'}`
+                        : `text-[0.84rem] font-light ${dark ? 'text-sand/70' : 'text-ink/55'}`
+                    }`}
+                  >
+                    {item}
+                  </span>
+                  <span className="h-[3px] w-[3px] rotate-45 bg-copper/60" />
                 </span>
-                <span className="text-[0.55rem] text-copper">✦</span>
-              </span>
-            ))}
+              );
+            })}
           </div>
         ))}
       </div>
