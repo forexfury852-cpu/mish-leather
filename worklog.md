@@ -108,3 +108,18 @@ Work Log:
 Stage Summary:
 - All 6 requested updates shipped; found and fixed the real RTL-anchoring bug behind "non-continuous marquee" (dir=ltr wrapper required) and the mobile overflow/anchor pair that hid the slider cards.
 - Site remains responsive (no simulator), white/leather-brown editorial, Vazirmatn throughout.
+
+---
+Task ID: 7
+Agent: Super Z (main agent)
+Task: User revision round 7 — minimal product-card frame (borders were ugly/heavy), mobile World-of-Mish auto-drift + user horizontal swipe, clear desktop UX path to shop, chic hamburger menu.
+
+Work Log:
+- ProductCard (desktop, shared) + MobileProductCard: removed the boxed frame entirely (no bg-paper wrapper, no p-2.5 padding, no ring-ink/10 + triple-shadow) → minimal editorial card: the image itself is the frame (rounded-[1.25rem]/[1.15rem], hairline ring-ink/[0.05], single soft shadow), name/latin/category + plain text price (chip removed) sit below; hover keeps subtle lift + copper-tinted deepening shadow; mobile keeps active:scale tap feedback.
+- Mobile World of Mish (mobile/home.tsx): CSS-marquee replaced with DriftSlider — rAF-driven continuous drift (≈21px/s, dt-clamped, seamless modulo wrap over duplicated halves) PLUS full pointer drag (setPointerCapture, touch-action:pan-y so vertical page scroll still works, pointermove offsets the track, drag>8px swallows the trailing click so cards don't navigate, hover pauses drift). Verified live: transform -238→-261px over 1s (auto), then mouse-drag 90px moved track +89px with no navigation.
+- Desktop UX path to shop: new ShopDoorway section (between InstagramGallery and Newsletter) — ink band, giant outlined «فروشگاه» watermark, LineMask heading «حالا، نوبتِ انتخابِ شماست», huge copper pill «ورود به فروشگاه» + 5 category shortcut chips; CTAs strengthened from outline to filled pills: NewCollection «همه‌ی قطعات جدید», BestSellers new «مشاهده همه‌ی پرفروش‌ها» beside arrows, Campaign «تماشای مجموعه کمپین».
+- Hamburger menu: header inline links replaced with editorial two-line «منو» trigger (cream/ink adaptive, hover fills short line); new desktop/menu.tsx fullscreen ink overlay — staggered numbered items (خانه/فروشگاه/قطعه امضا/داستان صنعتگری) with latin tags + arrow slide, hover-driven crossfading image panel with caption + ۰۱/۰۴ counter, category shortcut chips, address/Instagram row, X close (rotate on hover), Esc + body scroll lock; overlay rendered OUTSIDE the motion.header (transformed ancestor would break fixed positioning).
+- Verified via agent-browser: desktop 1600x1000 (menu open/hover image-swap/shop navigation, minimal cards in New Collection + Best Sellers + Shop, doorway CTA click → shop, hero), mobile 390x844 (drift measured, drag verified, minimal card grids); eslint src: 0 problems; tsc src: clean; no page errors (only pre-existing framer container-position warning).
+
+Stage Summary:
+- Cards are now minimal & chic (image-as-frame), mobile slider both auto-glides and accepts horizontal swipes, desktop home has an unmistakable path to the shop (hero CTA → section CTAs → ShopDoorway band), and a cinematic hamburger overlay handles navigation.

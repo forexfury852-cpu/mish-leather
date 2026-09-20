@@ -204,6 +204,7 @@ export function BestSellers() {
           </div>
         </div>
       </div>
+    </div>
 
       <div className="mt-12 overflow-hidden" ref={emblaRef}>
         <div className="flex touch-pan-y gap-6 ps-6 lg:ps-12">

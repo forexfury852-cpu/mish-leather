@@ -5,30 +5,20 @@ import { motion, useMotionValueEvent, useScroll } from 'framer-motion';
 import { Heart, Search, ShoppingBag } from 'lucide-react';
 import { useUI } from '@/lib/store';
 import { EASE } from '@/components/fx/reveal';
+import { MenuOverlay } from './menu';
 
 export function SiteHeader() {
   const { view, goHome, goShop, cartCount } = useUI();
   const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const { scrollY } = useScroll();
   useMotionValueEvent(scrollY, 'change', (v) => setScrolled(v > 40));
 
   // solid warm-ivory bar everywhere except over the cinematic home hero
   const solid = scrolled || view !== 'home';
 
-  const scrollToCraft = () => {
-    goHome();
-    setTimeout(() => {
-      document.getElementById('craft')?.scrollIntoView({ behavior: 'smooth' });
-    }, 700);
-  };
-
-  const links: { label: string; onClick: () => void; active: boolean }[] = [
-    { label: 'خانه', onClick: goHome, active: view === 'home' },
-    { label: 'فروشگاه', onClick: () => goShop('all'), active: view === 'shop' },
-    { label: 'صنعتگری', onClick: scrollToCraft, active: false },
-  ];
-
   return (
+    <>
     <motion.header
       initial={{ y: -80, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
@@ -38,24 +28,33 @@ export function SiteHeader() {
       }`}
     >
       <div className="mx-auto flex h-20 max-w-[1440px] items-center justify-between px-6 lg:px-12">
-        {/* nav */}
-        <nav className="hidden items-center gap-9 md:flex" aria-label="اصلی">
-          {links.map((l) => (
-            <button
-              key={l.label}
-              onClick={l.onClick}
-              className={`lux-link text-[0.82rem] font-light tracking-wide transition-colors duration-300 ${
-                l.active
-                  ? 'text-copper'
-                  : solid
-                    ? 'text-ink/80 hover:text-ink'
-                    : 'text-cream/85 hover:text-cream'
+        {/* hamburger — the editorial menu trigger */}
+        <button
+          onClick={() => setMenuOpen(true)}
+          aria-label="باز کردن منو"
+          data-hover
+          className="group flex items-center gap-3.5"
+        >
+          <span className="flex w-8 flex-col items-start gap-[7px]">
+            <span
+              className={`h-px w-full transition-all duration-500 ${
+                solid ? 'bg-ink' : 'bg-cream'
               }`}
-            >
-              {l.label}
-            </button>
-          ))}
-        </nav>
+            />
+            <span
+              className={`h-px w-3/5 transition-all duration-500 group-hover:w-full ${
+                solid ? 'bg-ink/80' : 'bg-cream/80'
+              }`}
+            />
+          </span>
+          <span
+            className={`text-[0.8rem] font-light tracking-wide transition-colors duration-300 ${
+              solid ? 'text-ink/85 group-hover:text-copper' : 'text-cream/90 group-hover:text-copper'
+            }`}
+          >
+            منو
+          </span>
+        </button>
 
         {/* wordmark */}
         <button onClick={goHome} className="group flex flex-col items-center" aria-label="چرم میش — خانه">
@@ -113,5 +112,7 @@ export function SiteHeader() {
         </div>
       </div>
     </motion.header>
+    <MenuOverlay open={menuOpen} onClose={() => setMenuOpen(false)} />
+    </>
   );
 }

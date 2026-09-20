@@ -87,14 +87,14 @@ export function MobileProductCard({ product, compact = false, index = 0 }: { pro
       viewport={{ once: true, margin: '-4% 0px' }}
       transition={{ duration: 0.65, delay: Math.min(index * 0.06, 0.3), ease: EASE }}
     >
-      {/* framed card — clear boundary against neighbours */}
+      {/* minimal editorial card — the image is the frame, no box around it */}
       <div
         onClick={() => goProduct(product.id)}
-        className="relative rounded-[1.4rem] bg-paper p-2 pb-3 ring-1 ring-ink/10 shadow-[0_1px_2px_rgba(28,19,10,0.05),0_14px_32px_-14px_rgba(28,19,10,0.16),0_32px_64px_-28px_rgba(122,76,40,0.28)] transition-transform duration-300 active:scale-[0.97]"
+        className="relative transition-transform duration-300 active:scale-[0.97]"
         data-hover
       >
       <div
-        className="img-zoom relative aspect-[4/5] overflow-hidden rounded-[1.05rem] bg-paper-deep"
+        className="img-zoom relative aspect-[4/5] overflow-hidden rounded-[1.15rem] bg-paper-deep ring-1 ring-ink/[0.05] shadow-[0_18px_40px_-26px_rgba(28,19,10,0.35)]"
       >
         { }
         <img src={product.image} alt={product.name} loading="lazy" className="h-full w-full object-cover" />
@@ -132,12 +132,12 @@ export function MobileProductCard({ product, compact = false, index = 0 }: { pro
           <Plus size={16} strokeWidth={1.75} />
         </button>
       </div>
-      <div className={`flex items-start justify-between gap-3 px-1 ${compact ? 'mt-2.5' : 'mt-3'}`}>
+      <div className={`flex items-start justify-between gap-3 ${compact ? 'mt-3' : 'mt-3.5'}`}>
         <div>
           <h3 className="text-[0.88rem] font-normal text-ink">{product.name}</h3>
           <p className="mt-0.5 text-[0.62rem] font-light text-ink/45">{CATEGORY_TITLE[product.category]}</p>
         </div>
-        <span className="mt-0.5 whitespace-nowrap rounded-full bg-paper-deep px-2.5 py-1 text-[0.7rem] font-medium text-ink/80 ring-1 ring-ink/[0.06]">{faPrice(product.price)}</span>
+        <span className="mt-0.5 whitespace-nowrap text-[0.74rem] font-medium tracking-wide text-ink/85">{faPrice(product.price)}</span>
       </div>
       </div>
     </motion.article>

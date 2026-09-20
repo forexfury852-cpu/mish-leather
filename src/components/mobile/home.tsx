@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowLeft, ChevronLeft, Star } from 'lucide-react';
 import { BEST_SELLERS, CATEGORIES, NEW_COLLECTION, TESTIMONIALS } from '@/lib/data';
@@ -9,6 +9,91 @@ import { LineMaskMount, Reveal, EASE } from '@/components/fx/reveal';
 import { MobileProductCard } from './chrome';
 
 const bootedDelay = 0.15;
+
+/* ---------- Drift slider: continuous auto-glide + user horizontal swipe ---------- */
+function DriftSlider({ children }: { children: React.ReactNode }) {
+  const trackRef = useRef<HTMLDivElement>(null);
+  const st = useRef({ offset: 0, dragging: false, lastX: 0, moved: 0, paused: false });
+
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+    let raf = 0;
+    let last = performance.now();
+    const apply = () => {
+      const h = track.scrollWidth / 2; // duplicated halves → seamless wrap
+      const o = ((st.current.offset % h) + h) % h;
+      track.style.transform = `translate3d(${-o}px,0,0)`;
+    };
+    const tick = (now: number) => {
+      const dt = Math.min(now - last, 50);
+      last = now;
+      if (!st.current.dragging && !st.current.paused) {
+        st.current.offset += dt * 0.021; // ≈21px/s — very slow cinematic drift
+        apply();
+      }
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, []);
+
+  const applyNow = () => {
+    const track = trackRef.current;
+    if (!track) return;
+    const h = track.scrollWidth / 2;
+    const o = ((st.current.offset % h) + h) % h;
+    track.style.transform = `translate3d(${-o}px,0,0)`;
+  };
+
+  return (
+    <div
+      dir="ltr"
+      className="relative mt-7 cursor-grab touch-pan-y select-none overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_6%,black_94%,transparent)] [-webkit-mask-image:linear-gradient(to_right,transparent,black_6%,black_94%,transparent)] active:cursor-grabbing"
+      onPointerDown={(e) => {
+        st.current.dragging = true;
+        st.current.lastX = e.clientX;
+        st.current.moved = 0;
+        e.currentTarget.setPointerCapture(e.pointerId);
+      }}
+      onPointerMove={(e) => {
+        if (!st.current.dragging) return;
+        const dx = e.clientX - st.current.lastX;
+        st.current.lastX = e.clientX;
+        st.current.moved += Math.abs(dx);
+        st.current.offset -= dx;
+        applyNow();
+      }}
+      onPointerUp={(e) => {
+        st.current.dragging = false;
+        try {
+          e.currentTarget.releasePointerCapture(e.pointerId);
+        } catch {}
+      }}
+      onPointerCancel={() => {
+        st.current.dragging = false;
+      }}
+      onMouseEnter={() => {
+        st.current.paused = true;
+      }}
+      onMouseLeave={() => {
+        st.current.paused = false;
+      }}
+      onClickCapture={(e) => {
+        // swallow the click that ends a drag so cards don't navigate accidentally
+        if (st.current.moved > 8) {
+          e.preventDefault();
+          e.stopPropagation();
+          st.current.moved = 0;
+        }
+      }}
+    >
+      <div ref={trackRef} dir="ltr" className="flex w-max will-change-transform">
+        {children}
+      </div>
+    </div>
+  );
+}
 
 export function MobileHome() {
   const { goShop, goProduct } = useUI();
@@ -116,18 +201,13 @@ export function MobileHome() {
           </header>
         </Reveal>
         <motion.div
-          dir="ltr"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.9, ease: EASE }}
-          className="relative mt-7 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_6%,black_94%,transparent)] [-webkit-mask-image:linear-gradient(to_right,transparent,black_6%,black_94%,transparent)]"
         >
-          {/* seamless, very slow horizontal drift — the slider glides on its own */}
-          <div
-            dir="ltr"
-            className="flex w-max animate-[marquee_44s_linear_infinite] will-change-transform hover:[animation-play-state:paused]"
-          >
+          {/* seamless slow auto-drift — and the user can swipe it horizontally too */}
+          <DriftSlider>
             {[0, 1].map((half) => (
               <div key={half} className="flex gap-4 pr-4">
                 {CATEGORIES.map((cat, i) => (
@@ -135,10 +215,10 @@ export function MobileHome() {
                     key={`${half}-${cat.key}`}
                     dir="rtl"
                     onClick={() => goShop(cat.key)}
-                    className="relative aspect-[3/4] w-[46vw] flex-none overflow-hidden rounded-[1.5rem] shadow-[0_12px_35px_-16px_rgba(28,19,10,0.4)] ring-1 ring-ink/10 transition-transform duration-300 active:scale-[0.97]"
+                    className="relative aspect-[3/4] w-[46vw] flex-none overflow-hidden rounded-[1.5rem] shadow-[0_12px_35px_-16px_rgba(28,19,10,0.4)] ring-1 ring-ink/10"
                     aria-label={cat.title}
                   >
-                    <img src={cat.image} alt={cat.title} loading="lazy" className="h-full w-full object-cover" />
+                    <img src={cat.image} alt={cat.title} loading="lazy" draggable={false} className="h-full w-full object-cover" />
                     <span className="text-outline absolute right-3 top-3 select-none text-5xl font-extralight">
                       {String(i + 1).replace(/\d/g, (d) => '۰۱۲۳۴۵۶۷۸۹'[Number(d)])}
                     </span>
@@ -159,7 +239,7 @@ export function MobileHome() {
                 ))}
               </div>
             ))}
-          </div>
+          </DriftSlider>
         </motion.div>
       </section>
 
