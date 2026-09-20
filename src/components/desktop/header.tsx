@@ -56,16 +56,20 @@ export function SiteHeader() {
           </span>
         </button>
 
-        {/* wordmark */}
+        {/* wordmark — cream + soft shadow over the hero photo, ink once the bar turns solid */}
         <button onClick={goHome} className="group flex flex-col items-center" aria-label="چرم میش — خانه">
           <span
-            className={`latin-tag text-[0.5rem] transition-colors group-hover:text-copper ${
-              solid ? 'text-copper/70' : 'text-copper/80'
+            className={`latin-tag text-[0.5rem] transition-all duration-500 group-hover:text-copper ${
+              solid ? 'text-copper/70' : 'text-copper/95 [text-shadow:0_1px_14px_rgba(15,9,3,0.6)]'
             }`}
           >
             Est. 2000 — Tehran
           </span>
-          <span className="mt-1 text-xl font-medium leading-none">
+          <span
+            className={`mt-1 text-xl font-medium leading-none transition-all duration-500 ${
+              solid ? 'text-ink' : 'text-cream [text-shadow:0_2px_24px_rgba(15,9,3,0.7)]'
+            }`}
+          >
             چرم <span className="font-extralight text-copper">میش</span>
           </span>
         </button>

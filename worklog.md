@@ -123,3 +123,18 @@ Work Log:
 
 Stage Summary:
 - Cards are now minimal & chic (image-as-frame), mobile slider both auto-glides and accepts horizontal swipes, desktop home has an unmistakable path to the shop (hero CTA → section CTAs → ShopDoorway band), and a cinematic hamburger overlay handles navigation.
+
+---
+Task ID: 8
+Agent: Super Z (main agent)
+Task: User revision round 8 — mobile hamburger menu, desktop navbar wordmark lost over hero photo, mobile World-of-Mish white edge fade → blur, best-sellers fade entrance + «همه‌ی محصول‌ها» link at rail end.
+
+Work Log:
+- Mobile hamburger menu (mobile/chrome.tsx + page.tsx): new MobileMenu rendered beside BottomNav in the mobile branch — frosted-circle trigger (bg-paper/80 backdrop-blur ring-ink/10, two hairline lines) fixed left-4 top-10 (aligned with hero brand row, hidden on product view whose top bar has back/wishlist); fullscreen ink overlay (z-80) with brand + X close (RTL: brand right, close left), staggered big editorial items خانه/فروشگاه/قطعه امضا with latin tags + arrows + hairline dividers, دسته‌بندی‌ها chip row, bottom Est./Instagram row, outlined «میش» watermark; nav() closes sheet then navigates (no setState-in-effect — lint rule), active:scale touch feedback. Verified: opens, item tap → shop view, close.
+- Desktop navbar wordmark legibility (desktop/header.tsx): wordmark «چرم میش» had no color class → inherited ink and vanished over the dark hero. Now: transparent state = text-cream + copper/95 latin tag + [text-shadow:0_2px_24px_rgba(15,9,3,0.7)] (inherited by the copper «میش» span), solid state = text-ink as before; 500ms transition.
+- Mobile World-of-Mish edges (mobile/home.tsx): removed the container mask-image (which faded cards into the cream page = the "white fade") → two pointer-events-none edge overlays with backdrop-blur-[7px] + gradient maskImage (Webkit + standard) so the blur strength fades from each screen edge inward; cards stay crisp in the center; drag/drift unaffected.
+- Best sellers (desktop/sections/collections.tsx + mobile): desktop cards entrance changed y:48 → opacity-only fade (0.9s, stagger 0.05; static lg:translate-y-10 zig-zag retained — note it now applies consistently since framer no longer owns transform); removed the permanent «مشاهده همه‌ی پرفروش‌ها» pill from the header row (arrows remain); added end-of-rail link card «همه‌ی محصول‌ها» (circled ArrowLeft + text, hover → copper fill) as the last embla slide — visible exactly when the user reaches the end; click → goShop('all') verified (h1 «فروشگاه»). Mobile: MobileProductCard gained fade prop (opacity-only), passed from the best-seller rail (new-collection grid keeps its y:14); mobile rail got a compact end link card too (active:scale/copper feedback); rail scrollTo end verified.
+- Verification: eslint 0 problems, tsc clean; agent-browser desktop 1600x1000 (wordmark cream+shadow legible over hero, best sellers rail end link + navigation to shop) + mobile 390x844 (frosted trigger aligned with hero brand row, menu open/navigation, blur edge fades on «دنیای میش» slider, mobile end link); zero page errors, only pre-existing framer container warning.
+
+Stage Summary:
+- All 4 requested updates shipped: mobile now has its own minimal hamburger menu, the desktop brand reads over any hero photo, slider edges frost-blur instead of fading white, and best-seller cards fade in with a «همه‌ی محصول‌ها» link waiting at the end of the rail on both desktop and mobile.

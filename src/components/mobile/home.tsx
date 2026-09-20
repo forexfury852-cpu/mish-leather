@@ -49,7 +49,7 @@ function DriftSlider({ children }: { children: React.ReactNode }) {
   return (
     <div
       dir="ltr"
-      className="relative mt-7 cursor-grab touch-pan-y select-none overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_6%,black_94%,transparent)] [-webkit-mask-image:linear-gradient(to_right,transparent,black_6%,black_94%,transparent)] active:cursor-grabbing"
+      className="relative mt-7 cursor-grab touch-pan-y select-none overflow-hidden active:cursor-grabbing"
       onPointerDown={(e) => {
         st.current.dragging = true;
         st.current.lastX = e.clientX;
@@ -91,6 +91,17 @@ function DriftSlider({ children }: { children: React.ReactNode }) {
       <div ref={trackRef} dir="ltr" className="flex w-max will-change-transform">
         {children}
       </div>
+      {/* frosted edges — blur fades in from both sides (no white fade) */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-y-0 left-0 z-10 w-14 backdrop-blur-[7px]"
+        style={{ WebkitMaskImage: 'linear-gradient(to right, black, transparent)', maskImage: 'linear-gradient(to right, black, transparent)' }}
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-y-0 right-0 z-10 w-14 backdrop-blur-[7px]"
+        style={{ WebkitMaskImage: 'linear-gradient(to left, black, transparent)', maskImage: 'linear-gradient(to left, black, transparent)' }}
+      />
     </div>
   );
 }
@@ -122,18 +133,17 @@ export function MobileHome() {
         </motion.div>
         <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/10 to-ink/55" />
 
-        {/* top brand row */}
+        {/* top brand row — hamburger trigger occupies the left corner (global chrome) */}
         <motion.div
           initial={{ opacity: 0, y: -14 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: bootedDelay + 0.4, duration: 0.9, ease: EASE }}
           className="absolute inset-x-0 top-12 flex items-center justify-between px-6"
         >
-          <span className="latin-tag text-copper">Est. 2000</span>
-          <span className="text-lg font-medium text-cream">
+          <span className="latin-tag text-copper">Est. 2000 — Tehran</span>
+          <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-lg font-medium text-cream">
             چرم <span className="font-extralight text-copper">میش</span>
           </span>
-          <span className="latin-tag text-copper">Tehran</span>
         </motion.div>
 
         {/* headline block */}
@@ -283,9 +293,23 @@ export function MobileHome() {
         >
           {BEST_SELLERS.map((p, i) => (
             <div key={p.id} className="w-[42vw] flex-none snap-start">
-              <MobileProductCard product={p} compact index={i} />
+              <MobileProductCard product={p} compact index={i} fade />
             </div>
           ))}
+          {/* end of rail — link to the full shop */}
+          <div className="flex w-[38vw] flex-none snap-start items-center">
+            <button
+              onClick={() => goShop('all')}
+              data-hover
+              className="group flex flex-col items-center gap-3.5 rounded-2xl py-8"
+              aria-label="مشاهده همه‌ی محصول‌ها"
+            >
+              <span className="flex h-12 w-12 items-center justify-center rounded-full border border-ink/20 text-ink/70 transition-all duration-300 group-active:scale-90 group-active:border-copper group-active:bg-copper group-active:text-paper">
+                <ArrowLeft size={17} strokeWidth={1.5} />
+              </span>
+              <span className="text-[0.72rem] font-light text-ink/60">همه‌ی محصول‌ها</span>
+            </button>
+          </div>
           <div className="w-2 flex-none" />
         </motion.div>
       </section>

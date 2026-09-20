@@ -11,7 +11,7 @@ import { ProductPage } from '@/components/desktop/product';
 import { MobileHome } from '@/components/mobile/home';
 import { MobileShop } from '@/components/mobile/shop';
 import { MobileProduct } from '@/components/mobile/product';
-import { BottomNav } from '@/components/mobile/chrome';
+import { BottomNav, MobileMenu } from '@/components/mobile/chrome';
 import { EASE } from '@/components/fx/reveal';
 
 const viewVariants = {
@@ -89,6 +89,7 @@ export default function Page() {
           </motion.div>
         </AnimatePresence>
       </div>
+      <MobileMenu />
       <BottomNav />
     </main>
   );

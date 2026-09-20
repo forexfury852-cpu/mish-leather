@@ -1,10 +1,138 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import { Home, Plus, Search, ShoppingBag, Store, Heart } from 'lucide-react';
-import { CATEGORY_TITLE, faPrice, type Product } from '@/lib/data';
+import { useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { ArrowLeft, Home, Plus, Search, ShoppingBag, Store, Heart, X } from 'lucide-react';
+import { CATEGORIES, CATEGORY_TITLE, faPrice, type Product } from '@/lib/data';
 import { useUI, type View } from '@/lib/store';
 import { EASE } from '@/components/fx/reveal';
+
+/* ---------------- Mobile hamburger menu — minimal fullscreen ink sheet ---------------- */
+const MENU_ITEMS: { label: string; latin: string; go: (ui: ReturnType<typeof useUI.getState>) => void }[] = [
+  { label: 'خانه', latin: 'Home', go: (ui) => ui.goHome() },
+  { label: 'فروشگاه', latin: 'Shop', go: (ui) => ui.goShop('all') },
+  { label: 'قطعه امضا', latin: 'Signature', go: (ui) => ui.goProduct('arta-messenger') },
+];
+
+export function MobileMenu() {
+  const view = useUI((s) => s.view);
+  const [open, setOpen] = useState(false);
+
+  const ui = useUI.getState;
+  // close the sheet, then navigate
+  const nav = (go: () => void) => {
+    setOpen(false);
+    go();
+  };
+
+  return (
+    <>
+      {/* trigger — frosted circle, hidden on product (its top bar has back/wishlist) */}
+      {view !== 'product' && (
+        <motion.button
+          initial={{ opacity: 0, y: -14 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.9, ease: EASE }}
+          onClick={() => setOpen(true)}
+          aria-label="باز کردن منو"
+          className="fixed left-4 top-10 z-[70] flex h-11 w-11 flex-col items-center justify-center gap-[5px] rounded-full bg-paper/80 shadow-[0_14px_34px_-14px_rgba(28,19,10,0.5)] ring-1 ring-ink/10 backdrop-blur-md transition-transform active:scale-90"
+        >
+          <span className="h-px w-4 bg-ink/85" />
+          <span className="h-px w-2.5 bg-ink/55" />
+        </motion.button>
+      )}
+
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.4, ease: EASE }}
+            role="dialog"
+            aria-label="منوی اصلی"
+            className="fixed inset-0 z-[80] overflow-hidden bg-ink"
+          >
+            <span
+              className="text-outline pointer-events-none absolute -bottom-8 -left-2 select-none text-[9rem] font-extralight leading-none opacity-25"
+              aria-hidden
+            >
+              میش
+            </span>
+
+            {/* top row — brand (right) + close (left) */}
+            <div className="relative flex items-center justify-between px-6 pt-7">
+              <span className="text-lg font-medium text-cream">
+                چرم <span className="font-extralight text-copper">میش</span>
+              </span>
+              <button
+                onClick={() => setOpen(false)}
+                aria-label="بستن منو"
+                className="flex h-11 w-11 items-center justify-center rounded-full border border-cream/20 text-cream/90 transition-all active:scale-90 active:border-copper active:text-copper"
+              >
+                <X size={17} strokeWidth={1.5} />
+              </button>
+            </div>
+
+            {/* primary items — big editorial lines */}
+            <nav className="relative mt-12 px-8" aria-label="ناوبری">
+              {MENU_ITEMS.map((it, i) => (
+                <motion.button
+                  key={it.label}
+                  initial={{ opacity: 0, y: 26 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.7, delay: 0.12 + i * 0.08, ease: EASE }}
+                  onClick={() => nav(() => it.go(ui()))}
+                  className="flex w-full items-center justify-between border-b border-cream/10 py-5 text-start"
+                >
+                  <span className="flex items-baseline gap-4">
+                    <span className="latin-tag text-[0.55rem] text-copper/80">{it.latin}</span>
+                    <span className="text-[1.7rem] font-extralight leading-snug text-cream">{it.label}</span>
+                  </span>
+                  <ArrowLeft size={18} strokeWidth={1.5} className="text-cream/30" />
+                </motion.button>
+              ))}
+            </nav>
+
+            {/* category shortcuts */}
+            <motion.div
+              initial={{ opacity: 0, y: 22 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.4, ease: EASE }}
+              className="relative mt-9 px-8"
+            >
+              <span className="text-[0.68rem] font-light text-cream/40">دسته‌بندی‌ها</span>
+              <div className="mt-4 flex flex-wrap gap-2.5">
+                {CATEGORIES.map((cat) => (
+                  <button
+                    key={cat.key}
+                    onClick={() => nav(() => ui().goShop(cat.key))}
+                    className="rounded-full border border-cream/15 px-4 py-2 text-[0.72rem] font-light text-cream/80 transition-colors active:border-copper active:text-copper"
+                  >
+                    {cat.title}
+                  </button>
+                ))}
+              </div>
+            </motion.div>
+
+            {/* bottom row */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.9, delay: 0.55 }}
+              className="absolute inset-x-0 bottom-0 flex items-center justify-between px-8 pb-9"
+            >
+              <span className="latin-tag text-copper/80">Est. 2000 — Tehran</span>
+              <a href="https://instagram.com" target="_blank" rel="noreferrer" className="text-[0.75rem] font-light text-cream/70">
+                اینستاگرام
+              </a>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
+  );
+}
 
 const NAV_ITEMS: { view: View; label: string; icon: typeof Home }[] = [
   { view: 'home', label: 'خانه', icon: Home },
@@ -75,14 +203,14 @@ export function BottomNav() {
   );
 }
 
-/* Mobile product card — modern rounded card, framed shadow, staggered reveal */
-export function MobileProductCard({ product, compact = false, index = 0 }: { product: Product; compact?: boolean; index?: number }) {
+/* Mobile product card — modern rounded card, framed shadow, staggered reveal (fade-only optional) */
+export function MobileProductCard({ product, compact = false, index = 0, fade = false }: { product: Product; compact?: boolean; index?: number; fade?: boolean }) {
   const { goProduct, addToCart, toggleWishlist, isWishlisted } = useUI();
   const wished = isWishlisted(product.id);
   return (
     <motion.article
       className="group"
-      initial={{ opacity: 0, y: 14 }}
+      initial={fade ? { opacity: 0 } : { opacity: 0, y: 14 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-4% 0px' }}
       transition={{ duration: 0.65, delay: Math.min(index * 0.06, 0.3), ease: EASE }}

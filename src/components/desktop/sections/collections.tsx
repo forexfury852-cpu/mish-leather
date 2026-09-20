@@ -177,13 +177,6 @@ export function BestSellers() {
         <div className="flex flex-wrap items-end justify-between gap-8">
           <SectionHead index="۰۳" title="پرفروش‌ترین‌ها" latin="Best Sellers" />
         <div className="flex flex-wrap items-center gap-6">
-          <button
-            onClick={() => goShop('all')}
-            className="group flex items-center gap-2.5 rounded-full bg-ink px-7 py-3.5 text-[0.82rem] font-light text-cream transition-all duration-500 hover:bg-copper active:scale-[0.97]"
-          >
-            مشاهده همه‌ی پرفروش‌ها
-            <ArrowLeft size={14} strokeWidth={1.75} className="transition-transform duration-500 group-hover:-translate-x-1" />
-          </button>
           <div className="flex items-center gap-3">
             <button
               onClick={() => embla?.scrollPrev()}
@@ -211,10 +204,10 @@ export function BestSellers() {
           {BEST_SELLERS.map((p, i) => (
             <motion.div
               key={p.id}
-              initial={{ opacity: 0, y: 48 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.9, delay: i * 0.06, ease: EASE }}
+              transition={{ duration: 0.9, delay: i * 0.05, ease: EASE }}
               className={`min-w-0 flex-none max-w-[340px] w-[70vw] sm:w-[40vw] lg:w-[26vw] xl:w-[21.5vw] ${
                 i % 2 === 1 ? 'lg:translate-y-10' : ''
               }`}
@@ -222,6 +215,28 @@ export function BestSellers() {
               <ProductCard product={p} />
             </motion.div>
           ))}
+          {/* پایان ریل — لینک همه‌ی محصول‌ها (وقتی به آخر کارت‌ها برسیم) */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.9, delay: 0.3, ease: EASE }}
+            className="flex min-w-0 flex-none items-center"
+          >
+            <button
+              onClick={() => goShop('all')}
+              data-hover
+              className="group flex flex-col items-center gap-5 px-8"
+              aria-label="مشاهده همه‌ی محصول‌ها"
+            >
+              <span className="flex h-16 w-16 items-center justify-center rounded-full border border-ink/20 text-ink/70 transition-all duration-500 group-hover:border-copper group-hover:bg-copper group-hover:text-paper group-hover:shadow-[0_18px_40px_-16px_rgba(164,110,62,0.55)]">
+                <ArrowLeft size={20} strokeWidth={1.5} className="transition-transform duration-500 group-hover:-translate-x-1" />
+              </span>
+              <span className="whitespace-nowrap text-[0.88rem] font-light text-ink/70 transition-colors duration-300 group-hover:text-copper">
+                همه‌ی محصول‌ها
+              </span>
+            </button>
+          </motion.div>
           <div className="w-6 flex-none lg:w-12" />
         </div>
       </div>
