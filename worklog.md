@@ -39,3 +39,20 @@ Work Log:
 Stage Summary:
 - Deliverable verified and live: single-route presentation app — desktop home/shop/product + dedicated mobile experience via bottom dock (دسکتاپ/موبایل + خانه/فروشگاه/محصول).
 - Ready for user delivery with preview link.
+
+---
+Task ID: 3
+Agent: Super Z (main agent)
+Task: User revision round — new hero image, light white/leather-brown re-theme, Vazirmatn-only typography, mobile card cleanup, simpler cursor.
+
+Work Log:
+- Generated 3 new cinematic hero candidates (scripts/gen-hero.ts, fixed b64 field name `base64` + retries); selected hero-c (man with cognac bag on leather sofa, espresso-brown backdrop, right-side negative space) → public/images/hero.jpg.
+- Re-themed globals.css to warm ivory editorial: new --paper #f7f2e8 / --paper-deep #efe7d6 tokens, body bg paper + ink text, ink hairlines, light scrollbars, light lux-input, multiply grain; kept sand light for dark photo overlays. Removed Marcellus @font-face; latin-tag/latin-word/--font-latin now Vazirmatn (500).
+- Desktop light flip: header (solid paper bar when scrolled or non-home views, ink text), categories/new-collection/showcase/guarantees/instagram/newsletter/shop-grid/product/related → bg-paper(-deep) with ink text + ink borders; hero + campaign image + testimonials (espresso brown band) + bespoke banner + footer stay dark for editorial rhythm; dark-card/float-spec and photo-overlay texts kept cream intentionally; fixed inherited-color regressions (hero h1, shop h1, footer brand, preloader, mobile hero h1/brand, categories CTA panel) with explicit text-cream.
+- Mobile light flip: wrapper paper, bottom nav paper/95 + ink icons, product cards ink text, testimonial/newsletter cards paper-deep, product content sheet + sticky CTA light, bottom-sheet filter drawer light, shop chips ink-based; StatusBar/hero overlays untouched (dark photos).
+- Mobile card cleanup per user: New Collection full-bleed 64cqh stack → clean 2-col grid of compact cards; shop single-column → 2-col grid; best-sellers rail w-60vw→44vw; related rail →44vw; categories carousel 68vw/3-4.4 → 56vw/3-4; campaign 70cqh → 52cqh; MobileProductCard no longer hardcodes width.
+- Cursor simplified: trailing ring+spring removed → single 7px copper dot (20px/35% on interactive), no border, native cursor kept.
+- Verified via agent-browser @1600x1000: desktop hero/collections/craft/guarantees/instagram/newsletter/footer, shop hero+filter bar+grid, product page, mobile frame home hero, 2-col card grids, mobile shop grid, light filter bottom-sheet; LineMask headings reveal correctly on gradual scroll; zero page errors; zero console errors; lint clean.
+
+Stage Summary:
+- Site is now warm white/leather-brown editorial with dark cinematic hero+footer anchors; all views browser-verified and stable.

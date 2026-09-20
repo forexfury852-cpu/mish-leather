@@ -62,7 +62,7 @@ export function Shop() {
             <ChevronLeft size={12} strokeWidth={1.5} />
             <span className="text-cream/90">فروشگاه</span>
           </nav>
-          <h1 className="text-display-xl">
+          <h1 className="text-display-xl text-cream">
             <LineMask>فروشگاه</LineMask>
           </h1>
           <Reveal delay={0.2} y={16}>
@@ -78,7 +78,7 @@ export function Shop() {
       </section>
 
       {/* filter bar */}
-      <div className="sticky top-20 z-40 border-b border-cream/10 bg-ink/90 backdrop-blur-md">
+      <div className="sticky top-20 z-40 border-b border-ink/10 bg-paper/92 backdrop-blur-md">
         <div className="mx-auto flex max-w-[1680px] items-center justify-between gap-6 px-6 lg:px-12">
           <div className="no-scrollbar flex items-center gap-8 overflow-x-auto py-5">
             {[{ key: 'all' as const, title: 'همه' }, ...CATEGORIES.map((c) => ({ key: c.key, title: c.title }))].map(
@@ -87,7 +87,7 @@ export function Shop() {
                   key={cat.key}
                   onClick={() => goShop(cat.key as 'all' | CategoryKey)}
                   className={`relative whitespace-nowrap pb-1 text-[0.82rem] font-light transition-colors duration-300 ${
-                    shopCategory === cat.key ? 'text-copper' : 'text-cream/70 hover:text-cream'
+                    shopCategory === cat.key ? 'text-copper' : 'text-ink/65 hover:text-ink'
                   }`}
                 >
                   {cat.title}
@@ -107,7 +107,7 @@ export function Shop() {
           <div className="relative hidden md:block">
             <button
               onClick={() => setSortOpen(!sortOpen)}
-              className="flex items-center gap-3 py-5 text-[0.78rem] font-light text-cream/75 transition-colors hover:text-cream"
+              className="flex items-center gap-3 py-5 text-[0.78rem] font-light text-ink/70 transition-colors hover:text-ink"
               aria-expanded={sortOpen}
             >
               <SlidersHorizontal size={14} strokeWidth={1.5} className="text-copper" />
@@ -120,7 +120,7 @@ export function Shop() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 8 }}
                   transition={{ duration: 0.3 }}
-                  className="absolute end-0 top-full z-50 w-44 border border-cream/12 bg-espresso py-2 shadow-2xl"
+                  className="absolute end-0 top-full z-50 w-44 border border-ink/12 bg-paper py-2 shadow-xl"
                 >
                   {SORTS.map((s) => (
                     <li key={s.key}>
@@ -130,7 +130,7 @@ export function Shop() {
                           setSortOpen(false);
                         }}
                         className={`w-full px-5 py-2.5 text-start text-[0.78rem] font-light transition-colors ${
-                          sort === s.key ? 'bg-cream/5 text-copper' : 'text-sand/80 hover:bg-cream/5 hover:text-cream'
+                          sort === s.key ? 'bg-copper/[0.08] text-copper' : 'text-ink/70 hover:bg-ink/[0.04] hover:text-ink'
                         }`}
                       >
                         {s.label}
@@ -145,7 +145,7 @@ export function Shop() {
       </div>
 
       {/* grid */}
-      <section className="bg-ink py-20 lg:py-28" aria-label="محصولات">
+      <section className="bg-paper py-20 lg:py-28" aria-label="محصولات">
         <div className="mx-auto max-w-[1680px] px-6 lg:px-12">
           <AnimatePresence mode="wait">
             <motion.div
@@ -167,7 +167,7 @@ export function Shop() {
       </section>
 
       {/* bespoke banner */}
-      <section className="hairline-t bg-espresso py-24" aria-label="سفارش اختصاصی">
+      <section className="border-t border-cream/10 bg-espresso py-24" aria-label="سفارش اختصاصی">
         <div className="mx-auto flex max-w-[1680px] flex-wrap items-center justify-between gap-10 px-6 lg:px-12">
           <div>
             <span className="latin-tag text-copper">Bespoke</span>

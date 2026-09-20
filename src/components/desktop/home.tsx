@@ -23,7 +23,7 @@ export function Home() {
   return (
     <>
       <Hero />
-      <Marquee items={MARQUEE_ITEMS} />
+      <Marquee items={MARQUEE_ITEMS} dark={false} />
       <Categories />
       <NewCollection />
       <BestSellers />

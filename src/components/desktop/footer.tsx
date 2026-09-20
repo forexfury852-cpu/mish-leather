@@ -25,7 +25,7 @@ export function Footer() {
           <div className="lg:col-span-5">
             <button onClick={goHome} className="flex flex-col items-start">
               <span className="latin-tag text-copper">Est. 2000 — Tehran</span>
-              <span className="mt-2 text-3xl font-medium leading-tight">
+              <span className="mt-2 text-3xl font-medium leading-tight text-cream">
                 چرم <span className="font-extralight text-copper">میش</span>
               </span>
             </button>
@@ -109,7 +109,7 @@ export function Footer() {
         <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-ink to-transparent" />
       </div>
 
-      <div className="hairline-t">
+      <div className="border-t border-cream/10">
         <div className="mx-auto flex max-w-[1680px] flex-wrap items-center justify-between gap-4 px-6 py-6 text-[0.68rem] font-light text-sand/45 lg:px-12">
           <span>© ۱۴۰۴ چرم میش — تمام حقوق محفوظ است.</span>
           <span className="latin-tag">Mish Leather Co. — Handcrafted</span>

@@ -52,10 +52,10 @@ export function ProductCard({ product, tall = false }: { product: Product; tall?
       <div className="mt-5 flex items-start justify-between gap-4">
         <div>
           <span className="latin-tag text-copper/80">{product.latin}</span>
-          <h3 className="mt-1.5 text-base font-light text-cream">{product.name}</h3>
-          <p className="mt-1 text-[0.7rem] font-light text-sand/55">{CATEGORY_TITLE[product.category]}</p>
+          <h3 className="mt-1.5 text-base font-light text-ink">{product.name}</h3>
+          <p className="mt-1 text-[0.7rem] font-light text-ink/50">{CATEGORY_TITLE[product.category]}</p>
         </div>
-        <span className="whitespace-nowrap text-sm font-light text-sand/90">{faPrice(product.price)}</span>
+        <span className="whitespace-nowrap text-sm font-light text-ink/80">{faPrice(product.price)}</span>
       </div>
     </article>
   );
@@ -67,9 +67,9 @@ export function NewCollection() {
   const [a, b, c, d] = NEW_COLLECTION;
 
   return (
-    <section className="relative overflow-hidden bg-ink py-28 lg:py-40" aria-label="مجموعه جدید">
+    <section className="relative overflow-hidden bg-paper py-28 lg:py-40" aria-label="مجموعه جدید">
       <span
-        className="text-outline pointer-events-none absolute -top-6 left-0 select-none text-[19vw] font-extralight leading-none opacity-60"
+        className="text-outline-ink pointer-events-none absolute -top-6 left-0 select-none text-[19vw] font-extralight leading-none opacity-60"
         aria-hidden
       >
         جدید
@@ -81,14 +81,14 @@ export function NewCollection() {
           <div className="lg:sticky lg:top-32">
             <SectionHead index="۰۲" title="مجموعه جدید" latin="New Arrivals" />
             <Reveal delay={0.2}>
-              <p className="mt-8 max-w-sm text-sm font-light leading-9 text-sand/75">
+              <p className="mt-8 max-w-sm text-sm font-light leading-9 text-ink/65">
                 پاییز ۱۴۰۴؛ روایتِ چرمی که هنوز قصه‌اش گفته نشده. چهار قطعه‌ی تازه از کارگاه میش، با دباغی گیاهی و یراق برنجی سناییده — محدود، شماره‌دار و امضاشده توسط استادکار.
               </p>
             </Reveal>
             <Reveal delay={0.3}>
               <button
                 onClick={() => goShop('all')}
-                className="lux-btn mt-12 border border-cream/25 px-9 py-4 text-sm font-light"
+                className="lux-btn mt-12 border border-ink/25 px-9 py-4 text-sm font-light"
               >
                 همه‌ی قطعات جدید
               </button>
@@ -151,7 +151,7 @@ export function BestSellers() {
   }, [embla, onSelect]);
 
   return (
-    <section className="hairline-t hairline-b bg-coal py-28 lg:py-36" aria-label="پرفروش‌ترین‌ها">
+    <section className="hairline-t hairline-b bg-paper-deep py-28 lg:py-36" aria-label="پرفروش‌ترین‌ها">
       <div className="mx-auto max-w-[1680px] px-6 lg:px-12">
         <div className="flex flex-wrap items-end justify-between gap-8">
           <SectionHead index="۰۳" title="پرفروش‌ترین‌ها" latin="Best Sellers" />
@@ -160,7 +160,7 @@ export function BestSellers() {
               onClick={() => embla?.scrollPrev()}
               disabled={!canPrev}
               aria-label="قبلی"
-              className="flex h-12 w-12 items-center justify-center rounded-full border border-cream/20 text-cream/80 transition-all duration-300 hover:border-copper hover:text-copper disabled:opacity-25 disabled:hover:border-cream/20 disabled:hover:text-cream/80"
+              className="flex h-12 w-12 items-center justify-center rounded-full border border-ink/20 text-ink/75 transition-all duration-300 hover:border-copper hover:text-copper disabled:opacity-25 disabled:hover:border-ink/20 disabled:hover:text-ink/75"
             >
               <ChevronRight size={18} strokeWidth={1.25} />
             </button>
@@ -168,7 +168,7 @@ export function BestSellers() {
               onClick={() => embla?.scrollNext()}
               disabled={!canNext}
               aria-label="بعدی"
-              className="flex h-12 w-12 items-center justify-center rounded-full border border-cream/20 text-cream/80 transition-all duration-300 hover:border-copper hover:text-copper disabled:opacity-25 disabled:hover:border-cream/20 disabled:hover:text-cream/80"
+              className="flex h-12 w-12 items-center justify-center rounded-full border border-ink/20 text-ink/75 transition-all duration-300 hover:border-copper hover:text-copper disabled:opacity-25 disabled:hover:border-ink/20 disabled:hover:text-ink/75"
             >
               <ChevronLeft size={18} strokeWidth={1.25} />
             </button>
@@ -224,34 +224,34 @@ export function Campaign() {
         </div>
 
         {/* text */}
-        <div className="relative order-1 flex flex-col justify-center bg-espresso px-6 py-24 lg:order-2 lg:px-20 lg:py-0 xl:px-28">
+        <div className="relative order-1 flex flex-col justify-center bg-paper px-6 py-24 lg:order-2 lg:px-20 lg:py-0 xl:px-28">
           <Reveal y={16}>
             <div className="flex items-center gap-4">
               <span className="latin-tag text-copper">Campaign — Autumn</span>
-              <span className="h-px w-14 bg-cream/25" />
-              <span className="text-sm font-light text-sand/70">۰۴</span>
+              <span className="h-px w-14 bg-ink/25" />
+              <span className="text-sm font-light text-ink/50">۰۴</span>
             </div>
           </Reveal>
           <h2 className="text-display-lg mt-8">
             <LineMask>عصرِ چرم</LineMask>
           </h2>
           <Reveal delay={0.15}>
-            <p className="mt-8 max-w-md text-sm font-light leading-9 text-sand/80">
+            <p className="mt-8 max-w-md text-sm font-light leading-9 text-ink/70">
               کمپین پاییز ۱۴۰۴ در قاب بتنی ساختمانی دهه‌پنجاه تصویر شده؛ جایی که سادگی معماری و پیچیدگی چرم به توازن می‌رسند. مدل‌ها بدون لوگو، بدون شعار — فقط فرم، بافت و نور.
             </p>
           </Reveal>
           <Reveal delay={0.25}>
             <blockquote className="mt-12 border-s-2 border-copper/60 ps-6">
-              <p className="text-lg font-extralight leading-10 text-cream/95">
+              <p className="text-lg font-extralight leading-10 text-ink/90">
                 «چرم، پوستی است که زمان به آن زیبایی می‌بخشد.»
               </p>
-              <cite className="mt-3 block text-xs font-light not-italic text-sand/60">
+              <cite className="mt-3 block text-xs font-light not-italic text-ink/50">
                 — استاد رحیم میش‌کار، بنیان‌گذار
               </cite>
             </blockquote>
           </Reveal>
           <Reveal delay={0.35}>
-            <button onClick={() => goShop('all')} className="lux-btn mt-14 w-fit border border-cream/25 px-9 py-4 text-sm font-light">
+            <button onClick={() => goShop('all')} className="lux-btn mt-14 w-fit border border-ink/25 px-9 py-4 text-sm font-light">
               تماشای مجموعه کمپین
             </button>
           </Reveal>

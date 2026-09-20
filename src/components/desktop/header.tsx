@@ -12,6 +12,9 @@ export function SiteHeader() {
   const { scrollY } = useScroll();
   useMotionValueEvent(scrollY, 'change', (v) => setScrolled(v > 40));
 
+  // solid warm-ivory bar everywhere except over the cinematic home hero
+  const solid = scrolled || view !== 'home';
+
   const scrollToCraft = () => {
     goHome();
     setTimeout(() => {
@@ -31,7 +34,7 @@ export function SiteHeader() {
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 1, delay: 2.6, ease: EASE }}
       className={`fixed inset-x-0 top-0 z-[60] transition-all duration-700 ${
-        scrolled ? 'border-b border-cream/10 bg-ink/85 backdrop-blur-md' : 'bg-transparent'
+        solid ? 'border-b border-ink/10 bg-paper/90 backdrop-blur-md' : 'bg-transparent'
       }`}
     >
       <div className="mx-auto flex h-20 max-w-[1680px] items-center justify-between px-6 lg:px-12">
@@ -42,7 +45,11 @@ export function SiteHeader() {
               key={l.label}
               onClick={l.onClick}
               className={`lux-link text-[0.82rem] font-light tracking-wide transition-colors duration-300 ${
-                l.active ? 'text-copper' : 'text-cream/85 hover:text-cream'
+                l.active
+                  ? 'text-copper'
+                  : solid
+                    ? 'text-ink/80 hover:text-ink'
+                    : 'text-cream/85 hover:text-cream'
               }`}
             >
               {l.label}
@@ -52,7 +59,11 @@ export function SiteHeader() {
 
         {/* wordmark */}
         <button onClick={goHome} className="group flex flex-col items-center" aria-label="چرم میش — خانه">
-          <span className="latin-tag text-[0.5rem] text-copper/80 transition-colors group-hover:text-copper">
+          <span
+            className={`latin-tag text-[0.5rem] transition-colors group-hover:text-copper ${
+              solid ? 'text-copper/70' : 'text-copper/80'
+            }`}
+          >
             Est. 2000 — Tehran
           </span>
           <span className="mt-1 text-xl font-medium leading-none">
@@ -62,23 +73,40 @@ export function SiteHeader() {
 
         {/* actions */}
         <div className="flex items-center gap-6">
-          <button aria-label="جستجو" className="hidden text-cream/80 transition-colors hover:text-copper md:block">
+          <button
+            aria-label="جستجو"
+            className={`hidden transition-colors hover:text-copper md:block ${
+              solid ? 'text-ink/75' : 'text-cream/80'
+            }`}
+          >
             <Search size={17} strokeWidth={1.5} />
           </button>
-          <button aria-label="علاقه‌مندی‌ها" className="hidden text-cream/80 transition-colors hover:text-copper md:block">
+          <button
+            aria-label="علاقه‌مندی‌ها"
+            className={`hidden transition-colors hover:text-copper md:block ${
+              solid ? 'text-ink/75' : 'text-cream/80'
+            }`}
+          >
             <Heart size={17} strokeWidth={1.5} />
           </button>
-          <button aria-label="سبد خرید" className="relative text-cream/85 transition-colors hover:text-copper">
+          <button
+            aria-label="سبد خرید"
+            className={`relative transition-colors hover:text-copper ${
+              solid ? 'text-ink/85' : 'text-cream/85'
+            }`}
+          >
             <ShoppingBag size={18} strokeWidth={1.5} />
             {cartCount > 0 && (
-              <span className="absolute -right-2 -top-2 flex h-4 w-4 items-center justify-center rounded-full bg-copper text-[0.55rem] font-semibold text-ink">
+              <span className="absolute -right-2 -top-2 flex h-4 w-4 items-center justify-center rounded-full bg-copper text-[0.55rem] font-semibold text-paper">
                 {String(cartCount).replace(/\d/g, (d) => '۰۱۲۳۴۵۶۷۸۹'[Number(d)])}
               </span>
             )}
           </button>
           <button
             onClick={() => goShop('all')}
-            className="lux-btn hidden border border-cream/25 px-6 py-2.5 text-[0.78rem] font-light text-cream/90 transition-colors lg:block"
+            className={`lux-btn hidden border px-6 py-2.5 text-[0.78rem] font-light transition-colors lg:block ${
+              solid ? 'border-ink/25 text-ink/90' : 'border-cream/25 text-cream/90'
+            }`}
           >
             مشاهده مجموعه
           </button>

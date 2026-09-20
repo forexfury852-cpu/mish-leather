@@ -39,7 +39,7 @@ export function Categories() {
   const open = (key: CategoryKey) => goShop(key);
 
   return (
-    <section ref={wrapRef} className="relative h-[420vh] bg-ink" aria-label="دسته‌بندی‌ها">
+    <section ref={wrapRef} className="relative h-[420vh] bg-paper" aria-label="دسته‌بندی‌ها">
       <div className="sticky top-0 flex h-screen flex-col justify-center overflow-hidden">
         {/* header line */}
         <div className="absolute inset-x-0 top-0 z-10 flex items-end justify-between px-6 pt-28 lg:px-12">
@@ -47,8 +47,8 @@ export function Categories() {
             <Reveal y={20}>
               <div className="flex items-center gap-4">
                 <span className="latin-tag text-copper">The World of Mish</span>
-                <span className="h-px w-14 bg-cream/25" />
-                <span className="text-sm font-light text-sand/70">۰۱</span>
+                <span className="h-px w-14 bg-ink/25" />
+                <span className="text-sm font-light text-ink/50">۰۱</span>
               </div>
             </Reveal>
             <h2 className="text-display-lg mt-4">
@@ -56,7 +56,7 @@ export function Categories() {
             </h2>
           </div>
           <Reveal y={20} className="hidden pb-2 md:block">
-            <span className="text-xs font-light text-sand/50">برای کاوش، اسکرول کنید ←</span>
+            <span className="text-xs font-light text-ink/45">برای کاوش، اسکرول کنید ←</span>
           </Reveal>
         </div>
 
@@ -68,15 +68,15 @@ export function Categories() {
         >
           {/* intro panel */}
           <div className="flex w-[30vw] min-w-[300px] flex-col justify-center">
-            <p className="text-display-md leading-snug text-cream/95">
+            <p className="text-display-md leading-snug text-ink">
               پنج دنیا،
               <br />
               یک <span className="text-copper">امضا</span>
             </p>
-            <p className="mt-6 max-w-xs text-sm font-light leading-8 text-sand/70">
+            <p className="mt-6 max-w-xs text-sm font-light leading-8 text-ink/65">
               هر دسته، فصلی از یک روایت است؛ چرمی که از کارگاه میش بیرون می‌رود، برای یک عمر ساخته شده است.
             </p>
-            <div className="mt-10 h-px w-full max-w-xs bg-cream/10">
+            <div className="mt-10 h-px w-full max-w-xs bg-ink/10">
               <motion.div style={{ width: progress }} className="h-px bg-copper" />
             </div>
           </div>
@@ -89,7 +89,7 @@ export function Categories() {
               className="group relative h-[62vh] w-[38vw] min-w-[330px] overflow-hidden text-start"
               aria-label={`دسته‌ی ${cat.title}`}
             >
-              <span className="text-outline absolute -top-4 right-4 z-10 select-none text-[7rem] font-extralight leading-none opacity-80">
+              <span className="text-outline-ink absolute -top-4 right-4 z-10 select-none text-[7rem] font-extralight leading-none opacity-90">
                 {FA_INDEX[i]}
               </span>
               <div className="img-zoom absolute inset-0">
@@ -123,11 +123,11 @@ export function Categories() {
           <button
             onClick={() => goShop('all')}
             data-hover
-            className="group relative flex h-[62vh] w-[24vw] min-w-[260px] flex-col items-start justify-center overflow-hidden border border-cream/12 bg-espresso p-10 text-start"
+            className="group relative flex h-[62vh] w-[24vw] min-w-[260px] flex-col items-start justify-center overflow-hidden border border-espresso bg-espresso p-10 text-start"
             aria-label="همه‌ی محصولات"
           >
             <span className="latin-tag text-copper">Full Catalogue</span>
-            <span className="text-display-md mt-6 leading-snug">
+            <span className="text-display-md mt-6 leading-snug text-cream">
               همه‌ی
               <br />
               محصولات

@@ -13,7 +13,6 @@
 @font-face { font-family: 'Vazirmatn'; src: url('/fonts/Vazirmatn-Bold.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: swap; }
 @font-face { font-family: 'Vazirmatn'; src: url('/fonts/Vazirmatn-ExtraBold.woff2') format('woff2'); font-weight: 800; font-style: normal; font-display: swap; }
 @font-face { font-family: 'Vazirmatn'; src: url('/fonts/Vazirmatn-Black.woff2') format('woff2'); font-weight: 900; font-style: normal; font-display: swap; }
-@font-face { font-family: 'Marcellus'; src: url('/fonts/Marcellus-400.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
 
 @theme inline {
   --color-background: var(--background);
@@ -32,10 +31,12 @@
   --color-copper-bright: var(--copper-bright);
   --color-cream: var(--cream);
   --color-sand: var(--sand);
+  --color-paper: var(--paper);
+  --color-paper-deep: var(--paper-deep);
   --color-hairline: var(--hairline);
 
   --font-sans: 'Vazirmatn', ui-sans-serif, system-ui, sans-serif;
-  --font-latin: 'Marcellus', 'Vazirmatn', serif;
+  --font-latin: 'Vazirmatn', ui-sans-serif, system-ui, sans-serif;
 
   --animate-marquee: marquee 36s linear infinite;
   --animate-scroll-dot: scroll-dot 2.2s cubic-bezier(.65,0,.35,1) infinite;
@@ -43,24 +44,26 @@
 }
 
 :root {
-  /* MISH LEATHER palette — dark cinematic luxury */
-  --ink: #0a0806;
-  --coal: #120e0a;
-  --espresso: #1b140e;
-  --leather: #6e4526;
-  --leather-soft: #8a5c33;
-  --copper: #c08a5c;
-  --copper-bright: #d9a876;
-  --cream: #efe8db;
+  /* MISH LEATHER palette — warm ivory editorial + leather brown + cinematic dark accents */
+  --ink: #1c130a;
+  --coal: #241a10;
+  --espresso: #2e2013;
+  --leather: #7a4c28;
+  --leather-soft: #96602f;
+  --copper: #b5722f;
+  --copper-bright: #cf8f4e;
+  --cream: #f2ead9;
   --sand: #c9b99f;
-  --hairline: rgba(239, 232, 219, 0.1);
+  --paper: #f7f2e8;
+  --paper-deep: #efe7d6;
+  --hairline: rgba(28, 19, 10, 0.12);
 
-  --background: #0a0806;
-  --foreground: #efe8db;
-  --border: rgba(239, 232, 219, 0.1);
-  --ring: rgba(192, 138, 92, 0.6);
-  --primary: #c08a5c;
-  --primary-foreground: #0a0806;
+  --background: #f7f2e8;
+  --foreground: #221609;
+  --border: rgba(28, 19, 10, 0.12);
+  --ring: rgba(181, 114, 47, 0.55);
+  --primary: #b5722f;
+  --primary-foreground: #f7f2e8;
 
   --radius: 0;
 }
@@ -72,8 +75,8 @@ html {
 }
 
 body {
-  background: var(--ink);
-  color: var(--cream);
+  background: var(--paper);
+  color: var(--foreground);
   font-family: 'Vazirmatn', ui-sans-serif, system-ui, sans-serif;
   font-feature-settings: "ss01";
   -webkit-font-smoothing: antialiased;
@@ -81,13 +84,13 @@ body {
   overflow-x: hidden;
 }
 
-::selection { background: var(--copper); color: var(--ink); }
+::selection { background: var(--copper); color: var(--paper); }
 
 /* Scrollbars */
 *::-webkit-scrollbar { width: 9px; height: 9px; }
-*::-webkit-scrollbar-track { background: #0a0806; }
-*::-webkit-scrollbar-thumb { background: #2b2118; }
-*::-webkit-scrollbar-thumb:hover { background: #6e4526; }
+*::-webkit-scrollbar-track { background: #efe7d6; }
+*::-webkit-scrollbar-thumb { background: #cfc0a4; }
+*::-webkit-scrollbar-thumb:hover { background: #7a4c28; }
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
@@ -111,27 +114,28 @@ body {
   font-weight: 200;
 }
 .latin-tag {
-  font-family: 'Marcellus', 'Vazirmatn', serif;
-  letter-spacing: 0.42em;
+  font-family: 'Vazirmatn', ui-sans-serif, sans-serif;
+  letter-spacing: 0.38em;
   text-transform: uppercase;
   font-size: 0.62rem;
-  font-weight: 400;
+  font-weight: 500;
 }
 .latin-word {
-  font-family: 'Marcellus', 'Vazirmatn', serif;
+  font-family: 'Vazirmatn', ui-sans-serif, sans-serif;
   letter-spacing: 0.18em;
   text-transform: uppercase;
+  font-weight: 500;
 }
 .text-outline {
-  -webkit-text-stroke: 1px rgba(239, 232, 219, 0.22);
+  -webkit-text-stroke: 1px rgba(242, 234, 217, 0.28);
   color: transparent;
 }
 .text-outline-copper {
-  -webkit-text-stroke: 1px rgba(192, 138, 92, 0.4);
+  -webkit-text-stroke: 1px rgba(181, 114, 47, 0.45);
   color: transparent;
 }
 .text-outline-ink {
-  -webkit-text-stroke: 1px rgba(10, 8, 6, 0.25);
+  -webkit-text-stroke: 1px rgba(28, 19, 10, 0.2);
   color: transparent;
 }
 
@@ -152,7 +156,7 @@ body {
   z-index: -1;
 }
 .lux-btn:hover::before { transform: scaleX(1); }
-.lux-btn:hover { color: var(--ink); border-color: var(--copper); }
+.lux-btn:hover { color: var(--paper); border-color: var(--copper); }
 
 .lux-btn-ink::before { background: var(--ink); }
 .lux-btn-ink:hover { color: var(--cream); border-color: var(--ink); }
@@ -192,8 +196,8 @@ body {
   z-index: 70;
   pointer-events: none;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  opacity: 0.05;
-  mix-blend-mode: overlay;
+  opacity: 0.035;
+  mix-blend-mode: multiply;
   animation: grain-shift 0.9s steps(4) infinite;
 }
 @keyframes grain-shift {
@@ -219,17 +223,17 @@ body {
 .hairline-b { border-bottom: 1px solid var(--hairline); }
 .hairline-s { border-inline-start: 1px solid var(--hairline); }
 
-/* Dark input underline */
+/* Light input underline */
 .lux-input {
   background: transparent;
   border: 0;
-  border-bottom: 1px solid rgba(239, 232, 219, 0.22);
+  border-bottom: 1px solid rgba(28, 19, 10, 0.25);
   padding: 0.9rem 0.25rem;
-  color: var(--cream);
+  color: var(--foreground);
   outline: none;
   transition: border-color 0.4s ease;
 }
-.lux-input::placeholder { color: rgba(239, 232, 219, 0.35); }
+.lux-input::placeholder { color: rgba(28, 19, 10, 0.38); }
 .lux-input:focus { border-color: var(--copper); }
 
 /* Keyboard focus */

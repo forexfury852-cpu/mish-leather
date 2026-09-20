@@ -1,14 +1,12 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { motion, useMotionValue, useSpring } from 'framer-motion';
+import { motion, useMotionValue } from 'framer-motion';
 
-/** Trailing copper ring cursor accent — fine pointers only, native cursor kept */
+/** Minimal dot cursor accent — fine pointers only, native cursor kept */
 export function Cursor() {
   const x = useMotionValue(-100);
   const y = useMotionValue(-100);
-  const sx = useSpring(x, { stiffness: 250, damping: 24, mass: 0.6 });
-  const sy = useSpring(y, { stiffness: 250, damping: 24, mass: 0.6 });
   const [active, setActive] = useState(false);
   const [enabled, setEnabled] = useState(false);
 
@@ -33,14 +31,14 @@ export function Cursor() {
   return (
     <motion.div
       aria-hidden
-      className="pointer-events-none fixed z-[95] rounded-full border border-copper/70"
-      style={{ x: sx, y: sy, translateX: '-50%', translateY: '-50%' }}
+      className="pointer-events-none fixed z-[95] rounded-full bg-copper"
+      style={{ x, y, translateX: '-50%', translateY: '-50%' }}
       animate={{
-        width: active ? 52 : 30,
-        height: active ? 52 : 30,
-        opacity: active ? 0.9 : 0.45,
+        width: active ? 20 : 7,
+        height: active ? 20 : 7,
+        opacity: active ? 0.35 : 0.8,
       }}
-      transition={{ duration: 0.3, ease: 'easeOut' }}
+      transition={{ duration: 0.25, ease: 'easeOut' }}
     />
   );
 }
@@ -77,7 +75,7 @@ export function Preloader({ onDone }: { onDone: () => void }) {
 
   return (
     <motion.div
-      className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-ink"
+      className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-ink text-cream"
       exit={{ clipPath: 'inset(0 0 100% 0)' }}
       transition={{ duration: 1, ease: [0.76, 0, 0.24, 1] }}
       aria-hidden

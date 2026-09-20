@@ -3,7 +3,7 @@
 import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowLeft, ChevronLeft, Star } from 'lucide-react';
-import { BEST_SELLERS, CATEGORIES, NEW_COLLECTION, TESTIMONIALS, faPrice } from '@/lib/data';
+import { BEST_SELLERS, CATEGORIES, NEW_COLLECTION, TESTIMONIALS } from '@/lib/data';
 import { useUI } from '@/lib/store';
 import { LineMaskMount, Reveal, EASE } from '@/components/fx/reveal';
 import { MobileProductCard } from './chrome';
@@ -22,7 +22,7 @@ export function MobileHome() {
   const campY = useTransform(campP, [0, 1], ['-12%', '12%']);
 
   return (
-    <div className="bg-ink pb-24">
+    <div className="bg-paper pb-24">
       {/* ---------- HERO ---------- */}
       <section ref={heroRef} className="relative h-[94cqh] min-h-[560px] overflow-hidden">
         <motion.div style={{ y: heroY }} className="absolute inset-0">
@@ -45,7 +45,7 @@ export function MobileHome() {
           className="absolute inset-x-0 top-12 flex items-center justify-between px-6"
         >
           <span className="latin-tag text-copper">Est. 2000</span>
-          <span className="text-lg font-medium">
+          <span className="text-lg font-medium text-cream">
             چرم <span className="font-extralight text-copper">میش</span>
           </span>
           <span className="latin-tag text-copper">Tehran</span>
@@ -62,7 +62,7 @@ export function MobileHome() {
             <span className="h-px w-10 bg-copper/80" />
             <span className="latin-tag text-copper">Autumn Collection</span>
           </motion.div>
-          <h1 className="text-[2.6rem] font-extralight leading-[1.28]">
+          <h1 className="text-[2.6rem] font-extralight leading-[1.28] text-cream">
             <LineMaskMount delay={bootedDelay + 0.55}>اصالت،</LineMaskMount>
             <LineMaskMount delay={bootedDelay + 0.72}>
               در <span className="font-medium text-copper">جزئیات</span> ساخته می‌شود
@@ -84,7 +84,7 @@ export function MobileHome() {
           >
             <button
               onClick={() => goShop('all')}
-              className="lux-btn border border-cream/30 py-4 text-sm font-light"
+              className="lux-btn border border-cream/30 py-4 text-sm font-light text-cream"
             >
               <span className="flex items-center justify-center gap-3">
                 مشاهده مجموعه
@@ -118,7 +118,7 @@ export function MobileHome() {
             <button
               key={cat.key}
               onClick={() => goShop(cat.key)}
-              className="relative aspect-[3/4.4] w-[68vw] flex-none snap-center overflow-hidden text-start"
+              className="relative aspect-[3/4] w-[56vw] flex-none snap-center overflow-hidden text-start"
               aria-label={cat.title}
             >
               { }
@@ -139,33 +139,17 @@ export function MobileHome() {
         </div>
       </section>
 
-      {/* ---------- NEW COLLECTION — full-bleed stack ---------- */}
+      {/* ---------- NEW COLLECTION — clean 2-col grid ---------- */}
       <section className="pt-20">
         <header className="px-6">
           <span className="latin-tag text-copper">New Arrivals</span>
           <h2 className="mt-2 text-[1.55rem] font-extralight">
-            مجموعه جدید <span className="text-sand/40 text-sm font-light">— پاییز ۱۴۰۴</span>
+            مجموعه جدید <span className="text-ink/40 text-sm font-light">— پاییز ۱۴۰۴</span>
           </h2>
         </header>
-        <div className="mt-7 flex flex-col gap-14">
-          {NEW_COLLECTION.slice(0, 3).map((p) => (
-            <div key={p.id}>
-              <div onClick={() => goProduct(p.id)} className="relative h-[64cqh] overflow-hidden" data-hover>
-                { }
-                <img src={p.image} alt={p.name} loading="lazy" className="h-full w-full object-cover" />
-                <div className="absolute inset-0 bg-gradient-to-t from-ink/95 via-ink/10 to-transparent" />
-                <div className="absolute inset-x-0 bottom-0 flex items-end justify-between p-6">
-                  <div>
-                    <span className="latin-tag text-copper/90">{p.latin}</span>
-                    <h3 className="mt-1.5 text-xl font-extralight text-cream">{p.name}</h3>
-                    <p className="mt-1 text-[0.8rem] font-light text-sand/80">{faPrice(p.price)}</p>
-                  </div>
-                  <span className="flex h-11 w-11 items-center justify-center rounded-full border border-cream/30 bg-ink/40 text-cream backdrop-blur">
-                    <ArrowLeft size={16} strokeWidth={1.5} />
-                  </span>
-                </div>
-              </div>
-            </div>
+        <div className="mt-7 grid grid-cols-2 gap-x-3 gap-y-9 px-6">
+          {NEW_COLLECTION.slice(0, 4).map((p) => (
+            <MobileProductCard key={p.id} product={p} />
           ))}
         </div>
       </section>
@@ -182,9 +166,9 @@ export function MobileHome() {
             <ChevronLeft size={13} strokeWidth={1.5} />
           </button>
         </header>
-        <div className="no-scrollbar mt-7 flex snap-x snap-mandatory gap-5 overflow-x-auto px-6 pb-2">
+        <div className="no-scrollbar mt-7 flex snap-x snap-mandatory gap-4 overflow-x-auto px-6 pb-2">
           {BEST_SELLERS.map((p, i) => (
-            <div key={p.id} className={`w-[60vw] flex-none snap-start ${i % 2 === 1 ? 'translate-y-5' : ''}`}>
+            <div key={p.id} className={`w-[44vw] flex-none snap-start ${i % 2 === 1 ? 'translate-y-4' : ''}`}>
               <MobileProductCard product={p} compact />
             </div>
           ))}
@@ -193,7 +177,7 @@ export function MobileHome() {
       </section>
 
       {/* ---------- CAMPAIGN ---------- */}
-      <section ref={campaignRef} className="relative mt-24 h-[70cqh] overflow-hidden">
+      <section ref={campaignRef} className="relative mt-24 h-[52cqh] min-h-[380px] overflow-hidden">
         <motion.img
           src="/images/campaign.jpg"
           alt="کمپین پاییز"
@@ -223,7 +207,7 @@ export function MobileHome() {
           چرم، در دستان ما
           <span className="text-copper"> جان می‌گیرد</span>
         </h2>
-        <p className="mt-4 text-[0.83rem] font-light leading-8 text-sand/70">
+        <p className="mt-4 text-[0.83rem] font-light leading-8 text-ink/60">
           چهارده ساعت کار دست روی هر کیف؛ از انتخاب پوست در دباغی تا کوک آخرِ لبه. هر قطعه شماره‌ی سری و امضای استادکار خودش را دارد.
         </p>
         <div className="mt-7 grid grid-cols-2 gap-3">
@@ -243,9 +227,9 @@ export function MobileHome() {
             { v: '۱۰۰٪', l: 'چرم طبیعی' },
             { v: '∞', l: 'ضمانت دوخت' },
           ].map((s) => (
-            <div key={s.l} className="flex-none border border-cream/12 px-6 py-4">
+            <div key={s.l} className="flex-none border border-ink/12 px-6 py-4">
               <div className="text-2xl font-extralight text-copper">{s.v}</div>
-              <div className="mt-1 text-[0.62rem] font-light text-sand/60">{s.l}</div>
+              <div className="mt-1 text-[0.62rem] font-light text-ink/50">{s.l}</div>
             </div>
           ))}
         </div>
@@ -254,18 +238,18 @@ export function MobileHome() {
       {/* ---------- TESTIMONIAL ---------- */}
       <section className="px-6 pt-20">
         <span className="latin-tag text-copper">Testimonials</span>
-        <div className="no-scrollbar mt-6 flex snap-x snap-mandatory gap-5 overflow-x-auto pb-2">
+        <div className="no-scrollbar mt-6 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2">
           {TESTIMONIALS.map((t) => (
-            <figure key={t.name} className="w-[82vw] flex-none snap-center border border-cream/12 bg-espresso/60 p-7">
+            <figure key={t.name} className="w-[78vw] flex-none snap-center border border-ink/12 bg-paper-deep p-6">
               <div className="flex gap-1">
                 {Array.from({ length: 5 }).map((_, i) => (
                   <Star key={i} size={12} className="fill-copper text-copper" strokeWidth={1} />
                 ))}
               </div>
-              <blockquote className="mt-5 text-[0.9rem] font-extralight leading-8 text-cream/95">{t.quote}</blockquote>
+              <blockquote className="mt-5 text-[0.9rem] font-extralight leading-8 text-ink/90">{t.quote}</blockquote>
               <figcaption className="mt-5">
                 <div className="text-[0.78rem] font-medium text-copper">{t.name}</div>
-                <div className="mt-0.5 text-[0.65rem] font-light text-sand/55">{t.role}</div>
+                <div className="mt-0.5 text-[0.65rem] font-light text-ink/50">{t.role}</div>
               </figcaption>
             </figure>
           ))}
@@ -274,10 +258,10 @@ export function MobileHome() {
 
       {/* ---------- NEWSLETTER ---------- */}
       <section className="px-6 pt-20">
-        <div className="border border-cream/12 bg-coal p-7">
+        <div className="border border-ink/12 bg-paper-deep p-7">
           <span className="latin-tag text-copper">Newsletter</span>
           <h2 className="mt-3 text-xl font-extralight">به دنیای میش بپیوندید</h2>
-          <p className="mt-3 text-[0.78rem] font-light leading-7 text-sand/65">
+          <p className="mt-3 text-[0.78rem] font-light leading-7 text-ink/60">
             مجموعه‌های محدود و دعوت‌نامه‌ی حراج خصوصی، ماهی یک نامه.
           </p>
           <form
@@ -299,7 +283,7 @@ export function MobileHome() {
                 aria-label="ایمیل"
                 className="lux-input text-[0.85rem]"
               />
-              <button type="submit" className="lux-btn border border-cream/30 py-4 text-[0.85rem] font-light">
+              <button type="submit" className="lux-btn border border-ink/25 py-4 text-[0.85rem] font-light">
                 عضویت
               </button>
             </div>
@@ -311,25 +295,25 @@ export function MobileHome() {
       </section>
 
       {/* ---------- FOOTER (compact) ---------- */}
-      <footer className="mt-20 border-t border-cream/10 px-6 pb-10 pt-12">
+      <footer className="mt-20 border-t border-ink/10 px-6 pb-10 pt-12">
         <div className="flex flex-col items-center text-center">
           <span className="latin-tag text-copper">Est. 2000 — Tehran</span>
           <span className="mt-2 text-2xl font-medium">
             چرم <span className="font-extralight text-copper">میش</span>
           </span>
-          <p className="mt-4 max-w-[32ch] text-[0.72rem] font-light leading-6 text-sand/55">
+          <p className="mt-4 max-w-[32ch] text-[0.72rem] font-light leading-6 text-ink/50">
             تهران، خیابان ولی‌عصر، نبش کوچه زرتشت — شنبه تا چهارشنبه ۱۰ تا ۲۰
           </p>
-          <div className="mt-6 flex gap-8 text-[0.72rem] font-light text-sand/70">
+          <div className="mt-6 flex gap-8 text-[0.72rem] font-light text-ink/65">
             <button onClick={() => goShop('all')} className="lux-link">فروشگاه</button>
             <button onClick={() => goProduct('arta-messenger')} className="lux-link">قطعه امضا</button>
             <a href="https://instagram.com" target="_blank" rel="noreferrer" className="lux-link">اینستاگرام</a>
           </div>
         </div>
-        <div className="mt-10 select-none overflow-hidden text-center text-[4.4rem] font-black leading-[0.9] text-cream/[0.05]" aria-hidden>
+        <div className="mt-10 select-none overflow-hidden text-center text-[4.4rem] font-black leading-[0.9] text-ink/[0.06]" aria-hidden>
           چرم میش
         </div>
-        <p className="mt-4 text-center text-[0.62rem] font-light text-sand/40">© ۱۴۰۴ چرم میش — تمام حقوق محفوظ است.</p>
+        <p className="mt-4 text-center text-[0.62rem] font-light text-ink/40">© ۱۴۰۴ چرم میش — تمام حقوق محفوظ است.</p>
       </footer>
     </div>
   );

@@ -30,7 +30,7 @@ export function PhoneFrame({ children }: { children: React.ReactNode }) {
         </div>
       </div>
       {/* caption under frame */}
-      <p className="mt-7 text-center text-[0.68rem] font-light leading-6 text-sand/45">
+      <p className="mt-7 text-center text-[0.68rem] font-light leading-6 text-ink/45">
         تجربه‌ی اختصاصی موبایل — درون قاب اسکرول کنید
       </p>
     </motion.div>
@@ -108,18 +108,18 @@ export function PresentationDock() {
 /* ---------- Desktop presentation stage for mobile screens ---------- */
 export function MobileStage({ children }: { children: React.ReactNode }) {
   return (
-    <div className="relative flex min-h-svh flex-col items-center justify-center overflow-hidden bg-ink py-16">
+    <div className="relative flex min-h-svh flex-col items-center justify-center overflow-hidden bg-paper py-16">
       {/* ambient background */}
       <div
-        className="absolute inset-0 opacity-40"
+        className="absolute inset-0 opacity-70"
         style={{
           background:
-            'radial-gradient(60% 50% at 70% 30%, rgba(110,69,38,0.22), transparent 70%), radial-gradient(50% 40% at 20% 80%, rgba(192,138,92,0.1), transparent 70%)',
+            'radial-gradient(60% 50% at 70% 30%, rgba(181,114,47,0.14), transparent 70%), radial-gradient(50% 40% at 20% 80%, rgba(122,76,40,0.1), transparent 70%)',
         }}
         aria-hidden
       />
       <span
-        className="text-outline pointer-events-none absolute top-10 left-1/2 -translate-x-1/2 select-none whitespace-nowrap text-[11vw] font-extralight leading-none opacity-40"
+        className="text-outline-ink pointer-events-none absolute top-10 left-1/2 -translate-x-1/2 select-none whitespace-nowrap text-[11vw] font-extralight leading-none opacity-50"
         aria-hidden
       >
         MISH LEATHER
@@ -134,10 +134,10 @@ export function MobileStage({ children }: { children: React.ReactNode }) {
             <br />
             برای لمس
           </h2>
-          <p className="mt-6 text-sm font-light leading-8 text-sand/70">
+          <p className="mt-6 text-sm font-light leading-8 text-ink/60">
             تجربه‌ی موبایل میش، بازطراحی کامل است؛ نه نسخه‌ی کوچک‌شده‌ی دسکتاپ. ناوبری پایینی، فیلتر کشویی و خرید چسبان — همه در دسترس شست.
           </p>
-          <ul className="mt-8 space-y-3 text-[0.78rem] font-light text-sand/60">
+          <ul className="mt-8 space-y-3 text-[0.78rem] font-light text-ink/55">
             {['ناوبری پایینی اختصاصی', 'فیلتر Bottom-Sheet کشویی', 'دکمه‌ی خرید چسبان', 'گالری سوایپی تمام‌صفحه'].map((t) => (
               <li key={t} className="flex items-center gap-3">
                 <span className="text-[0.5rem] text-copper">✦</span>

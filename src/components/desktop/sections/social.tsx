@@ -94,14 +94,14 @@ export function Testimonials() {
 /* ---------------- Instagram gallery ---------------- */
 export function InstagramGallery() {
   return (
-    <section className="bg-ink py-24 lg:py-32" aria-label="اینستاگرام">
+    <section className="bg-paper py-24 lg:py-32" aria-label="اینستاگرام">
       <div className="mx-auto mb-14 flex max-w-[1680px] flex-wrap items-end justify-between gap-8 px-6 lg:px-12">
         <div>
           <Reveal y={16}>
             <div className="flex items-center gap-4">
               <span className="latin-tag text-copper">@mishleather</span>
-              <span className="h-px w-14 bg-cream/25" />
-              <span className="text-sm font-light text-sand/70">۰۹</span>
+              <span className="h-px w-14 bg-ink/25" />
+              <span className="text-sm font-light text-ink/50">۰۹</span>
             </div>
           </Reveal>
           <h2 className="text-display-lg mt-5">
@@ -113,7 +113,7 @@ export function InstagramGallery() {
             href="https://instagram.com"
             target="_blank"
             rel="noreferrer"
-            className="lux-btn flex items-center gap-3 border border-cream/25 px-7 py-3.5 text-sm font-light"
+            className="lux-btn flex items-center gap-3 border border-ink/25 px-7 py-3.5 text-sm font-light"
           >
             <Instagram size={16} strokeWidth={1.5} />
             دنبال کنید
@@ -155,7 +155,7 @@ export function Newsletter() {
   const [joined, setJoined] = useState(false);
 
   return (
-    <section className="hairline-t bg-coal py-28 lg:py-36" aria-label="خبرنامه">
+    <section className="hairline-t bg-paper-deep py-28 lg:py-36" aria-label="خبرنامه">
       <div className="mx-auto max-w-2xl px-6 text-center">
         <Reveal y={16}>
           <span className="latin-tag text-copper">Newsletter — عضویت</span>
@@ -164,7 +164,7 @@ export function Newsletter() {
           <LineMask>به دنیای میش بپیوندید</LineMask>
         </h2>
         <Reveal delay={0.15}>
-          <p className="mx-auto mt-6 max-w-md text-sm font-light leading-8 text-sand/70">
+          <p className="mx-auto mt-6 max-w-md text-sm font-light leading-8 text-ink/60">
             نخستین نفراتی باشید که از مجموعه‌های محدود، دعوت‌نامه‌ی حراج‌های خصوصی و قصه‌های کارگاه باخبر می‌شوند.
           </p>
         </Reveal>
@@ -177,7 +177,7 @@ export function Newsletter() {
               className="mt-12 border border-copper/40 bg-copper/[0.06] px-8 py-6"
             >
               <p className="text-sm font-light text-copper">خوش آمدید — کد تخفیف ۱۰٪ خرید نخست شما:</p>
-              <p className="latin-word mt-2 text-lg tracking-[0.4em] text-cream">MISH10</p>
+              <p className="latin-word mt-2 text-lg tracking-[0.4em] text-ink">MISH10</p>
             </motion.div>
           ) : (
             <form
@@ -194,14 +194,14 @@ export function Newsletter() {
                 aria-label="ایمیل"
                 className="lux-input flex-1 text-sm"
               />
-              <button type="submit" className="lux-btn border border-cream/30 px-9 py-3 text-sm font-light">
+              <button type="submit" className="lux-btn border border-ink/25 px-9 py-3 text-sm font-light">
                 عضویت
               </button>
             </form>
           )}
         </Reveal>
         <Reveal delay={0.3}>
-          <p className="mt-6 text-[0.68rem] font-light text-sand/40">
+          <p className="mt-6 text-[0.68rem] font-light text-ink/40">
             ماهی یک نامه، نه بیشتر — بدون تبلیغات مزاحم.
           </p>
         </Reveal>

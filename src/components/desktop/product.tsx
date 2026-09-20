@@ -24,10 +24,10 @@ import { ParallaxImage } from '@/components/fx/parallax';
 function Accordion({ title, children, defaultOpen = false }: { title: string; children: React.ReactNode; defaultOpen?: boolean }) {
   const [open, setOpen] = useState(defaultOpen);
   return (
-    <div className="border-t border-cream/10">
+    <div className="border-t border-ink/10">
       <button
         onClick={() => setOpen(!open)}
-        className="flex w-full items-center justify-between py-5 text-start text-sm font-light text-cream/90 transition-colors hover:text-copper"
+        className="flex w-full items-center justify-between py-5 text-start text-sm font-light text-ink/90 transition-colors hover:text-copper"
         aria-expanded={open}
       >
         {title}
@@ -46,7 +46,7 @@ function Accordion({ title, children, defaultOpen = false }: { title: string; ch
             transition={{ duration: 0.5, ease: EASE }}
             className="overflow-hidden"
           >
-            <div className="pb-7 text-[0.82rem] font-light leading-8 text-sand/70">{children}</div>
+            <div className="pb-7 text-[0.82rem] font-light leading-8 text-ink/65">{children}</div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -75,16 +75,16 @@ export function ProductPage() {
     <>
       <section className="mx-auto max-w-[1680px] px-6 pt-32 lg:px-12" aria-label="محصول">
         {/* breadcrumb */}
-        <nav className="flex items-center gap-2 text-xs font-light text-sand/55" aria-label="مسیر">
-          <button onClick={goHome} className="transition-colors hover:text-cream">
+        <nav className="flex items-center gap-2 text-xs font-light text-ink/50" aria-label="مسیر">
+          <button onClick={goHome} className="transition-colors hover:text-copper">
             خانه
           </button>
           <ChevronLeft size={12} strokeWidth={1.5} />
-          <button onClick={() => goShop(product.category)} className="transition-colors hover:text-cream">
+          <button onClick={() => goShop(product.category)} className="transition-colors hover:text-copper">
             فروشگاه
           </button>
           <ChevronLeft size={12} strokeWidth={1.5} />
-          <span className="text-cream/85">{product.name}</span>
+          <span className="text-ink/85">{product.name}</span>
         </nav>
 
         <div className="mt-10 grid grid-cols-1 gap-14 lg:grid-cols-12 lg:gap-20">
@@ -142,11 +142,11 @@ export function ProductPage() {
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-4">
                     <span className="latin-tag text-copper">{product.latin}</span>
-                    <span className="h-px w-10 bg-cream/25" />
+                    <span className="h-px w-10 bg-ink/25" />
                   </div>
-                  {product.badge === 'new' && <span className="bg-copper px-3 py-1 text-[0.62rem] text-ink">جدید</span>}
+                  {product.badge === 'new' && <span className="bg-copper px-3 py-1 text-[0.62rem] text-paper">جدید</span>}
                   {product.badge === 'bestseller' && (
-                    <span className="border border-cream/30 px-3 py-1 text-[0.62rem] text-cream/85">پرفروش</span>
+                    <span className="border border-ink/30 px-3 py-1 text-[0.62rem] text-ink/80">پرفروش</span>
                   )}
                 </div>
               </Reveal>
@@ -160,7 +160,7 @@ export function ProductPage() {
                   {Array.from({ length: 5 }).map((_, i) => (
                     <Star key={i} size={13} className="fill-copper text-copper" strokeWidth={1} />
                   ))}
-                  <span className="ms-2 text-xs font-light text-sand/60">
+                  <span className="ms-2 text-xs font-light text-ink/55">
                     {product.rating} — {String(product.reviews).replace(/\d/g, (d) => '۰۱۲۳۴۵۶۷۸۹'[Number(d)])} دیدگاه
                   </span>
                 </div>
@@ -168,15 +168,15 @@ export function ProductPage() {
 
               <Reveal delay={0.14} y={12}>
                 <div className="mt-7 flex items-baseline gap-4">
-                  <span className="text-2xl font-light text-cream">{faPrice(product.price)}</span>
+                  <span className="text-2xl font-light text-ink">{faPrice(product.price)}</span>
                   {product.oldPrice && (
-                    <span className="text-sm font-light text-sand/40 line-through">{faPrice(product.oldPrice)}</span>
+                    <span className="text-sm font-light text-ink/40 line-through">{faPrice(product.oldPrice)}</span>
                   )}
                 </div>
               </Reveal>
 
               <Reveal delay={0.18} y={12}>
-                <p className="mt-7 border-t border-cream/10 pt-7 text-sm font-light leading-9 text-sand/75">
+                <p className="mt-7 border-t border-ink/10 pt-7 text-sm font-light leading-9 text-ink/70">
                   {product.description}
                 </p>
               </Reveal>
@@ -185,7 +185,7 @@ export function ProductPage() {
               <Reveal delay={0.2} y={12}>
                 <div className="mt-8">
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-light text-sand/60">رنگ: {product.colors[color].name}</span>
+                    <span className="text-xs font-light text-ink/55">رنگ: {product.colors[color].name}</span>
                   </div>
                   <div className="mt-4 flex items-center gap-4">
                     {product.colors.map((c, i) => (
@@ -194,7 +194,7 @@ export function ProductPage() {
                         onClick={() => setColor(i)}
                         aria-label={c.name}
                         className={`relative h-9 w-9 rounded-full transition-all duration-300 ${
-                          color === i ? 'ring-1 ring-copper ring-offset-4 ring-offset-ink' : 'hover:scale-110'
+                          color === i ? 'ring-1 ring-copper ring-offset-4 ring-offset-paper' : 'hover:scale-110'
                         }`}
                         style={{ backgroundColor: c.hex }}
                       />
@@ -208,10 +208,10 @@ export function ProductPage() {
                 <Reveal delay={0.22} y={12}>
                   <div className="mt-8">
                     <div className="flex items-center justify-between">
-                      <span className="text-xs font-light text-sand/60">
+                      <span className="text-xs font-light text-ink/55">
                         {product.category === 'shoes' ? 'سایز' : product.category === 'belts' ? 'طول (سانتی‌متر)' : 'اندازه'}
                       </span>
-                      <button className="lux-link text-[0.7rem] font-light text-sand/55">راهنمای سایز</button>
+                      <button className="lux-link text-[0.7rem] font-light text-ink/50">راهنمای سایز</button>
                     </div>
                     <div className="mt-4 flex flex-wrap gap-3">
                       {product.sizes.map((s) => (
@@ -220,8 +220,8 @@ export function ProductPage() {
                           onClick={() => setSize(s)}
                           className={`min-w-[3.2rem] border px-4 py-2.5 text-sm font-light transition-all duration-300 ${
                             size === s
-                              ? 'border-copper bg-copper text-ink'
-                              : 'border-cream/20 text-cream/80 hover:border-cream/50'
+                              ? 'border-copper bg-copper text-paper'
+                              : 'border-ink/20 text-ink/80 hover:border-ink/50'
                           }`}
                         >
                           {s}
@@ -235,8 +235,8 @@ export function ProductPage() {
               {product.dimensions && (
                 <Reveal delay={0.22} y={12}>
                   <div className="mt-8">
-                    <span className="text-xs font-light text-sand/60">ابعاد</span>
-                    <div className="mt-3 inline-block border border-cream/20 px-5 py-2.5 text-sm font-light text-cream/85">
+                    <span className="text-xs font-light text-ink/55">ابعاد</span>
+                    <div className="mt-3 inline-block border border-ink/20 px-5 py-2.5 text-sm font-light text-ink/85">
                       {product.dimensions}
                     </div>
                   </div>
@@ -246,10 +246,10 @@ export function ProductPage() {
               {/* qty + cta */}
               <Reveal delay={0.26} y={12}>
                 <div className="mt-10 flex items-stretch gap-4">
-                  <div className="flex items-center border border-cream/20">
+                  <div className="flex items-center border border-ink/20">
                     <button
                       onClick={() => setQty(Math.max(1, qty - 1))}
-                      className="px-4 text-cream/70 transition-colors hover:text-copper"
+                      className="px-4 text-ink/70 transition-colors hover:text-copper"
                       aria-label="کاهش"
                     >
                       <Minus size={14} strokeWidth={1.5} />
@@ -259,7 +259,7 @@ export function ProductPage() {
                     </span>
                     <button
                       onClick={() => setQty(qty + 1)}
-                      className="px-4 text-cream/70 transition-colors hover:text-copper"
+                      className="px-4 text-ink/70 transition-colors hover:text-copper"
                       aria-label="افزایش"
                     >
                       <Plus size={14} strokeWidth={1.5} />
@@ -267,7 +267,7 @@ export function ProductPage() {
                   </div>
                   <button
                     onClick={handleAdd}
-                    className="lux-btn lux-btn-ink flex-1 border border-cream/30 bg-cream px-6 py-4 text-sm font-medium text-ink"
+                    className="lux-btn lux-btn-ink flex-1 border border-ink bg-ink px-6 py-4 text-sm font-medium text-cream"
                   >
                     <span className="flex items-center justify-center gap-3">
                       <ShoppingBag size={16} strokeWidth={1.5} />
@@ -277,7 +277,7 @@ export function ProductPage() {
                   <button
                     onClick={() => toggleWishlist(product.id)}
                     aria-label="افزودن به علاقه‌مندی"
-                    className="flex w-14 items-center justify-center border border-cream/25 text-cream/85 transition-colors hover:border-copper hover:text-copper"
+                    className="flex w-14 items-center justify-center border border-ink/25 text-ink/85 transition-colors hover:border-copper hover:text-copper"
                   >
                     <Heart
                       size={17}
@@ -290,7 +290,7 @@ export function ProductPage() {
 
               {/* micro trust row */}
               <Reveal delay={0.3} y={12}>
-                <div className="mt-8 grid grid-cols-3 gap-4 border-y border-cream/10 py-6">
+                <div className="mt-8 grid grid-cols-3 gap-4 border-y border-ink/10 py-6">
                   {[
                     { icon: Truck, label: 'ارسال بیمه‌شده' },
                     { icon: ShieldCheck, label: 'ضمانت دوخت' },
@@ -298,7 +298,7 @@ export function ProductPage() {
                   ].map(({ icon: Icon, label }) => (
                     <div key={label} className="flex flex-col items-center gap-2 text-center">
                       <Icon size={17} strokeWidth={1.25} className="text-copper" />
-                      <span className="text-[0.68rem] font-light text-sand/65">{label}</span>
+                      <span className="text-[0.68rem] font-light text-ink/60">{label}</span>
                     </div>
                   ))}
                 </div>
@@ -384,13 +384,13 @@ export function ProductPage() {
       </section>
 
       {/* related */}
-      <section className="bg-ink py-24 lg:py-32" aria-label="قطعات مرتبط">
+      <section className="bg-paper py-24 lg:py-32" aria-label="قطعات مرتبط">
         <div className="mx-auto max-w-[1680px] px-6 lg:px-12">
           <Reveal y={16}>
             <div className="flex items-center gap-4">
               <span className="latin-tag text-copper">Related Pieces</span>
-              <span className="h-px w-14 bg-cream/25" />
-              <span className="text-sm font-light text-sand/70">از همان خانواده</span>
+              <span className="h-px w-14 bg-ink/25" />
+              <span className="text-sm font-light text-ink/55">از همان خانواده</span>
             </div>
           </Reveal>
           <h2 className="text-display-lg mt-5">

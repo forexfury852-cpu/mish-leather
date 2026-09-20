@@ -41,10 +41,10 @@ export function MobileProduct() {
   };
 
   const acc = (key: string, title: string, body: React.ReactNode) => (
-    <div className="border-t border-cream/10">
+    <div className="border-t border-ink/10">
       <button
         onClick={() => setOpenAcc(openAcc === key ? null : key)}
-        className="flex min-h-[56px] w-full items-center justify-between py-1 text-start text-[0.9rem] font-light text-cream/90"
+        className="flex min-h-[56px] w-full items-center justify-between py-1 text-start text-[0.9rem] font-light text-ink/90"
         aria-expanded={openAcc === key}
       >
         {title}
@@ -59,7 +59,7 @@ export function MobileProduct() {
             transition={{ duration: 0.45, ease: EASE }}
             className="overflow-hidden"
           >
-            <div className="pb-6 text-[0.78rem] font-light leading-7 text-sand/70">{body}</div>
+            <div className="pb-6 text-[0.78rem] font-light leading-7 text-ink/60">{body}</div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -67,7 +67,7 @@ export function MobileProduct() {
   );
 
   return (
-    <div className="relative min-h-full bg-ink">
+    <div className="relative min-h-full bg-paper">
       {/* ---------- gallery carousel ---------- */}
       <section className="relative h-[56cqh] min-h-[380px]">
         <div className="overflow-hidden" ref={emblaRef}>
@@ -111,9 +111,9 @@ export function MobileProduct() {
         initial={{ y: 40, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: EASE }}
-        className="relative z-10 -mt-7 rounded-t-[1.75rem] border-t border-cream/12 bg-ink px-6 pb-40 pt-8"
+        className="relative z-10 -mt-7 rounded-t-[1.75rem] border-t border-ink/10 bg-paper px-6 pb-40 pt-8"
       >
-        <div className="mx-auto mb-7 h-1 w-12 rounded-full bg-cream/20" aria-hidden />
+        <div className="mx-auto mb-7 h-1 w-12 rounded-full bg-ink/15" aria-hidden />
 
         <header className="flex items-start justify-between gap-4">
           <div>
@@ -123,24 +123,24 @@ export function MobileProduct() {
               {Array.from({ length: 5 }).map((_, i) => (
                 <Star key={i} size={11} className="fill-copper text-copper" strokeWidth={1} />
               ))}
-              <span className="ms-1 text-[0.65rem] font-light text-sand/55">
+              <span className="ms-1 text-[0.65rem] font-light text-ink/50">
                 {product.rating} — {fa(product.reviews)} دیدگاه
               </span>
             </div>
           </div>
           <div className="text-end">
-            <div className="text-[1.05rem] font-light text-cream">{faPrice(product.price)}</div>
+            <div className="text-[1.05rem] font-light text-ink">{faPrice(product.price)}</div>
             {product.oldPrice && (
-              <div className="mt-1 text-[0.7rem] font-light text-sand/40 line-through">{faPrice(product.oldPrice)}</div>
+              <div className="mt-1 text-[0.7rem] font-light text-ink/40 line-through">{faPrice(product.oldPrice)}</div>
             )}
           </div>
         </header>
 
-        <p className="mt-6 text-[0.82rem] font-light leading-8 text-sand/75">{product.description}</p>
+        <p className="mt-6 text-[0.82rem] font-light leading-8 text-ink/65">{product.description}</p>
 
         {/* colors */}
         <div className="mt-8">
-          <span className="text-[0.72rem] font-light text-sand/55">رنگ: {product.colors[color].name}</span>
+          <span className="text-[0.72rem] font-light text-ink/50">رنگ: {product.colors[color].name}</span>
           <div className="mt-3.5 flex gap-4">
             {product.colors.map((c, i) => (
               <button
@@ -148,7 +148,7 @@ export function MobileProduct() {
                 onClick={() => setColor(i)}
                 aria-label={c.name}
                 className={`h-11 w-11 rounded-full transition-all duration-300 ${
-                  color === i ? 'ring-1 ring-copper ring-offset-4 ring-offset-ink' : 'scale-95 opacity-80'
+                  color === i ? 'ring-1 ring-copper ring-offset-4 ring-offset-paper' : 'scale-95 opacity-80'
                 }`}
                 style={{ backgroundColor: c.hex }}
               />
@@ -160,10 +160,10 @@ export function MobileProduct() {
         {product.sizes && (
           <div className="mt-8">
             <div className="flex items-center justify-between">
-              <span className="text-[0.72rem] font-light text-sand/55">
+              <span className="text-[0.72rem] font-light text-ink/50">
                 {product.category === 'shoes' ? 'سایز' : product.category === 'belts' ? 'طول (سانتی‌متر)' : 'اندازه'}
               </span>
-              <button className="lux-link text-[0.68rem] font-light text-sand/55">راهنمای سایز</button>
+              <button className="lux-link text-[0.68rem] font-light text-ink/50">راهنمای سایز</button>
             </div>
             <div className="mt-3.5 flex flex-wrap gap-3">
               {product.sizes.map((s) => (
@@ -171,7 +171,7 @@ export function MobileProduct() {
                   key={s}
                   onClick={() => setSize(s)}
                   className={`min-h-[48px] min-w-[52px] border px-5 text-[0.85rem] font-light transition-all duration-300 ${
-                    size === s ? 'border-copper bg-copper text-ink' : 'border-cream/18 text-cream/80'
+                    size === s ? 'border-copper bg-copper text-paper' : 'border-ink/15 text-ink/75'
                   }`}
                 >
                   {s}
@@ -184,21 +184,21 @@ export function MobileProduct() {
         {/* dimensions */}
         {product.dimensions && (
           <div className="mt-8">
-            <span className="text-[0.72rem] font-light text-sand/55">ابعاد</span>
-            <div className="mt-3 inline-block border border-cream/18 px-5 py-3 text-[0.82rem] font-light text-cream/85">
+            <span className="text-[0.72rem] font-light text-ink/50">ابعاد</span>
+            <div className="mt-3 inline-block border border-ink/15 px-5 py-3 text-[0.82rem] font-light text-ink/80">
               {product.dimensions}
             </div>
           </div>
         )}
 
         {/* quantity */}
-        <div className="mt-8 flex items-center justify-between border-y border-cream/10 py-4">
-          <span className="text-[0.82rem] font-light text-cream/85">تعداد</span>
+        <div className="mt-8 flex items-center justify-between border-y border-ink/10 py-4">
+          <span className="text-[0.82rem] font-light text-ink/80">تعداد</span>
           <div className="flex items-center gap-6">
             <button
               onClick={() => setQty(Math.max(1, qty - 1))}
               aria-label="کاهش"
-              className="flex h-11 w-11 items-center justify-center text-cream/70 active:text-copper"
+              className="flex h-11 w-11 items-center justify-center text-ink/70 active:text-copper"
             >
               <Minus size={16} strokeWidth={1.5} />
             </button>
@@ -206,7 +206,7 @@ export function MobileProduct() {
             <button
               onClick={() => setQty(qty + 1)}
               aria-label="افزایش"
-              className="flex h-11 w-11 items-center justify-center text-cream/70 active:text-copper"
+              className="flex h-11 w-11 items-center justify-center text-ink/70 active:text-copper"
             >
               <Plus size={16} strokeWidth={1.5} />
             </button>
@@ -245,9 +245,9 @@ export function MobileProduct() {
             </button>
           </div>
           <h2 className="mt-2 text-[1.35rem] font-extralight">قطعات هم‌خانواده</h2>
-          <div className="no-scrollbar mt-6 flex snap-x snap-mandatory gap-5 overflow-x-auto pb-2">
+          <div className="no-scrollbar mt-6 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2">
             {related.map((p) => (
-              <div key={p.id} className="w-[58vw] flex-none snap-start">
+              <div key={p.id} className="w-[44vw] flex-none snap-start">
                 <MobileProductCard product={p} compact />
               </div>
             ))}
@@ -260,16 +260,16 @@ export function MobileProduct() {
         initial={{ y: 90 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.8, delay: 0.35, ease: EASE }}
-        className="fixed inset-x-0 bottom-[64px] z-40 border-t border-cream/10 bg-ink/92 px-5 py-4 backdrop-blur-lg"
+        className="fixed inset-x-0 bottom-[64px] z-40 border-t border-ink/10 bg-paper/95 px-5 py-4 backdrop-blur-lg"
       >
         <div className="flex items-center gap-4">
           <div className="min-w-[92px]">
-            <div className="text-[0.58rem] font-light text-sand/55">قیمت</div>
-            <div className="text-[0.92rem] font-light text-cream">{faPrice(product.price)}</div>
+            <div className="text-[0.58rem] font-light text-ink/50">قیمت</div>
+            <div className="text-[0.92rem] font-light text-ink">{faPrice(product.price)}</div>
           </div>
           <button
             onClick={handleAdd}
-            className="flex flex-1 items-center justify-center gap-3 bg-copper py-4 text-[0.88rem] font-medium text-ink active:brightness-110"
+            className="flex flex-1 items-center justify-center gap-3 bg-copper py-4 text-[0.88rem] font-medium text-paper active:brightness-110"
           >
             <ShoppingBag size={16} strokeWidth={1.75} />
             {added ? 'به سبد اضافه شد ✓' : 'افزودن به سبد خرید'}

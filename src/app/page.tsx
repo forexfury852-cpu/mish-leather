@@ -48,7 +48,7 @@ export default function Page() {
   /* ---------- DESKTOP ---------- */
   if (!fullscreenMobile) {
     return (
-      <main className="grain min-h-svh bg-ink text-cream">
+      <main className="grain min-h-svh bg-paper text-ink">
         <Cursor />
         <AnimatePresence>{loading && <Preloader onDone={() => { setLoading(false); setBooted(); }} />}</AnimatePresence>
         <SiteHeader />
@@ -74,7 +74,7 @@ export default function Page() {
   /* ---------- MOBILE (fullscreen on real devices) ---------- */
   if (smallScreen) {
     return (
-      <main className="grain fixed inset-0 overflow-hidden bg-ink text-cream [container-type:size]">
+      <main className="grain fixed inset-0 overflow-hidden bg-paper text-ink [container-type:size]">
         <AnimatePresence>{loading && <Preloader onDone={() => { setLoading(false); setBooted(); }} />}</AnimatePresence>
         <div className="h-full overflow-y-auto overscroll-contain no-scrollbar">
           <AnimatePresence mode="wait">
@@ -99,7 +99,7 @@ export default function Page() {
 
   /* ---------- MOBILE (inside phone frame — presentation mode) ---------- */
   return (
-    <main className="min-h-svh bg-ink text-cream">
+    <main className="min-h-svh bg-paper text-ink">
       <MobileStage>
         <PhoneFrame>
           <div className="relative h-full">

@@ -40,7 +40,7 @@ export function BottomNav() {
 
   return (
     <nav
-      className="fixed inset-x-0 bottom-0 z-50 border-t border-cream/10 bg-ink/92 pb-[env(safe-area-inset-bottom)] backdrop-blur-lg"
+      className="fixed inset-x-0 bottom-0 z-50 border-t border-ink/10 bg-paper/95 pb-[env(safe-area-inset-bottom)] backdrop-blur-lg"
       aria-label="ناوبری موبایل"
     >
       <div className="grid grid-cols-5 items-stretch">
@@ -54,9 +54,9 @@ export function BottomNav() {
             <Icon
               size={20}
               strokeWidth={1.4}
-              className={item(v) ? 'text-copper' : 'text-cream/60'}
+              className={item(v) ? 'text-copper' : 'text-ink/55'}
             />
-            <span className={`text-[0.58rem] font-light ${item(v) ? 'text-copper' : 'text-cream/45'}`}>{label}</span>
+            <span className={`text-[0.58rem] font-light ${item(v) ? 'text-copper' : 'text-ink/45'}`}>{label}</span>
             {item(v) && (
               <motion.span layoutId="mnav-dot" className="absolute -top-px h-[2px] w-9 bg-copper" transition={{ duration: 0.4, ease: EASE }} />
             )}
@@ -68,8 +68,8 @@ export function BottomNav() {
           className={`flex min-h-[58px] flex-col items-center justify-center gap-1 ${false ? 'text-copper' : ''}`}
           aria-label="علاقه‌مندی‌ها"
         >
-          <Heart size={20} strokeWidth={1.4} className="text-cream/60" />
-          <span className="text-[0.58rem] font-light text-cream/45">علاقه‌مندی</span>
+          <Heart size={20} strokeWidth={1.4} className="text-ink/55" />
+          <span className="text-[0.58rem] font-light text-ink/45">علاقه‌مندی</span>
         </button>
         {/* cart */}
         <button
@@ -78,28 +78,28 @@ export function BottomNav() {
           aria-label="سبد خرید"
         >
           <span className="relative">
-            <ShoppingBag size={20} strokeWidth={1.4} className="text-cream/60" />
+            <ShoppingBag size={20} strokeWidth={1.4} className="text-ink/55" />
             {cartCount > 0 && (
-              <span className="absolute -right-2 -top-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-copper text-[0.5rem] font-semibold text-ink">
+              <span className="absolute -right-2 -top-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-copper text-[0.5rem] font-semibold text-paper">
                 {badge}
               </span>
             )}
           </span>
-          <span className="text-[0.58rem] font-light text-cream/45">سبد</span>
+          <span className="text-[0.58rem] font-light text-ink/45">سبد</span>
         </button>
       </div>
     </nav>
   );
 }
 
-/* Mobile product card — full-bleed editorial style */
+/* Mobile product card — clean editorial grid card */
 export function MobileProductCard({ product, compact = false }: { product: Product; compact?: boolean }) {
   const { goProduct, addToCart } = useUI();
   return (
     <article className="group">
       <div
         onClick={() => goProduct(product.id)}
-        className={`img-zoom relative ${compact ? 'aspect-[4/5] w-[62vw]' : 'aspect-[4/5]'} overflow-hidden`}
+        className="img-zoom relative aspect-[4/5] overflow-hidden"
         data-hover
       >
         { }
@@ -107,7 +107,7 @@ export function MobileProductCard({ product, compact = false }: { product: Produ
         {product.badge && (
           <span
             className={`absolute right-3 top-3 px-2.5 py-1 text-[0.58rem] font-light ${
-              product.badge === 'new' ? 'bg-copper text-ink' : 'border border-cream/30 bg-ink/40 text-cream/90 backdrop-blur-sm'
+              product.badge === 'new' ? 'bg-copper text-paper' : 'border border-cream/30 bg-ink/40 text-cream/90 backdrop-blur-sm'
             }`}
           >
             {product.badge === 'new' ? 'جدید' : 'پرفروش'}
@@ -124,12 +124,12 @@ export function MobileProductCard({ product, compact = false }: { product: Produ
           <span className="text-lg font-light leading-none">+</span>
         </button>
       </div>
-      <div className="mt-3.5 flex items-start justify-between gap-3 px-0.5">
+      <div className={`flex items-start justify-between gap-3 px-0.5 ${compact ? 'mt-2.5' : 'mt-3.5'}`}>
         <div>
-          <h3 className="text-[0.9rem] font-light text-cream">{product.name}</h3>
-          <p className="mt-0.5 text-[0.65rem] font-light text-sand/50">{CATEGORY_TITLE[product.category]}</p>
+          <h3 className="text-[0.9rem] font-light text-ink">{product.name}</h3>
+          <p className="mt-0.5 text-[0.65rem] font-light text-ink/45">{CATEGORY_TITLE[product.category]}</p>
         </div>
-        <span className="whitespace-nowrap text-[0.8rem] font-light text-sand/85">{faPrice(product.price)}</span>
+        <span className="whitespace-nowrap text-[0.8rem] font-light text-ink/75">{faPrice(product.price)}</span>
       </div>
     </article>
   );

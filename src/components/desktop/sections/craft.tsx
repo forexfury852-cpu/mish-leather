@@ -131,9 +131,9 @@ export function Showcase() {
   const [wish, setWish] = useState(false);
 
   return (
-    <section className="relative overflow-hidden bg-ink py-28 lg:py-40" aria-label="قطعه امضا">
+    <section className="relative overflow-hidden bg-paper py-28 lg:py-40" aria-label="قطعه امضا">
       <span
-        className="text-outline pointer-events-none absolute top-10 left-0 select-none text-[16vw] font-extralight leading-none opacity-70"
+        className="text-outline-ink pointer-events-none absolute top-10 left-0 select-none text-[16vw] font-extralight leading-none opacity-80"
         aria-hidden
       >
         امضا
@@ -174,18 +174,18 @@ export function Showcase() {
               {Array.from({ length: 5 }).map((_, i) => (
                 <Star key={i} size={13} className="fill-copper text-copper" strokeWidth={1} />
               ))}
-              <span className="ms-2 text-xs font-light text-sand/60">بر اساس ۱۳۲ دیدگاه</span>
+              <span className="ms-2 text-xs font-light text-ink/50">بر اساس ۱۳۲ دیدگاه</span>
             </div>
           </Reveal>
           <Reveal delay={0.25}>
-            <p className="mt-8 max-w-md text-sm font-light leading-9 text-sand/75">
+            <p className="mt-8 max-w-md text-sm font-light leading-9 text-ink/70">
               «آرتا» پرچم‌دار کارگاه ماست؛ چرم تمام‌دانه‌ی گاوی با یراق برنجی سناییده و آستر پشم. طراحی‌اش برای مردانی است که بیشترِ حرف‌هایشان را نمی‌زنند.
             </p>
           </Reveal>
           <Reveal delay={0.3}>
             <ul className="mt-8 space-y-3">
               {['چرم گاوی تمام‌دانه، دباغی گیاهی', 'دوخت زین‌دوزی دست با نخ موم‌زده', 'یراق برنجی سناییده — ضدزنگ', 'جیب داخلی مخصوص لپ‌تاپ ۱۴ اینچ'].map((m) => (
-                <li key={m} className="flex items-center gap-3 text-sm font-light text-sand/80">
+                <li key={m} className="flex items-center gap-3 text-sm font-light text-ink/75">
                   <span className="text-[0.55rem] text-copper">✦</span>
                   {m}
                 </li>
@@ -196,7 +196,7 @@ export function Showcase() {
             <div className="mt-12 flex items-stretch gap-4">
               <button
                 onClick={() => goProduct(p.id)}
-                className="lux-btn lux-btn-ink flex-1 border border-cream/30 bg-cream px-8 py-4 text-sm font-medium text-ink"
+                className="lux-btn lux-btn-ink flex-1 border border-ink bg-ink px-8 py-4 text-sm font-medium text-cream"
               >
                 خرید قطعه — {faPrice(p.price)}
               </button>
@@ -206,7 +206,7 @@ export function Showcase() {
                   toggleWishlist(p.id);
                 }}
                 aria-label="افزودن به علاقه‌مندی"
-                className="flex w-14 items-center justify-center border border-cream/25 text-cream/85 transition-colors hover:border-copper hover:text-copper"
+                className="flex w-14 items-center justify-center border border-ink/25 text-ink/80 transition-colors hover:border-copper hover:text-copper"
               >
                 <Heart size={17} strokeWidth={1.5} className={wish || isWishlisted(p.id) ? 'fill-copper text-copper' : ''} />
               </button>
@@ -223,7 +223,7 @@ const ICONS = { badge: BadgeCheck, shield: ShieldCheck, truck: Truck, return: Ro
 
 export function Guarantees() {
   return (
-    <section className="hairline-t bg-coal py-24 lg:py-32" aria-label="تعهد ما">
+    <section className="hairline-t bg-paper-deep py-24 lg:py-32" aria-label="تعهد ما">
       <div className="mx-auto max-w-[1680px] px-6 lg:px-12">
         <SectionHead index="۰۷" title="تعهد میش" latin="Our Promise" />
         <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
@@ -233,16 +233,16 @@ export function Guarantees() {
               <Reveal key={g.title} delay={i * 0.08}>
                 <div
                   className={`group h-full px-2 py-10 sm:px-8 lg:py-2 ${
-                    i > 0 ? 'lg:hairline-s lg:border-cream/10' : ''
+                    i > 0 ? 'lg:hairline-s lg:border-ink/10' : ''
                   }`}
                   data-hover
                 >
                   <div className="flex items-center justify-between">
                     <Icon size={26} strokeWidth={1} className="text-copper transition-transform duration-500 group-hover:-translate-y-1" />
-                    <span className="latin-word text-xs text-cream/25">0{i + 1}</span>
+                    <span className="latin-word text-xs text-ink/30">0{i + 1}</span>
                   </div>
                   <h3 className="mt-8 text-xl font-light">{g.title}</h3>
-                  <p className="mt-4 text-[0.82rem] font-light leading-7 text-sand/65">{g.desc}</p>
+                  <p className="mt-4 text-[0.82rem] font-light leading-7 text-ink/60">{g.desc}</p>
                 </div>
               </Reveal>
             );

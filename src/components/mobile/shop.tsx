@@ -57,15 +57,15 @@ function BottomSheet({
             onDragEnd={(_, info) => {
               if (info.offset.y > 120) onClose();
             }}
-            className="fixed inset-x-0 bottom-0 z-[61] max-h-[78%] overflow-y-auto rounded-t-[1.75rem] border-t border-cream/15 bg-ink pb-10 no-scrollbar"
+            className="fixed inset-x-0 bottom-0 z-[61] max-h-[78%] overflow-y-auto rounded-t-[1.75rem] border-t border-ink/10 bg-paper pb-10 no-scrollbar"
             role="dialog"
             aria-label={title}
           >
-            <div className="sticky top-0 z-10 bg-ink px-6 pt-4">
-              <div className="mx-auto h-1 w-12 rounded-full bg-cream/25" />
+            <div className="sticky top-0 z-10 bg-paper px-6 pt-4">
+              <div className="mx-auto h-1 w-12 rounded-full bg-ink/20" />
               <div className="mt-5 flex items-center justify-between pb-3">
                 <h3 className="text-lg font-extralight">{title}</h3>
-                <button onClick={onClose} aria-label="بستن" className="flex h-10 w-10 items-center justify-center rounded-full border border-cream/15 text-cream/80">
+                <button onClick={onClose} aria-label="بستن" className="flex h-10 w-10 items-center justify-center rounded-full border border-ink/15 text-ink/70">
                   <X size={16} strokeWidth={1.5} />
                 </button>
               </div>
@@ -80,8 +80,8 @@ function BottomSheet({
 
 function SheetSection({ label, children }: { label: string; children: React.ReactNode }) {
   return (
-    <div className="border-t border-cream/10 py-6 first:border-t-0">
-      <h4 className="mb-4 text-[0.72rem] font-light text-sand/55">{label}</h4>
+    <div className="border-t border-ink/10 py-6 first:border-t-0">
+      <h4 className="mb-4 text-[0.72rem] font-light text-ink/50">{label}</h4>
       {children}
     </div>
   );
@@ -109,7 +109,7 @@ export function MobileShop() {
   const fa = (n: number | string) => String(n).replace(/\d/g, (d) => '۰۱۲۳۴۵۶۷۸۹'[Number(d)]);
 
   return (
-    <div className="relative min-h-full bg-ink pb-28">
+    <div className="relative min-h-full bg-paper pb-28">
       {/* compact hero */}
       <section className="relative flex h-[36cqh] min-h-[250px] items-end overflow-hidden">
         { }
@@ -117,7 +117,7 @@ export function MobileShop() {
         <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/35 to-ink/55" />
         <div className="relative w-full px-6 pb-7">
           <span className="latin-tag text-copper">Shop — Catalogue</span>
-          <h1 className="mt-2 text-[2rem] font-extralight">فروشگاه</h1>
+          <h1 className="mt-2 text-[2rem] font-extralight text-cream">فروشگاه</h1>
           <p className="mt-1.5 text-[0.72rem] font-light text-sand/65">
             {fa(items.length)} قطعه — چرم طبیعی، دست‌دوز
           </p>
@@ -125,15 +125,15 @@ export function MobileShop() {
       </section>
 
       {/* category chips */}
-      <div className="no-scrollbar sticky top-0 z-40 flex gap-3 overflow-x-auto border-b border-cream/10 bg-ink/92 px-6 py-4 backdrop-blur">
+      <div className="no-scrollbar sticky top-0 z-40 flex gap-3 overflow-x-auto border-b border-ink/10 bg-paper/95 px-6 py-4 backdrop-blur">
         {[{ key: 'all' as const, title: 'همه' }, ...CATEGORIES.map((c) => ({ key: c.key, title: c.title }))].map((c) => (
           <button
             key={c.key}
             onClick={() => goShop(c.key as 'all' | CategoryKey)}
             className={`min-h-[38px] whitespace-nowrap border px-5 py-2 text-[0.75rem] font-light transition-all duration-300 ${
               shopCategory === c.key
-                ? 'border-copper bg-copper text-ink'
-                : 'border-cream/18 text-cream/75'
+                ? 'border-copper bg-copper text-paper'
+                : 'border-ink/15 text-ink/70'
             }`}
           >
             {c.title}
@@ -141,8 +141,8 @@ export function MobileShop() {
         ))}
       </div>
 
-      {/* product list — immersive single column */}
-      <section className="flex flex-col gap-12 px-6 pt-10">
+      {/* product list — clean 2-col grid */}
+      <section className="grid grid-cols-2 gap-x-3 gap-y-9 px-6 pt-9">
         {items.map((p, i) => (
           <motion.div
             key={p.id}
@@ -150,7 +150,7 @@ export function MobileShop() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: Math.min(i * 0.05, 0.3), ease: EASE }}
           >
-            <MobileProductCard product={p} />
+            <MobileProductCard product={p} compact />
           </motion.div>
         ))}
       </section>
@@ -161,7 +161,7 @@ export function MobileShop() {
           setPendingCats([]);
           setSheet(true);
         }}
-        className="fixed bottom-[92px] left-1/2 z-40 flex -translate-x-1/2 items-center gap-2.5 rounded-full border border-cream/20 bg-espresso/95 px-7 py-3.5 text-[0.8rem] font-light text-cream shadow-2xl backdrop-blur active:scale-95"
+        className="fixed bottom-[92px] left-1/2 z-40 flex -translate-x-1/2 items-center gap-2.5 rounded-full border border-ink/15 bg-espresso/95 px-7 py-3.5 text-[0.8rem] font-light text-cream shadow-2xl backdrop-blur active:scale-95"
         aria-label="فیلترها"
       >
         <SlidersHorizontal size={15} strokeWidth={1.5} className="text-copper" />
@@ -177,7 +177,7 @@ export function MobileShop() {
                 key={s.key}
                 onClick={() => setSort(s.key)}
                 className={`min-h-[42px] border px-6 py-2 text-[0.78rem] font-light ${
-                  sort === s.key ? 'border-copper bg-copper text-ink' : 'border-cream/18 text-cream/80'
+                  sort === s.key ? 'border-copper bg-copper text-paper' : 'border-ink/15 text-ink/75'
                 }`}
               >
                 {s.label}
@@ -196,12 +196,12 @@ export function MobileShop() {
                   onClick={() =>
                     setPendingCats((prev) => (active ? prev.filter((k) => k !== c.key) : [...prev, c.key]))
                   }
-                  className="flex min-h-[52px] items-center justify-between text-start text-[0.85rem] font-light text-cream/85"
+                  className="flex min-h-[52px] items-center justify-between text-start text-[0.85rem] font-light text-ink/85"
                 >
                   {c.title}
                   <span
                     className={`flex h-6 w-6 items-center justify-center border ${
-                      active ? 'border-copper bg-copper text-ink' : 'border-cream/25'
+                      active ? 'border-copper bg-copper text-paper' : 'border-ink/25'
                     }`}
                   >
                     {active && <Check size={13} strokeWidth={2} />}
@@ -219,7 +219,7 @@ export function MobileShop() {
                 key={b.key}
                 onClick={() => setBand(b.key)}
                 className={`min-h-[42px] border px-6 py-2 text-[0.78rem] font-light ${
-                  band === b.key ? 'border-copper bg-copper text-ink' : 'border-cream/18 text-cream/80'
+                  band === b.key ? 'border-copper bg-copper text-paper' : 'border-ink/15 text-ink/75'
                 }`}
               >
                 {b.label}
@@ -235,7 +235,7 @@ export function MobileShop() {
               setBand('all');
               setPendingCats([]);
             }}
-            className="min-h-[52px] flex-1 border border-cream/20 py-3 text-[0.82rem] font-light text-cream/80"
+            className="min-h-[52px] flex-1 border border-ink/20 py-3 text-[0.82rem] font-light text-ink/75"
           >
             بازنشانی
           </button>
@@ -244,7 +244,7 @@ export function MobileShop() {
               if (pendingCats.length > 0) goShop(pendingCats[0]);
               setSheet(false);
             }}
-            className="min-h-[52px] flex-[2] bg-copper py-3 text-[0.85rem] font-medium text-ink active:brightness-110"
+            className="min-h-[52px] flex-[2] bg-copper py-3 text-[0.85rem] font-medium text-paper active:brightness-110"
           >
             اعمال فیلتر
           </button>

@@ -52,7 +52,7 @@ export function Hero() {
           <span className="latin-tag text-copper">Mish Leather — Autumn Collection</span>
         </motion.div>
 
-        <h1 className="text-display-xl max-w-[13ch]">
+        <h1 className="text-display-xl max-w-[13ch] text-cream">
           <LineMaskMount delay={d + 0.25}>اصالت،</LineMaskMount>
           <LineMaskMount delay={d + 0.45}>
             در <span className="font-medium text-copper">جزئیات</span> ساخته می‌شود
