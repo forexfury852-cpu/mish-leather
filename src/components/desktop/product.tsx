@@ -56,7 +56,7 @@ function Accordion({ title, children, defaultOpen = false }: { title: string; ch
 
 export function ProductPage() {
   const productId = useUI((s) => s.productId);
-  const { goShop, goHome, addToCart, toggleWishlist, isWishlisted } = useUI();
+  const { goShop, goHome, addToCart, setCartOpen, toggleWishlist, isWishlisted, showToast } = useUI();
   const product = getProduct(productId);
   const related = relatedProducts(product.id, product.category);
   const [imgIndex, setImgIndex] = useState(0);
@@ -66,8 +66,18 @@ export function ProductPage() {
   const [added, setAdded] = useState(false);
 
   const handleAdd = () => {
-    addToCart();
+    addToCart({
+      productId: product.id,
+      name: product.name,
+      image: product.image,
+      price: product.price,
+      colorName: product.colors[color].name,
+      colorHex: product.colors[color].hex,
+      size,
+    }, qty);
+    showToast(`«${product.name}» به سبد اضافه شد`);
     setAdded(true);
+    setTimeout(() => setCartOpen(true), 700);
     setTimeout(() => setAdded(false), 2200);
   };
 

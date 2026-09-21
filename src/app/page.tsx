@@ -12,6 +12,9 @@ import { MobileHome } from '@/components/mobile/home';
 import { MobileShop } from '@/components/mobile/shop';
 import { MobileProduct } from '@/components/mobile/product';
 import { BottomNav, MobileMenu } from '@/components/mobile/chrome';
+import { CartDrawer, SearchOverlay } from '@/components/cart-drawer';
+import { WishlistDrawer, Toast } from '@/components/wishlist-drawer';
+import { CheckoutSheet } from '@/components/checkout-sheet';
 import { LivingBackdrop } from '@/components/fx/backdrop';
 import { EASE } from '@/components/fx/reveal';
 
@@ -36,6 +39,11 @@ export default function Page() {
       cancelAnimationFrame(raf);
       mq.removeEventListener('change', update);
     };
+  }, []);
+
+  // restore cart + wishlist from localStorage on first mount
+  useEffect(() => {
+    useUI.getState().hydrate();
   }, []);
 
   // reset page scroll when the view changes — desktop window + mobile scroll container
@@ -67,6 +75,11 @@ export default function Page() {
             {view === 'product' && <ProductPage />}
           </motion.div>
         </AnimatePresence>
+        <CartDrawer />
+        <SearchOverlay />
+        <WishlistDrawer />
+        <CheckoutSheet />
+        <Toast />
       </main>
     );
   }
@@ -93,6 +106,11 @@ export default function Page() {
       </div>
       <MobileMenu />
       <BottomNav />
+      <CartDrawer />
+      <SearchOverlay />
+      <WishlistDrawer />
+      <CheckoutSheet />
+      <Toast />
       <LivingBackdrop containerRef={mobileScrollRef} />
     </main>
   );

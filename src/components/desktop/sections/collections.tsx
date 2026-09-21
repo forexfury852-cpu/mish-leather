@@ -15,7 +15,20 @@ export function ProductCard({ product, tall = false }: { product: Product; tall?
   const addToCart = useUI((s) => s.addToCart);
   const toggleWishlist = useUI((s) => s.toggleWishlist);
   const isWishlisted = useUI((s) => s.isWishlisted);
+  const showToast = useUI((s) => s.showToast);
   const wished = isWishlisted(product.id);
+  const quickAdd = () => {
+    addToCart({
+      productId: product.id,
+      name: product.name,
+      image: product.image,
+      price: product.price,
+      colorName: product.colors[0].name,
+      colorHex: product.colors[0].hex,
+      size: product.sizes?.[0] ?? null,
+    });
+    showToast(`«${product.name}» به سبد اضافه شد`);
+  };
   return (
     <article className="group" data-hover>
       {/* minimal editorial card — the image is the frame, no box around it */}
@@ -57,7 +70,7 @@ export function ProductCard({ product, tall = false }: { product: Product; tall?
         <div className="pointer-events-none absolute inset-x-3 bottom-3 z-20 flex translate-y-2 items-center justify-between rounded-2xl bg-paper/90 p-2 ps-4 opacity-0 shadow-[0_14px_35px_-12px_rgba(28,19,10,0.35)] backdrop-blur-md transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
           <span className="text-[0.7rem] font-light text-ink/70">مشاهده جزئیات</span>
           <button
-            onClick={() => addToCart()}
+            onClick={quickAdd}
             className="pointer-events-auto flex items-center gap-1.5 rounded-full bg-ink px-4 py-2 text-[0.68rem] font-light text-cream transition-colors duration-300 hover:bg-copper active:scale-95"
             aria-label="افزودن سریع به سبد"
           >

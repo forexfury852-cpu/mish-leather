@@ -141,8 +141,9 @@ const NAV_ITEMS: { view: View; label: string; icon: typeof Home }[] = [
 ];
 
 export function BottomNav() {
-  const { view, goHome, goShop, goProduct, cartCount } = useUI();
+  const { view, goHome, goShop, setCartOpen, setSearchOpen, setWishlistOpen, wishlist, cartCount } = useUI();
   const badge = String(cartCount).replace(/\d/g, (d) => '۰۱۲۳۴۵۶۷۸۹'[Number(d)]);
+  const wishCount = wishlist.length;
 
   const item = (v: View) => view === v;
 
@@ -155,10 +156,10 @@ export function BottomNav() {
       aria-label="ناوبری موبایل"
     >
       <div className="grid grid-cols-5 items-stretch">
-        {NAV_ITEMS.map(({ view: v, label, icon: Icon }) => (
+        {NAV_ITEMS.slice(0, 2).map(({ view: v, label, icon: Icon }) => (
           <button
             key={label}
-            onClick={() => (v === 'home' ? goHome() : v === 'shop' ? goShop('all') : goProduct('arta-messenger'))}
+            onClick={() => (v === 'home' ? goHome() : goShop('all'))}
             className="relative flex min-h-[58px] flex-col items-center justify-center gap-1"
             aria-label={label}
           >
@@ -173,18 +174,34 @@ export function BottomNav() {
             )}
           </button>
         ))}
-        {/* favorites */}
+        {/* search — opens the search overlay */}
         <button
-          onClick={() => goProduct('mehr-bifold')}
-          className={`flex min-h-[58px] flex-col items-center justify-center gap-1 ${false ? 'text-copper' : ''}`}
+          onClick={() => setSearchOpen(true)}
+          className="relative flex min-h-[58px] flex-col items-center justify-center gap-1"
+          aria-label="جستجو"
+        >
+          <Search size={20} strokeWidth={1.4} className="text-ink/55" />
+          <span className="text-[0.58rem] font-light text-ink/45">جستجو</span>
+        </button>
+        {/* favorites — opens the wishlist drawer */}
+        <button
+          onClick={() => setWishlistOpen(true)}
+          className="relative flex min-h-[58px] flex-col items-center justify-center gap-1"
           aria-label="علاقه‌مندی‌ها"
         >
-          <Heart size={20} strokeWidth={1.4} className="text-ink/55" />
+          <span className="relative">
+            <Heart size={20} strokeWidth={1.4} className={wishCount > 0 ? 'text-copper' : 'text-ink/55'} />
+            {wishCount > 0 && (
+              <span className="absolute -right-2 -top-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-copper text-[0.5rem] font-semibold text-paper">
+                {String(wishCount).replace(/\d/g, (d) => '۰۱۲۳۴۵۶۷۸۹'[Number(d)])}
+              </span>
+            )}
+          </span>
           <span className="text-[0.58rem] font-light text-ink/45">علاقه‌مندی</span>
         </button>
-        {/* cart */}
+        {/* cart — opens the cart drawer */}
         <button
-          onClick={() => goProduct('kian-briefcase')}
+          onClick={() => setCartOpen(true)}
           className="relative flex min-h-[58px] flex-col items-center justify-center gap-1"
           aria-label="سبد خرید"
         >
@@ -205,8 +222,18 @@ export function BottomNav() {
 
 /* Mobile product card — modern rounded card, framed shadow, staggered reveal (fade-only optional) */
 export function MobileProductCard({ product, compact = false, index = 0, fade = false }: { product: Product; compact?: boolean; index?: number; fade?: boolean }) {
-  const { goProduct, addToCart, toggleWishlist, isWishlisted } = useUI();
+  const { goProduct, addToCart, toggleWishlist, isWishlisted, showToast } = useUI();
   const wished = isWishlisted(product.id);
+  const addThis = () =>
+    addToCart({
+      productId: product.id,
+      name: product.name,
+      image: product.image,
+      price: product.price,
+      colorName: product.colors[0].name,
+      colorHex: product.colors[0].hex,
+      size: product.sizes?.[0] ?? null,
+    });
   return (
     <motion.article
       className="group"
@@ -252,7 +279,8 @@ export function MobileProductCard({ product, compact = false, index = 0, fade = 
         <button
           onClick={(e) => {
             e.stopPropagation();
-            addToCart();
+            addThis();
+            showToast(`«${product.name}» به سبد اضافه شد`);
           }}
           aria-label="افزودن سریع"
           className="absolute bottom-2.5 left-2.5 flex h-10 w-10 items-center justify-center rounded-full bg-paper/90 text-ink shadow-md backdrop-blur-md transition-all active:scale-90 active:bg-copper active:text-paper"

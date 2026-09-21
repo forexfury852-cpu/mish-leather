@@ -8,7 +8,7 @@ import { EASE } from '@/components/fx/reveal';
 import { MenuOverlay } from './menu';
 
 export function SiteHeader() {
-  const { view, goHome, goShop, cartCount } = useUI();
+  const { view, goHome, goShop, cartCount, setCartOpen, setSearchOpen, setWishlistOpen, wishlist } = useUI();
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const { scrollY } = useScroll();
@@ -77,6 +77,7 @@ export function SiteHeader() {
         {/* actions */}
         <div className="flex items-center gap-6">
           <button
+            onClick={() => setSearchOpen(true)}
             aria-label="جستجو"
             className={`hidden transition-colors hover:text-copper md:block ${
               solid ? 'text-ink/75' : 'text-cream/80'
@@ -85,14 +86,21 @@ export function SiteHeader() {
             <Search size={17} strokeWidth={1.5} />
           </button>
           <button
+            onClick={() => setWishlistOpen(true)}
             aria-label="علاقه‌مندی‌ها"
-            className={`hidden transition-colors hover:text-copper md:block ${
+            className={`relative hidden transition-colors hover:text-copper md:block ${
               solid ? 'text-ink/75' : 'text-cream/80'
             }`}
           >
-            <Heart size={17} strokeWidth={1.5} />
+            <Heart size={17} strokeWidth={1.5} className={wishlist.length > 0 ? 'fill-copper text-copper' : ''} />
+            {wishlist.length > 0 && (
+              <span className="absolute -right-2 -top-2 flex h-4 w-4 items-center justify-center rounded-full bg-copper text-[0.55rem] font-semibold text-paper">
+                {String(wishlist.length).replace(/\d/g, (d) => '۰۱۲۳۴۵۶۷۸۹'[Number(d)])}
+              </span>
+            )}
           </button>
           <button
+            onClick={() => setCartOpen(true)}
             aria-label="سبد خرید"
             className={`relative transition-colors hover:text-copper ${
               solid ? 'text-ink/85' : 'text-cream/85'
