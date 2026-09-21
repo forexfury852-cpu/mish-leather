@@ -51,4 +51,9 @@ prompt
 
 server.log
 # Skills directory
-/skills/.env
+/skills/
+
+# local database files
+/db/
+/prisma/
+*.db.env
