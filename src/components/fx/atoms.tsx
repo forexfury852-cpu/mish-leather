@@ -49,6 +49,10 @@ export function Cursor() {
 export function Preloader({ onDone, variant = 'desktop' }: { onDone: () => void; variant?: 'desktop' | 'mobile' }) {
   const [count, setCount] = useState(0);
   const startedRef = useRef(false);
+  const onDoneRef = useRef(onDone); // keep the latest callback without re-triggering the animation
+  useEffect(() => {
+    onDoneRef.current = onDone;
+  }, [onDone]);
   const mobile = variant === 'mobile';
   const sweep = [0.76, 0, 0.24, 1] as const;
 
@@ -66,7 +70,7 @@ export function Preloader({ onDone, variant = 'desktop' }: { onDone: () => void;
       else {
         setTimeout(() => {
           document.body.style.overflow = '';
-          onDone();
+          onDoneRef.current();
         }, 350);
       }
     };
@@ -75,7 +79,8 @@ export function Preloader({ onDone, variant = 'desktop' }: { onDone: () => void;
       cancelAnimationFrame(raf);
       document.body.style.overflow = '';
     };
-  }, [onDone]);
+    // run exactly once — the callback is read through a ref so inline onDone props are safe
+  }, []);
 
   return (
     <div className="fixed inset-0 z-[100]" aria-hidden>
